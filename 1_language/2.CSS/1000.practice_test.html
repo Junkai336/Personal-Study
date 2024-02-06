@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        /* 02-1-1 범용, 리셋 */
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html {
+            font-size: 10px;
+        }
+
+        body {
+            font-size: 1.6rem;
+        }
+
+        body,
+        h1,
+        h2,
+        h3,
+        p,
+        ul button {
+            margin: 0;
+            padding: 0;
+        }
+
+        li {
+            list-style: none;
+        }
+
+        /* 이미지는 부모박스 100% */
+        img {
+            width: 100%;
+            vertical-align: top;
+        }
+
+        a {
+            text-decoration: none;
+            color: #333;
+        }
+
+        /* 02-5 child 테스트 */
+        /* 완벽한 이해는 X 다시 봐야함 */
+
+        p:first-child {
+            color: red;
+        }
+
+        p:last-child {
+            color: blue;
+        }
+
+        p:only-child {
+            color: green;
+        }
+
+        /* 같은 형제관계 중에서 2번쨰가 p일 경우. */
+        p:nth-child(2) {
+            color: orange;
+        }
+
+        div:nth-last-child(3) {
+            color: pink;
+        }
+
+        /* 02-6 of type 테스트 */
+        span:only-of-type {
+            color: purple;
+        }
+
+        span:first-of-type {
+            color: skyblue;
+        }
+
+        span::before {
+            content: '::before --- ';
+        }
+
+        span::after {
+            content: ' --- ::after ';
+        }
+
+        /* 02-8 :target, :not */
+
+        #click:target~ :not(span) {
+            background-color: black;
+        }
+
+        /* #click2의 형제니깐 div. span은 div 자식이라서 not(span)해도 상속되는듯함 */
+        #click2:target~ :not(div>span) {
+            background-color: black;
+        }
+
+        [class] {background: lightgoldenrodyellow;}
+    </style>
+</head>
+
+<body>
+    <!-- 
+        child는 형제요소 전부 고려, 선택
+        of type은 type 구별해서 고려, 선택
+     -->
+    <div class="전체를 감싸는 박스"> div박스
+        <h1 id="click">child test</h1>
+        <div> 부모div
+            <p>자식 p1</p>
+            <div>gd</div>
+            <p>자식 p2</p>
+            <p>자식 p3</p>
+        </div>
+        <hr>
+        <div> 부모2 div
+            <p>자식2 p1</p>
+            <p>자식2 p2</p>
+            <p>자식2 p3</p>
+        </div>
+        <hr>
+        <div> 부모3 div
+            <p>자식3 p1</p>
+        </div>
+    </div>
+    <hr>
+
+    <br><br><br>
+
+    <div class="전체를 감싸는 박스"> div박스
+        <h1 id="click2">of type test</h1>
+        <div> 부모 div
+            <p>저는 p에요</p>
+            <span>자식 span1</span> <br>
+            <span>자식 span2</span> <br>
+            <span>자식 span3</span> <br>
+        </div>
+        <hr>
+        <div> 부모2 div <br>
+            <span>자식 span1</span> <br>
+            <span>자식 span2</span> <br>
+            <span>자식 span3</span> <br>
+        </div>
+        <hr>
+        <div> 부모2 div <br>
+            <span>자식 span1</span>
+            <p>저는 p임</p><br>
+        </div>
+        <hr>
+        <p><a href="#click">target not 테스트 p</a></p>
+        <p><a href="#click2">target not 테스트 span</a></p>
+    </div>
+
+</body>
+
+</html>

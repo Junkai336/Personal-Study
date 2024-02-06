@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        html {
+            height: 200vh;
+        }
+
+        .dd {
+            width: 100px;
+            height: 100px;
+            border: 1px solid red;
+        }
+    </style>
+</head>
+
+<body>
+    <p id="id">dd</p>
+    <p class="class">dd</p>
+    <p>dd</p>
+    <p>asd</p>
+    <p>qpqp</p>
+    <span>a</span>
+    <span>b</span>
+    <span>c</span>
+    <span>d</span>
+    <span>e</span>
+
+    <script>
+        const a = document.querySelector('p');
+        const aa = document.querySelectorAll('p');
+        const aaa = document.getElementById('id');
+        const aaaa = document.getElementsByClassName('class');
+        const aaaaa = document.getElementsByTagName('p');
+        const b = document.querySelectorAll('span');
+
+        let z = 1;
+        let x = "2";
+
+        console.log(aa);
+
+        // console.log(a);
+        // window.alert(aa);
+        // document.write(aaa);
+        // window.confirm(aaaa);
+        // window.prompt(aaaaa);
+
+        // document.addEventListener ('keydown', function () {
+        //     window.alert('a');
+        // });
+
+        // document.addEventListener ('keyup', function () {
+        //     window.alert('b');
+        // });
+
+        // window.addEventListener ('resize', function () {
+        //     window.alert('c');
+        // });
+
+        document.addEventListener ('scroll', function () {
+            for(let i=0; i<aa.length; i++) {
+                a.innerText = "dsd";
+                aa[i].style.fontWeight = "bold"; //css변경
+                aa[i].title = "가나다라마바사" // html추가변경
+                aa[i].innerHTML = (`<img src="images/a${i}.jpg" alt="a${i}">`)
+            }
+        });
+
+        aa[4].innerHTML = ('a' + 23 + '<br>aaa' + `이미지 <img src="../2.CSS/assets/images/coc${'a'}.png" alt="dd">`);
+
+        b[2].innerHTML = ('ㄴ문자1 ' + 50 + '문자2 ' + '<br>');
+        b[3].innerHTML = (`ㄷ문자1 50 문자2`);
+
+        b[4].outerHTML = (
+            `
+            <h2>계산</h2>
+            <br><br> 1 + 2 = ${1 + 2}
+            <br> 3 ** 3 = ${3 ** 3}
+            typeof ${typeof z} ${typeof x} ${typeof "dd"}
+            zz = ${zz = 1} xx = ${xx = 1}
+            ${zz += xx}
+            ${zz} ${xx}
+            `
+        )
+
+        console.log(b[4].outerHTML);
+
+    </script>
+<!-- <img src="images/a1.jpg" alt="a"> -->
+</body>
+
+</html>

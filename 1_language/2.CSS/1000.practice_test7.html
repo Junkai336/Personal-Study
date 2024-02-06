@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>position</title>
+    <style>
+        body {
+            height: 2000px;
+        }
+
+        .dd {
+            border: 1px solid black;
+            width: 300px;
+            height: 300px;
+            margin: 50px;
+        }
+
+        .dd>div {
+            border: 1px solid pink;
+            width: 150px;
+            height: 150px;
+        }
+
+        .fixed {
+            position: fixed;
+            left: calc(50% - 150px);
+        }
+
+        .relative {
+            position: relative;
+        }
+
+        .absolute {
+            position: absolute;
+        }
+
+        .static {
+            transform: translateY(500px);
+        }
+
+        .ff {
+            position: absolute;
+            left: calc(100%);
+            top: calc(100%);
+        }
+
+        .wri {
+            margin-top: 1000px;
+        }
+
+        p:nth-of-type(1) {
+            writing-mode: horizontal-tb;
+        }
+
+        p:nth-of-type(2) {
+            writing-mode: vertical-rl;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="fixed dd">
+        fixed
+        <div class="ff">
+            absolute2
+        </div>
+    </div>
+    <div class="relative dd">
+        relative
+        <div class="ff">
+            absolute2
+        </div>
+    </div>
+    <div class="absolute dd">
+        absolute
+        <div class="ff">
+            absolute2
+        </div>
+    </div>
+    <div class="static dd">
+        static
+        <div class="ff">
+            absolute2
+        </div>
+    </div>
+
+    <div class="wri">
+        <p>가나다라</p>
+        <p>가나다라</p>
+    </div>
+</body>
+
+</html>

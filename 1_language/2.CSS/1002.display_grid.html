@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>display: grid</title>
+</head>
+<body>
+    <!-- 
+    그리드는 플렉스와 다르게 열 = column = 가로 /  행 = row = 세로
+        
+    명시적인? : 만드는 것이 확실하게 정해졌다는 의미인듯?
+    암시적인? : 만들지 안만들지 불확실한 경우인듯?
+        
+        그리드 컨테이너
+            - 모든 그리드 아이템의 부모 요소
+            - 컨테이너 요소에 grid를 주면 모든 자식은 grid item
+                - display : 
+                    - 그리드 컨테이너 정의
+                    값: grid, inline-grid
+                        grid : 블록 특성의 그리드 컨테이너 정의
+                        inline-grid : inline 특성의 그리드 컨테이너 정의
+
+                - grid-template-rows : [선이름] 1행크기 [선이름] 2행크기 ...;
+                    - 명시적 행(track)의 크기를 정의
+                    - repeat() 함수
+                        - () : auto-fill, auto-fit
+                    - minmax() 함수
+                    - 값: px, %, fr, auto
+                        - fraction(fr) : 컨테이너 크기가 고정되어 있지 않은 경우 아이템 크기를 비율로 정하고 싶을 때 %나 fr 단위 사용.
+                                        이 단위는 사용 가능한 공간의 일정 비율 나타냄
+                                        grid-template-rows : 2fr 1fr 1fr -> 전체 공간의 개수는 4 , 첫번째 행은 2/4의 크기, 두번째 행은 1/4의 크기.
+                                        예) 전체 크기1000px :500px 250px 250px
+
+                - grid-template-columns : [선이름] 1열크기 [선이름] 2열크기 ...;
+                    - 명시적 열(track)의 크기를 정의
+                    - 값: px, %, fr, auto
+                    - minmax() 함수
+                    - repeat() 함수 : 두번 째 인수를 n 번 만큼 반복한다.
+                                    grid-template-columns: repeat(2, 100px 200px 300px);
+                                    grid-template-columns: 100px 200px 300px 100px 200px 300px;
+                                    - () : auto-fill, auto-fit
+                                        - columns의 개수를 미리 정하지 않고 설정된 너비가 허용하는 한 최대한 셀을 채운다.
+                                        예) grid-template-columns: repeat(auto-fill, minmax(21%, auto);
+                                        - 최소 크기 21%, 1개의 columns에 4개 셀이 들어간다. (나머지 16% 공간이 남는다.)
+                                        - auto-fill: 남는 공간은 여백으로 남는다.
+                                        - auto-fit:  남는 공간을 채운다.
+                    
+                - grid-template-areas : 지정된 그리드 영역(Area) 이름을 참조해 탬플릿 생성
+                                    grid-template-areas:
+                                    " header header header "
+                                    " section none   none "
+                                    " footer footer footer";
+                    
+                - grid-template : grid-template-xxx 의 속기형
+                    - repeat() 함수
+                        - () : auto-fill, auto-fit
+                    - minmax() 함수 : 최소값과 최대값 지정하는 함수
+                                    grid-template-rows: repeat(3, minmax(100px, auto));
+                                                        최소 크기는 100px, 최대 크기는 자동으로 늘어나게. (최소 높이 100px 확보, 내용이 많아 100px 넘어가면 알아서 늘어나도록.)
+                                    grid-template:
+                                    " header header header " 100px <- rows
+                                    " section section section " 1fr
+                                    " footer footer footer" 20%
+                                    / 1fr 300px 10% <- columns
+
+                - row-gap(grid-row-gap) : 행과 행 사이의 간격(Line) 정의
+                - column-gap(grid-column-gap) : 열과 열 사이의 간격(Line) 정의
+                - gap(grid-rap) : xxx-gap 의 속기형
+                    - 값: row-gap column-gap
+
+                - grid-auto-rows : 암시적인 행(track)의 크기를 정의
+                - grid-auto-columns : 암시적인 열(track)의 크기를 정의
+                    - 만들고자 하는 아이템의 크기가 확실치 않을 경우 브라우저가 auto로 조절해주게 하는 속성
+                    - 암시적 행과 열 개수 생성, 양수라인 번호만 사용 가능 <- ?
+                - grid-auto-flow : 자동 배치 알고리즘 방식 정의
+                    - 값: row(기본값), column, row dense, column dense
+                    - 배치하지 않은 그리드 아이템을 어떤 방식으로 자동 배치할 지 정의
+                    - row(각행축을 따라 차례로 배치) / column(각열축을 따라 차례로 배치) / row dense,column dense(빈영역 채움)
+                    - (flex-direction 느낌?)
+
+                - grid : grid-template-xxx , grid-auto-xxx 의 속기형
+
+                - justify-content : 그리드 컨텐츠 수평(행 축) 정렬
+                    - 값: normal ,stretch, start, end, center, space-around, space-between, space-evenly
+                - align-content : 그리드 컨텐츠 수직(열 축) 정렬
+                    - 값: normal ,stretch, start, end, center, space-around, space-between, space-evenly
+                        normal: stretch와 같다.
+                        stretch: 축을 채우기 위해 그리드 컨텐츠를 늘림
+                        start: 시작점(왼쪽, 위쪽) 정렬
+                        end: 끝점(오른쪽, 아래) 정렬
+                        center: 가운데 정렬
+                        space-around: 여백을 고르게 정렬 <-?
+                        space-between: 처음:시작점 / 끝:끝점 / 나머지 여백 고르게 정렬
+                        space-evenly: 모든 여백을 고르게 정렬
+                - place-content : 속기형
+                    - 값: align-content justify-content;
+
+                - justify-items : 그리드 아이템 수평(행 축) 정렬
+                - align-items : 그리드 아이템 수직(열 축) 정렬
+                    - 값: normal, start, end, center, stretch
+                - place-items : 속기형
+                    - 값: align-items justify-items;
+
+
+
+        그리드 아이템
+            - 그리드 컨테이너의 자식 요소
+                - grid-row-start : 그리드 아이템의 행 시작 위치 지정
+                    - 그리드 라인의 시작 위치와 끝 위치를 정한다.
+                    - 값: 숫자, 선 이름, span
+                - grid-row-end : 그리드 아이템의 행 끝 위치 지정
+                - grid-row : 속기형
+                    - 값: grid-row-start / grid-row-end; (/로 속성 구분)
+                
+                - grid-column-start : 그리드 아이템의 열 시작 위치 지정
+                    - 값: 숫자, 선 이름, span
+                        span 숫자 : 숫자만큼 라인을 확장 (기본값: span 1)
+                - grid-column-end : 그리드 아이템의 열 끝 위치 지정
+                - grid-column : 속기형
+                    - 값: start end
+                        부모
+                        grid-template-rows: [row-1st] 1fr [row-2st] 1fr; 
+                        grid-template-columns: [column-1st] 1fr [column-2st] 1fr;
+                        자식 
+                        grid-row-start: [row-1st]
+                        grid-row-end: [row-2st]
+                        grid-column-start: [column-1st]
+                        grid-column-end: [column-2st]
+
+                - grid-area : 영역(area) 이름 설정하거나, grid-row 또는 grid-column 속기형
+                    - 값: <grid-row-start> / <grid-column-start> / <grid-row-end> / <grid-column-end>;
+                        또는
+                    - 값: 영역이름;
+                        영역이름을 설정할 경우 grid-row~grid-column 개념은 무시된다.
+
+                - justify-self : 단일 그리드 아이템 수평 정렬
+                - align-self : 단일 그리드 아이템 수직 정렬
+                - place-self : 속기형
+                        - 값: align-self justify-self;
+                        - 하나의 값만 입력하면 두 속성 모두 적용
+
+                - order : 그리드 아이템 자동 배치 순서
+                        - 값: 숫자
+                        - 숫자가 작을 수록 앞에 배치
+                - z-index : 그리드 아이템 쌓이는 순서
+
+
+        그리드 라인
+            - 그리드를 구성하는 분할 선
+
+        그리드 트랙
+            - 2개의 그리드 라인 사이에 공간
+            - 그리드의 열 또는 행
+
+        그리드 셀
+            - 그리드의 구성 단위
+        
+        그리드 영역
+            - 4개의 그리드 라인으로 둘러싸인 공간, 몇 개의 그리드 셀로 구성
+
+        그리드 번호
+            - 그리드 라인의 각 번호
+
+        그리드 갭
+            - 그리드 셀 사이 간격
+
+     -->
+</body>
+</html>
+
+<!-- 
+    https://inpa.tistory.com/entry/CSS-%F0%9F%93%9A-%EA%B7%B8%EB%A6%AC%EB%93%9CGrid-%F0%9F%92%AF-%EC%B4%9D%EC%A0%95%EB%A6%AC
+
+    https://studiomeal.com/archives/533
+ -->

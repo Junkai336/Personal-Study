@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>grid-container: grid-template-xxx, grid-xxx-gap</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            padding: 0;
+            margin: 0;
+        }
+
+        .container {
+            /* flex 처럼 부모에 grid 선언 */
+            display: grid;
+
+            /* 
+            "열"의 가로크기 정하기
+                - 이름은 생략 가능, 번호는 순서대로 자동으로 매겨짐 1 2 3 (자바스크립트에서 인덱스번호 자동으로 매겨지는 느낌)
+                - div(class:item) 박스의 크기를 정하는 것이 아닌 보이지 않는 열과 행의  크기를 정하는 것???
+                - div 박스의 크기가 커지는 이유는 기본 width:100%, height:컨텐츠크기라서??? 
+            */
+            grid-template-columns: [one] 100px [two] 100px [three] 100px [four] 100px [five] 100px;
+
+            /* "행"의 세로크기 정하기 */
+            grid-template-rows: [one2] 100px [two2] 100px [three2] 100px [four2] 100px [five2] 100px;
+
+            /* 열의 가로 세로 간격 정하기 (margin 같은 느낌) */
+            /* 열,행 마다 따로따로 적용은 안되는듯? 통일된 하나의 값만 가능? */
+            column-gap: 10px;
+            row-gap: 10px;
+            
+            
+            width: 1000px;
+            height: 1000px;
+            margin: 0 auto;
+            border: 3px dashed black;
+        }
+        
+        .item {
+            background-color: gray;
+            border: 1px solid black;
+        }
+
+        .child {
+            background-color: yellow;
+            border: 1px solid green;
+            width: 10px;
+            height: 10px;
+        }
+
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="item">one
+            <div class="child"></div>
+            <div class="child"></div>
+            <div class="child"></div>
+        </div>
+        
+        <div class="item">two
+            <div class="child"></div>
+            <div class="child"></div>
+            <div class="child"></div>
+        </div>
+        
+        <div class="item">three
+            <div class="child"></div>
+            <div class="child"></div>
+            <div class="child"></div>
+        </div>
+        
+        <div class="item">four
+            <div class="child"></div>
+            <div class="child"></div>
+            <div class="child"></div>
+        </div>
+        
+        <div class="item">five
+            <div class="child"></div>
+            <div class="child"></div>
+            <div class="child"></div>
+        </div>
+    </div>
+</body>
+
+</html>

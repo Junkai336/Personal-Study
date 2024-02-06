@@ -1,0 +1,393 @@
+/* 30.font-family */
+
+/* 
+    타이포(typo) 시스템
+
+    color: 글자색;
+
+    font-size: 글자크기;
+    font-weight: 글자굵기;
+    font-style: 글자기울임;
+    font-family: 글꼴;
+
+    line-height: 줄간격;
+    letter-spacing: 자간; (글자와 글자사이 간격)
+    word-spacing: 어간; (단어 사이 간격)
+    white-space: 공백; (줄바꿈)
+
+    writing-mode: 글이 쓰여지는 방향
+        - horizontal-tb : 가로로 , 위에서 아래로
+        - vertical-rl : 세로로, 왼쪽에서 오른쪽으로
+
+    font: 속기형
+          [스타일] [굵기] 크기[/줄간격] 글꼴;
+          폰트에는 색이 포함되지 않는다. (따로 쓰기)
+          (줄간격 1.5 ~ 2.0 사이)
+*/
+/* 
+    text-decoration: 꾸밈; -> 밑줄 생성/제거    (a태그)
+    text-align: 텍스트 정렬 + 인라인 요소 좌우정렬
+    vertical-align: 수직 정렬 + 인라인 요소 상하정렬
+
+    text-shadow: 텍스트 그림자
+*/
+
+
+/* 
+    font-family: 글꼴1, 글꼴2, 글꼴3, ...;
+        글꼴 이름에 공백이 있으면 ''로 묶기
+        ex) 'Courier New', sans-serif, serif, monospace, cursive, fantasy, Courier
+
+        경로는 C:/Windows/Fonts 
+
+        body {font-family: 'Courier New', Courier, monospace;}
+*/
+
+/* 
+    1234 아라비아숫자: 1byte
+    abcd 영문자: 1byte
+    가나다 한글: 2byte
+
+    무료 폰트 사이트: 다폰트(https://www.dafont.com/)
+*/
+
+ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
+/* 30-1 WebFont */
+
+
+@font-face {
+    font-family: '0SeongandHanEum';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_two@1.0/OSeongandHanEum.woff') format('woff');
+}
+
+/* 
+    src 링크 내에 폰트 이름을 font-family 로 사용하겠다.
+*/
+
+/* 
+    @font-face
+        - 글꼴을 사용할 선택자 위에 기록
+        - font-family: 글꼴이름;
+        - src: url('경로/글꼴파일')
+
+*/
+
+
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;400;500;700&display=swap');
+
+/* 
+    CDN(Content Delivery Network, 컨텐츠 전송 네트워크)
+        - 여러개의 서버를 통해 웹 컨텐츠를 사용자와 가까운 곳에서 전송함으로써 전송 속도 높임
+        - 구글: https://fonts.google.com/noto/specimen/Noto+Sans+KR?query=noto
+*/
+
+/* 
+    폰트 종류
+        1. ttf/otf (true type font)
+        2. woff (wep open font format)
+*/
+
+ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
+/* 30-2~5 font-size font-weight font-style font  */
+
+/* 
+    font-size: 값; (숫자, 키워드)
+        키워드: xx-small, x-small, small, smaller, medium, large, larger, x-large, xx-large
+        단위: px, em, rem, %
+
+        em: 조상 > 부모 태그에 지정한 글꼴 크기 기준 (조상에서 내려옴)
+        rem: html에 지정한 글꼴 크기 기준 (html 10px이면 body 1.5rem 15px)
+        %: 부모 태그에 지정한 글꼴 크기 기준
+*/
+
+/* 
+    font-weight: 값; (숫자, 키워드)
+        키워드: lighter, bold, bolder
+        숫자: 100 ~ 900
+        
+        폰트 종류에 따라 지원하는 굵기의 단계 다름
+*/
+
+/* 
+    font-style: 값;
+        값: italic, oblique
+
+        italic: 기울어진 글꼴이 처음부터 디자인 됨
+        oblique: 원래 글꼴을 기울어지게 표시
+*/
+
+/* 
+    font: [스타일] [굵기] 크기[/줄간격] 글꼴;
+            italic bold 1.5rem/1.616 'Courier New', Courier, monospace;
+*/
+
+ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
+/* 31.text-align */
+
+/* 
+    text-align: 값;
+        left : 왼쪽 맞춤
+        right : 오른쪽 맞춤
+        center : 중앙 맞춤
+        justify : 양쪽 맞춤 (양쪽 모두 가지런하게 맞춤. 띄어쓰기 간격이 조금 달라짐, 단어가 길면 간격이 이상할 수 있는데 word-break로 속성 조정 가능) (영어:단어별로자동줄바꿈, 한글:글자별로자동줄바꿈)
+        inherit : 부모 요소의 속성값을 상속 받음
+
+            justify는 이미지에 적용 안되는 듯 함
+ */
+
+/* 
+    word-wrap: 비아시아언어
+        normal : 기본
+        break-word : 글자가 길어지면 강제로 끊어서 줄바꿈 처리, 단어의 기준이 글자로.
+
+    word-break: 비아시아언어, 아시아언어    
+        normal : 기본
+        break-all : 글자 기준 줄바꿈
+        keep-all :  단어 기준 줄바꿈
+
+ */
+
+ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
+/* 31-1.vertical-align */
+
+/* 
+    인라인 요소가 한박스에 여러개 크기가 다르게 있을 때 의미 있는듯? 
+*/
+
+/* 
+    vertical-align: 값;
+        - top
+        - middle
+        - bottom
+        - baseline
+        - text-top
+        - sub
+
+        https://developer.mozilla.org/en-US/docs/Web/CSS/vertical-align
+*/
+
+/* padding은 음수 불가 */
+ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
+/* 31-2,3 text-decoration, text-indent */
+
+/* 
+    text-decoration : 속기형; (순서는 겹치지 않으니 상관없다)
+        text-decoration : red 10px underline dashed;
+    text-decoration-color : 색;
+        기본값: 글자색
+    text-decoration-thickness : 두께; 
+        값: px, %
+    text-decoration-line : 위치;
+        값: none, overline, underline, line-through(가운데줄)
+    text-decoration-style : 종류;
+        값: solid, dotted, dashed, double, wavy
+*/
+
+/* 
+    a {text-decoration: none;} => a태그 밑줄 지우기용    
+*/
+
+/* 
+    text-indent : 단락의 첫 줄 들여쓰기;
+        - 값: px, %
+        - %는 width가 기준
+
+    text-transform : 대소문자 변환 (대문자, 소문자)
+        값: none, uppercase, lowercase, captialize (단어(띄어쓰기)별 첫글자 대문자) 
+
+    line-height : 줄간격 (글자의 세로)
+        - 값: 숫자(배수), px, %, em, rem
+        - px로 쓰면 텍스트 크기에 대응 불가. 글자 겹침 문제 발생 가능.
+        - %는 글자크기 기준
+*/
+
+ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
+/* 31-4,5,6 letter-spacing, pre, br, white-space */
+
+/* 
+    letter-spacing : 자간;
+        - 글자사이 간격
+        - 값: normal, px (음수 가능)
+    
+    word-spacing : 어간;
+        - 단어사이 간격
+        - 값: normal, px
+*/
+
+/* 
+    HTML 태그 
+        <pre></pre> : 띄어쓰기, 줄바꿈 모두 적용
+        <br> : 띄어쓰기
+*/
+
+/* 
+    white-space : 공백 처리;
+        - 줄바꿈 여부
+        - 공백? : spacebar(스페이스바), tab(탭), Enter(엔터)
+        - 값 : normal, nowrap, pre, pre-wrap, pre-line
+
+        normal : 자동줄바꿈 (O) , Enter (X), Spacebar/Tab (X)
+        nowrap : 자동줄바꿈 (X) , Enter (X), Spacebar/Tab (X)
+        pre : 자동줄바꿈 (X) , Enter (O), Spacebar/Tab (O)
+        pre-wrap : 자동줄바꿈 (O) , Enter (O), Spacebar/Tab (O)
+        pre-line : 자동줄바꿈 (O) , Enter (O), Spacebar/Tab (X)
+*/
+
+/* 
+    숫자 0 : 단위 생략 가능
+*/
+
+ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
+/* 31-6 text-shadow, text-overflow  */
+
+/* 
+    text-shadow : 가로 세로 [흐림] [색]
+
+        text-shadow: 1px 1px 2px #000, 0px 0px 25 blue, 0px 0px 5px darkblue;
+
+    text-overflow : 값;
+        - 넘치는 텍스트 표시
+        - clip : 넘치는 텍스트 자름
+        - ellipsis : 말 줄임표 (...)
+        
+        ex) div박스에서 넘친 텍스트를 어떻게 할 것인가 (white-space 하고 연동)
+*/
+
+ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
+/* 32, 32-1 list-style-type, list-style */
+
+/* 
+    list-style-type : 마커유형 (ul, ol, 쓸 때 왼쪽 목록 붙는거)
+            - ul: disc, circle, square
+            - ol: decimal, decimal-leading-zero, upper-alpha, lower-alpha, upper-roman,
+                lower-roman, upper-greek, lower-greek, upper-latin, lower-latin ...
+
+            https://www.w3schools.com/cssref/pr_list-style-type.php/
+*/
+
+/* 
+    li에 쓰는거인듯?
+
+    list-style-image: url('경로/이미지파일');
+            - 이미지 마커 (왼쪽에 목록에 이미지가 뜸) 
+
+    list-style-position: 마커의 위치
+            - outside(기본값), inside
+            - li 태그 기준
+*/
+
+/* 
+    list-style : 타입 이미지 위치
+        - 속기형
+        - list-style : none; (왼쪽 없애기용, 리셋)
+*/
+a {
+    list-style: url(../assets/images) disc outside
+}
+
+/* 
+    <ul start="2"> <- 2부터 시작
+
+    비트맵: png, jpg, gif -> 확대시 깨짐
+    벡터: svg -> 확대시 안깨짐 -> 로고, 아이콘, 버튼
+*/
+ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
+/* 33.table */
+
+/* 
+border-collaspse : 단일 테두리 축소 여부
+값: seperate, collapse
+border-spacing : 테두리 사이 여백
+caption-side : 캡션 위치 (위 또는 아래)
+empty-cells : 빈 셀 테두리 숨김 여부;
+table-layout : 셀 너비 고정 여부;
+*/
+
+ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
+/* 34~34-2 background-image, background-repeat, background-position */
+
+/* 
+    background-image: url(), url(), ...
+            - 첫번째로 기록한 url이 위로 지정
+
+    background-repeat: 값;
+            - no-repeat : 이미지 반복 X 
+            - repeat :  이미지 반복 O
+            - repeat-x : 가로로만 이미지 반복 O
+            - repeat-y : 세로로만 이미지 반복 O
+
+    background-position: x위치 y위치;
+            - 단위 : px, em, rem, %,
+            - x위치 : left, right, center
+            - y위치 : top, bottom, center
+            - 크기 하나만 지정하면 나머지 위치는 가운데 가는듯
+            - center center = 50% 50%
+*/
+
+ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
+/* 34-3~34-6 background-size, background-attachment, background-origin*/
+
+/* 
+    background-size : 너비 [높이];
+            - 단위 하나만 사용하면 너비 / 높이는 비례 조정
+            - 값: px, em, rem, %
+            - 키워드: auto, cover, contain
+                - auto : 이미지가 가진 크기 그대로
+                        (이미지가 박스보다 크면 남은 부분 잘림)
+                - cover : 이미지 일부 잘릴 수 있으나 가득 채움 (패럴렉스)
+                        (
+                - contain : 이미지 잘리지 않으나 빈공간 생길 수 있음
+                        (박스를 채우면서 다 보여줌 크든. 작든.)
+                            
+
+    background-attachment : 값;
+            - fixed : 배경 이미지 고정 (이게 패럴렉스 스크롤)
+            - scroll : 배경 이미지 스크롤
+
+
+    background-origin : 이미지 시작 위치;
+            - 값: padding-box, border-box, content-box
+
+*/
+ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
+/* 34-7~34-9 background-clip, background, background-blend-mode */
+
+/* 
+    background-clip : 배경색 시작 위치;
+            - 값: padding-box, border-box, content-box
+
+    background : 속기형;
+
+    background-blend-mode : 배경이미지 혼합;
+            - 값: normal, multiply, screen, overlay, darken, lighten, color-burn,
+                  hard-light, soft-light, difference, exclusion, hue, saturation,
+                  color, luminosity
+*/
+
+ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
+/* 35 gradient */
+
+/* 
+    gradient : 두가지 이상 색 + 점진적 변화
+
+    유형 : 선형(linear), 원형(radial), 원뿔형(conic)
+
+    background-image: linear-gradient([to 방향1 방향2], 색1, 색2, [색3, 색4, ...]);
+            - 방향: left, right, top, bottom
+
+    background-image: linear-gradient([각도], 색1, 색2, [색3, 색4, ...]);
+            - 각도: 0~360deg
+    
+    background-image: repeating-liner-gradient => 반복되는 gradient
+                    : ([circle, closet-side,farthest-corner,farthest-side,] 색1, 색2..)
+
+    background-image: radial-gradient([모양], 색1, 색2, [색3, 색4, ...]);
+
+    background-image: conic-gradient([from 각도] [at x위치 y위치], 색1 [각], 색2 [각], [색3 [각], 색4 [각], ...]);
+            - from 각도 : 색의 시작 위치
+*/
+
+/* 
+Permalink - use to edit and share this gradient: 
+    https://colorzilla.com/gradient-editor/#d0e4f7+3,73b1e7+18,73b1e7+18,0a77d5+50,539fe1+79,87bcea+100 
+*/

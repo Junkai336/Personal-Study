@@ -1,0 +1,314 @@
+/*  40, 40-1 transition, transition-timing-function */
+
+/* 
+    transition: [property] duration [timing-function] [delay];
+            - 속기형
+            - transition: property duration, property duration delay 이런식으로 2개 이상 다르게 가능
+
+    transition-property : 값1, 값2
+            - 전환 속성
+            - 값: all, CSS속성명
+            - 기본값은 all ?
+
+    transition-duration : 값1, 값2
+            - 전환 시간
+            - 값: 숫자s
+    
+    transition-timing-function: 값;
+            - ease : 보통-빠름-느림
+            - ease-in : 느림-빠름
+            - ease-out : 빠름-느림
+            - ease-in-out : 느림-빠름-느림
+            - linear : 보통
+            - cubic-bezier(n,n,n,n) : 사용자 정의
+                https://cubic-bezier.com/#.17,.67,.83,.67 
+                0 ~ 1
+
+    transition-delay : 값1, 값2
+            - 전환 지연 시간
+            - 값: 숫자s
+*/
+
+/* 가속도: easing */
+
+
+ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
+
+/* 41~41-4 transform, translate, scale, rotate, skew */
+
+/* 
+    transform: 값; (이동, 크기 조절, 회전, 기울임)
+        단위: px, %
+
+        translateX(x) : 좌우
+        translateY(y) : 상하
+        translateZ(z) : 깊이(앞/뒤)
+        translate(x,y) : y생략하면 x만.
+        translate3d(x,y,z) : 
+
+        단위 없음. 배수 적용.
+        scaleX(x) : 가로
+        scaleY(y) : 세로
+        scaleZ(z) : 깊이 (앞이나 뒤로 가면서 커지거나 작아지는 느낌)
+        scale3D(x,y,z)
+        scale(x,y) : y생략하면 x에 비례해서 y값이 적용된다.
+
+        단위: 0~360deg
+        rotateX(x): 3D (앞뒤로 회전하는 느낌)
+        rotateY(y): 3D (앞뒤로 회전하는 느낌)
+        rotateZ(z): 2D (옆으로 회전하는 느낌)
+        rotate3d(x,y,z, 각도) : 얘는 잘 모르겠음
+        rotate(각도): 2D = rotateZ
+
+        단위: 각도(deg)
+        skewX(deg)
+        skewY(deg)
+        skew(deg,deg)
+
+
+        perspective: 값;
+            - 단위 : px
+            - 관점, 부모 요소에 지정
+            - ~px 기준에서 봤을 때 이렇게 보인다~ 정도인듯
+            - 부모에 perspective를 지정하지 않았을 경우 transform: perspective() translateZ(z);
+            - translateZ하면 앞뒤로 움직이는데 perspective(관점) 기준으로 앞뒤. 관점이 멀면 앞뒤로 조금 움직이는 것처럼 보인다.
+
+        perspective-origin: x축 y축;
+            - 변형 대상 요소의 변형 기준
+
+        transform-origin : x축 y축;
+            - 변형 대상 요소의 변형 기준
+            - 값: px, %, 키워드
+            - x축: left, right, center
+            - y축: top, bottom, center
+            - rotate의 경우 어느 기준에서 회전할 것인가를 물음 (없으면 중앙 기준인듯)
+
+        transform-style : 
+
+        backface-visibility : 
+*/
+
+/* 
+    display: none; 
+        - 요소가 아예 제거
+        - 트랜지션 적용 x
+    opacity: 0 , visibility: hidden
+        - 화면상에서만 안보임
+        - 트랜지션 적용 o
+*/
+
+ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
+
+/* 42~42.2 animation, animation-fill-mode, animation,play-state */
+
+/* 
+    animation : name duration [delay] [timing-function] [iteration-count] [direction]
+                이름  시간   지연시간     가속도           반복횟수         방 향
+
+        animation-name : 애니메이션 이름
+        animation-duration : 애니메이션 지속시간s
+        animation-iteration-count : 에니메이션 반복여부
+                    - 값 : 숫자, infinite
+        animation-direction : 애니메이션 방향;
+                    - 값 :  normal : 기본값, 원래방향, 내가기록한방향
+                            alternate : 좌우 왕복
+                            reverse :  반대로
+                            alternate-reverse : 반대로 왕복
+        animation-timing-function : 애니메이션 시간함수
+                    - 값 : ease, ease-in, ease-out, ease-in-out, linear, cubic-bezier(n,n,n,n)
+        animation-delay : 애니메이션 지연 시간s
+        animation-fill-mode : 값;
+                    - 값 :  none : 끝나고 원위치
+                                - 시작(지연) -> 0% -> 100% -> 시작
+                            forwards : 100% 상태 유지, 반복 횟수 1회
+                                - 시작(지연) -> 0% -> 100%
+                            backwards : 0% 위치에서 시작 (끝나고 원위치)
+                                - 0%(지연) -> 100% -> 시작
+                            both : 0% 위치에서 시작, 100% 상태 유지
+                                - 0%(지연) -> 100%
+        animation-play-state : 실행 상태
+                    - 값 : running, paused
+                    - 호버하면 running, 가만히 paused 이런식으로 활용
+
+    @keyframes 애니메이션 이름 {
+        n% {시작 CSS}
+        n% {끝 CSS}
+    }
+        - 애니메이션 작업단위
+        - 이름 규칙: 첫글자는 영문자,-,_ 두번째부터 영문자,-,_,숫자, 대소문자 구별
+*/
+
+/* 
+    animation: steps(n) : n단계에 걸쳐서 재생한다. (이미지 애니메이션)
+
+*/
+
+
+ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
+
+/* 50. viewpoint */
+
+/* 
+    반응형 : 감지된 화면 크기에 따라 자동으로 페이지 재배열 %단위
+    적응형 : 브라우저가 주어진 플랫폼에 맞춰 특별히 생성된 레이아웃 불러오는 방식
+*/
+
+/* 경로지정: .은 현재 폴더 의미 맨앞 /은 작업영역폴더 */
+
+ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
+
+/* 51.mediaquery, rwd */
+
+/* 
+    @import url(파일) : 외부 파일 가져오기
+    @font-face {
+        name: 글꼴 이름;
+        url('파일명')
+    } : 외부 글꼴 연결
+    @keyframes {} : 애니메이션
+
+    @media [not|only] [mediatype] [and|,] (expressions) {
+        CSS-code;
+    }
+
+        not : 제외하고
+
+        mediatype : all(기본값?), screen(모니터, 폰), tv, projection, print, speech
+
+        and: 그리고 / ,: 또는
+
+        expressions: min-width, max-width, orientation, aspect-ratio
+            orientation : portrait (가로) ㅣ landscape (세로)
+
+        중단점(Break Point): 미디어 쿼리 영역 나누는 기준
+*/
+
+    /* 데스크탑 */
+    @media (min-width:992px) {}
+    /* 맥북일거임 */
+    @media (max-width:1280px) {}
+    /* 태블릿 */
+    @media (max-width:992px) and (min-width:768px) {}
+    /* 폰 */
+    @media (max-width:767ox) {}
+
+
+ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
+
+/* 52 viewport */
+
+/* 
+    가변 단위
+        % : 부모의 크기 기준
+        vw : viewport width의 n%
+        vh : viewport height의 n%
+        vmin : vw와 vh 중 작은 값
+        vmax : vw와 vh 중 큰 값
+*/
+
+ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
+
+/* 61 filter */
+
+/* 
+    filter : 값;
+        값: 
+        brightness : 0% 검은색 / 100% 기본값 / 초과: 밝게
+        contrast : 0% 검은색 / 100% 기본값 / 초과: 대비차 크게
+        grayscale : 0% 기본값 / 100% 회색 / 음수지정X
+        invert : 0% 기본값 / 100% 반전 / 음수지정X
+        opacity : 0% 투명 / 100% 기본값 / 음수지정X
+        sepia :  0% 기본값 / 100% 세피아 / 음수지정X
+        saturate : 0% 무채도 / 100% 기본값 / 음수지정X
+        blur :  0% 기본값 / 음수지정X
+        hue-rotate : 0deg~360deg 빨-주-노-초-파-남-보-빨
+        drop-shadow : 그림자: h위치 v위치 흐림 색
+
+*/
+
+ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
+
+/* 62 var */
+
+/* 
+    변수
+        :root = HTML
+        용도: 반복사용, 수정보완용이
+ */
+
+    /* 변수 정의 : --변수명: 값; */
+    :root {
+        --textred: #f00;
+        --textblue: #00f;
+        --textsize30px: 30px;
+        --textbold: bold;
+    }
+
+    /* 변수 호출 : var(변수명) */
+    h1 {
+        var(--textred);
+        font-size: var(--textsize30px);
+    }
+
+    h2 {
+        var(--textblue);
+        font-weight: var(--textbold);
+    }
+
+ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
+
+/* 63 object-fit */
+
+/* 
+    object-fit: 값;
+        - <img> <video> 를 지정하는데 사용
+        - 박스 크기에 맞게 미디어 크기 조정
+        - 값 : 
+            - fill : 기본값, 비율유지x 가득채움
+            - contain : 비율 유지, 이미지 잘림 없이 "상자에 맞게" 크기 조정 빈공간
+            - cover : 비율 유지, 이미지 잘리더라도 "상자를 가득" 채움
+            - none : 원본 크기 그대로. 이미지 잘리거나, 빈공간
+    
+    object-position: x위치 y위치;
+        - 값 : left, right, top, bottom, center, %, px
+        - 기본값: 50% 50%
+
+*/
+
+ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
+
+/* 64,65 삼각형 만들기, clip-path */
+
+/* 
+    모형 만들어주는 사이트
+    https://bennettfeely.com/clippy/
+
+    clip-path : 
+                circle, ellipse, triangle, polygon, path, inset
+                circle(radius at X Y)
+                ellipse(horizontal radius vertical radius at X Y)
+                triangle(좌측 상단 X Y, 우측 상단 X Y, 하단 X Y);
+                polygon(좌측 상단, 우측 상단, 우측 하단, 좌측 하단)
+                path()
+                inset()
+*/
+
+
+ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
+
+ /* 68 aspect-ratio */
+
+ /* 
+    aspect-ratio: 가로비율 / 세로비율
+ 
+ */
+
+
+ /* 
+    pointer-events : HTML 클릭 이벤트 제어
+        - 값: none, auto, inherit
+            none: 없음
+            auto: 브라우저 자동으로 선
+            inherit: 상속 받음
+            https://inpa.tistory.com/entry/CSS-%F0%9F%93%9A-pointer-events-%ED%81%B4%EB%A6%AD-%EC%9D%B4%EB%B2%A4%ED%8A%B8-%EB%B0%A9%EC%A7%80
+ */

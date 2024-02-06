@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        button {
+            padding: 40px;
+        }
+
+        input {
+            width: 50px;
+            height: 50px;
+        }
+
+        div {
+            width: 20px;
+            height: 20px;
+            margin: 20px 0;
+        }
+
+        .target1 {
+            border: 1px solid black;
+        }
+
+        .target2 {
+            border: 1px solid red;
+        }
+
+        .target3 {
+            border: 1px solid blue;
+        }
+    </style>
+</head>
+
+<body>
+    <button></button>
+    <button></button>
+    <button></button>
+    <input type="text" onchange="change();" value="">
+    <button></button>
+    <button></button>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+
+    <script>
+        const div = document.querySelectorAll('div')
+        const button = document.querySelectorAll('button')
+        const input = document.querySelector('input')
+
+        let i = 0;
+        let a = true;
+
+        button[0].addEventListener('click', function () {
+            if (a) {
+                div[0].style.border = '1px solid black';
+                a = false;
+            } else {
+                div[0].style.border = '1px solid white';
+                a = true;
+            }
+        });
+
+
+        button[1].addEventListener('click', function () {
+            div[1].classList.toggle("aa");
+            if (div[1].classList.contains("aa")) {
+                div[1].classList.add('target1');
+            } else if (div[1].classList.contains("target1")) {
+                div[1].classList.remove('target1');
+            }
+        });
+
+        input.value = 0;
+
+        switch (input.value) {
+            case '1':
+                div[2].classList.add('target1');
+                break;
+            default:
+                div[2].classList.add('target2');
+                break;
+
+        }
+
+        button[2].addEventListener('click', function () {
+            for(let b = 0; b < 8; b++) {
+                div[3].innerHTML += 1;
+                input.value += `aaa ${++b}`;
+                if (b == 8) break;
+            }
+        });
+
+        button[3].addEventListener('click', function () {
+            let c = 0;
+            while(c < 10) {
+                if(c < 2) {
+                    c++;
+                    continue;
+                }
+                div[4].innerHTML += c;
+                c++;
+            }
+        })
+
+        function change() {
+            div[5].innerHTML = `ㅇㄴㅇㄴ ${input.value}`;
+        };
+    </script>
+</body>
+
+</html>

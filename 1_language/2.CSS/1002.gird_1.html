@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        div {
+            border: 1px solid black;
+        }
+
+        .container {
+            border: 1px solid black;
+            display: grid;
+            grid-template-rows: 100px repeat(4, 100vh) 200px;
+            grid-template-areas:
+                " header "
+                " section1 "
+                " section2 "
+                " section3 "
+                " section4 "
+                " footer "
+        }
+
+        .header {
+            display: grid;
+            grid-auto-flow: column;
+            justify-content: space-around;
+            align-items: center;
+            grid-template-columns: [logo] 100px [menu] 400px [sns] 200px;
+            grid-template-rows: 100%;
+            column-gap: 50px;
+            white-space: pre;
+            text-align: center;
+        }
+        
+        .header>div:nth-of-type(3) {
+            display: grid;
+            grid-auto-flow: column;
+            /* grid-template-columns: repeat(3, 60px); */
+            justify-content: center;
+            /* height: 100%; */
+            column-gap: 40px;
+            align-content: center;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="header">
+            <div>
+                <h1>logo</h1>
+            </div>
+            <div>
+                <div>menu menu menu menu</div>
+            </div>
+            <div>
+                <div>sns</div>
+                <div>sns</div>
+                <div>sns</div>
+            </div>
+        </div>
+        <div>section1</div>
+        <div>section2</div>
+        <div>section3</div>
+        <div>section4</div>
+        <div>footer</div>
+    </div>
+</body>
+
+</html>

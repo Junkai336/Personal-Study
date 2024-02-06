@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .anc {
+            width: 100px;
+            height: 400px;
+            border: 1px solid black
+        }
+
+        h1 {
+            width: 100px;
+            height: 100px;
+            border: 1px solid red;
+        }
+
+        .abc {
+            width: 200px;
+            height: 200px;
+            position: fixed;
+            left: 300px;
+            top: 300px;
+            background-color: #000;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="anc">ancestor
+        <div>parent
+            <div>child</div>
+            <div>child</div>
+            <div>child</div>
+        </div>
+        <div>parent
+            <div>child</div>
+            <div>child</div>
+            <div>child</div>
+        </div>
+        <div>parent
+            <div>child</div>
+            <div>child</div>
+            <div>child</div>
+        </div>
+    </div>
+    <div class="anc">ancestor2
+        <div>parent2
+            <div>child2</div>
+            <div>child2</div>
+            <div>child2</div>
+        </div>
+        <div>parent2
+            <div>child2</div>
+            <div>child2</div>
+            <div>child2</div>
+        </div>
+        <div>parent2
+            <div>child2</div>
+            <div>child2</div>
+            <div>child2</div>
+        </div>
+    </div>
+    <div class="anc">ancestor3
+        <p>parent3
+            <div>child3</div>
+            <div>child3</div>
+            <div>child3</div>
+        </p>
+        <p>parent3
+            <div>child3</div>
+            <div>child3</div>
+            <div>child3</div>
+        </p>
+        <p>parent3
+            <span class="dd">child3</span>
+            <span class="dd">child3</span>
+            <span class="dd">child3</span>
+        </p>
+        <div class="abc"></div>
+    </div>
+
+
+    <script>
+        const div = document.querySelectorAll('div')
+        const anc = document.querySelectorAll('.anc')
+        const p = document.querySelectorAll('p')
+        const span = document.querySelectorAll('span')
+        const abc = document.querySelector('.abc')
+
+        console.log(div);
+        console.log(p);
+        console.log(span);
+
+        // div[0] 조상 : 색이 같이 바뀜, 자식 클릭하면 자식도 바뀜<-?
+        // div[1] 부모: div끼리는 자식까지 영향
+        // div[2] 자식: 개별적용
+
+        // anc[2] 조상 : 색이 같이 바뀜
+        // p[2] 부모 : 혼자 바뀜
+        // span[0] 자식 : 혼자 바뀜
+
+        // anc[0].onclick = function (e) {
+            // event.stopPropagation();
+            // this.style.color = 'red';
+            // e.target.style.color = 'red';
+            // e.currentTarget.style.color = 'red';
+        // }
+
+            var dd = document.createElement('h1');
+            var dd2 = document.createElement('h1');
+            var dd3 = document.createElement('h1');
+            var dd4 = document.createTextNode('dddd');
+            var dd5 = document.createElement('img');
+            const img = ["images/a1.png", "images/a2.png"];
+
+            div[0].onclick = function () {
+                div[0].appendChild(dd);
+                div[0].insertBefore(dd2, dd);
+                div[0].prepend(dd3);
+                
+                div[0].prepend(dd4);
+                dd2.createTextNode("dddasdasdsadsadasdadsadasdddd");
+            }
+
+            anc[1].onclick = function () {
+                // dd5.setAttribute('alt', 'images/a1.jpg');
+                dd5.setAttribute('src', 'images/a1.jpg');
+                // dd5.getAttribute('img');
+                anc[2].appendChild(dd5);
+                window.scrollTo(0,1000);
+            }
+
+            console.log(abc.getBoundingClientRect());
+            console.log(abc.scrollLeft);
+            console.log(abc.offsetLeft);
+            console.log(abc.clientLeft);
+            console.log("");
+            
+            console.log(abc.offsetHeight);
+            console.log(abc.scrollHeight);
+            console.log(abc.clientHeight);
+            console.log("");
+
+            console.log(window.scrollY);
+            // console.log(mouse.PageY);
+            console.log(window.clientY);
+            console.log(window.offsetY);
+            console.log(window.screenY);
+
+
+
+
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            text-align: center;
+        }
+
+        section {
+            height: 100vh;
+            /* border: 1px solid black; */
+        }
+
+        section:nth-of-type(1) {
+            background-color: red;
+        }
+
+        section:nth-of-type(2) {
+            background-color: blue;
+        }
+
+        section:nth-of-type(3) {
+            background-color: green;
+        }
+
+        section:nth-of-type(4) {
+            background-color: pink;
+        }
+
+        section:nth-of-type(5) {
+            background-color: yellow;
+        }
+
+        section:nth-of-type(6) {
+            background-color: lightcoral;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div>
+        <section class="sec">
+            <h2>1</h2>
+        </section>
+        <section class="sec">
+            <h2>2</h2>
+        </section>
+        <section class="sec">
+            <h2>3</h2>
+        </section>
+        <section class="sec">
+            <h2>4</h2>
+        </section>
+        <section class="sec">
+            <h2>5</h2>
+        </section>
+        <section class="sec">
+            <h2>6</h2>
+        </section>
+    </div>
+
+    <script>
+
+        const docEle = document.documentElement;
+        const section = document.querySelectorAll('.sec');
+
+        let action = false;
+        let count = 0;
+
+        // 스크롤 여러번 올렸다 내리기 방지 (마우스)
+        window.addEventListener('scroll', function () {
+            for (let i = 0; i < section.length; i++) {
+                // console.log(docEle.scrollTop);
+                if (docEle.scrollTop == section[i].offsetTop) {
+                    action = false;
+                };
+            }
+        })
+
+        // 풀페이지 (키보드)
+        // + 스크롤 여러번 올렸다 내리기 방지 (키보드)
+        window.addEventListener('keydown', function (e) {
+            if ((e.keyCode == 38 && action == true) || (e.keyCode == 40 && action == true)) {
+                e.preventDefault();
+                e.returnValue = false;
+            }
+
+            if (e.keyCode == 40 && action == false) {
+                if (docEle.scrollTop == section[section.length - 1].offsetTop) { return; }
+                count++;
+                if (count > section.length -1) { count = section.length - 1; }
+                window.scrollBy(0, section[count].offsetHeight);
+                e.preventDefault();
+                action = true;
+            } else if (e.keyCode == 38 && action == false) {
+                if (docEle.scrollTop == section[0].offsetTop) { return; }
+                count--;
+                if (count < 0) { count = 0; }
+                window.scrollBy(0, -(section[count].offsetHeight));
+                e.preventDefault();
+                action = true;
+            }
+
+        });
+
+        // 풀페이지 (마우스)
+        for (let i = 0; i < section.length; i++) {
+            section[i].addEventListener('wheel', function (e) {
+                e.preventDefault();
+                if (e.deltaY > 0 && action == false) {
+                    if (docEle.scrollTop == section[section.length - 1].offsetTop) { return; }
+                    action = true;
+                    let next = e.currentTarget.nextElementSibling.offsetTop
+                    docEle.scrollTop = next;
+                    count++;
+                    if (count > section.length -1) { count = section.length - 1; }
+                } else if (e.deltaY < 0 && action == false) {
+                    if (docEle.scrollTop == section[0].offsetTop) { return; }
+                    action = true;
+                    let prev = e.currentTarget.previousElementSibling.offsetTop
+                    docEle.scrollTop = prev;
+                    count--;
+                    if (count < 0) { count = 0; }
+                }
+            });
+        };
+
+        // 출처: 조휘일 강사님(풀페이지마우스) + me(스크롤여러번방지,맨끝섹션에서오류방지,풀페이지키보드스크롤이동 수정)
+        // 특정키방지: https://miyakita.tistory.com/129
+
+    </script>
+</body>
+
+</html>

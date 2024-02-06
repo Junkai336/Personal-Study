@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>float, overflow</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+.p1, .p2 {
+    border: 1px solid green;
+    margin-bottom: 200px;
+}
+
+p > img {
+    border: 2px dashed red;
+    width: 100px;
+    height: 200px;
+}
+
+/* p::after {
+    content:'';
+    clear: both;
+    display: block;
+} */
+
+.p1 {
+    overflow: hidden;
+}
+
+.p2 {
+    height: 200px;
+}
+
+.p1 img {
+    float: left;
+}
+
+.p2 img {
+    float: right;
+}
+
+    </style>
+</head>
+<body>
+<p>div</p>
+        <p class="p1"><img src="../assets/images/coca.png" alt="float">Lorem ipsum dolor sit amet consectetur adipisicing elit. Distinctio sequi natus sit aliquam tempore debitis cum nam nihil aperiam quas iure maiores labore non soluta doloribus, voluptatum possimus asperiores ratione. Nemo quaerat repellat eos ab consequuntur debitis quasi nobis tempora cupiditate voluptatum aspernatur, ratione dolorum iusto! Natus distinctio laudantium expedita?Lorem ipsum dolor sit amet consectetur, adipisicing elit. Perspiciatis deleniti odio dolorem. Architecto animi nesciunt tempora necessitatibus aut, ipsam quas, porro dolorum quam eligendi fugit? Nam, deleniti optio. Et, tempore.</p>
+        <p class="p2"><img src="../assets/images/coca.png" alt="float">Lorem ipsum dolor sit amet consectetur adipisicing elit. Distinctio sequi natus sit aliquam tempore debitis cum nam nihil aperiam quas iure maiores labore non soluta doloribus, voluptatum possimus asperiores ratione. Nemo quaerat repellat eos ab consequuntur debitis quasi nobis tempora cupiditate voluptatum aspernatur, ratione dolorum iusto! Natus distinctio laudantium expedita?Lorem ipsum dolor sit amet consectetur, adipisicing elit. Perspiciatis deleniti odio dolorem. Architecto animi nesciunt tempora necessitatibus aut, ipsam quas, porro dolorum quam eligendi fugit? Nam, deleniti optio. Et, tempore.</p>
+
+</body>
+</html>

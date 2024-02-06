@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <!--숙소 모달-->
+  <div class="d-flex">
+    <div class="modal fade modal-lg" id="lodgingModalToggle" aria-hidden="true"
+      aria-labelledby="lodgingModalToggleLabel" tabindex="-1">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+
+          <div class="modal-header border-bottom">
+            <h5 class="modal-title d-flex justify-content-center" id="lodgingModalToggleLabel">
+              <p class="text-center" th:text="*{name}"></p>
+            </h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+          </div>
+
+          <div class="modal-body">
+            <div class="tab-content" id="myTabContent">
+
+              <div class="tab-pane fade show active" id="lodgingTab-pane" role="tabpanel" aria-labelledby="lodgingTab"
+                tabindex="0">
+
+                <!-- Carousel -->
+                <div id="demo" class="carousel slide" data-bs-ride="carousel">
+                  <!-- The slideshow/carousel -->
+                  <div class="carousel-inner" style="height:500px;">
+                    <div class="carousel-item active w-100 mx-2" th:each="lodgingImg : *{itemImgDtoList}"
+                      th:if="${#strings.equals(lodgingImg.repimgYn, 'Y')}">
+                      <img th:src="${lodgingImg.imgUrl}" class="d-block w-100" th:alt="${lodgingImg.imgName}"
+                        th:if="${#strings.equals(lodgingImg.repimgYn, 'Y')}">
+                    </div>
+                    <div class="carousel-item w-100 mx-2" th:each="lodgingImg : ${lodgingDto.itemImgDtoList}"
+                      th:if="${#strings.equals(lodgingImg.repimgYn, 'N')} and ${#strings.contains(lodgingImg.imgUrl, 'images')}">
+                      <img th:src="${lodgingImg.imgUrl}" class="d-block w-100" th:alt="${lodgingImg.imgName}"
+                        th:if="${#strings.equals(lodgingImg.repimgYn, 'N')} and ${#strings.contains(lodgingImg.imgUrl, 'images')}">
+                    </div>
+
+                    <!-- Left and right controls/icons -->
+                    <button class="carousel-control-prev" type="button" data-bs-target="#demo" data-bs-slide="prev">
+                      <span class="carousel-control-prev-icon text-muted">prev</span>
+                    </button>
+                    <button class="carousel-control-next" type="button" data-bs-target="#demo" data-bs-slide="next">
+                      <span class="carousel-control-next-icon text-muted">next</span>
+                    </button>
+                  </div>
+                </div>
+              </div>
+              <div class="modal-footer carousel_footer mt-1">
+                <div class="d-flex ms-auto container-sm justify-content-center">
+
+                  <div class="active indi rounded mx-1" th:each="lodgingImg : *{itemImgDtoList}"
+                    th:if="${#strings.equals(lodgingImg.repimgYn, 'Y')}">
+                    <img th:src="${lodgingImg.imgUrl}" class="d-block w-100 rounded" th:alt="${lodgingImg.imgName}"
+                      th:if="${#strings.equals(lodgingImg.repimgYn, 'Y')}" data-bs-target="#demo"
+                      th:data-bs-slide-to="${lodgingImgStat.index}" aria-current="true">
+                  </div>
+
+                  <div class="indi rounded mx-1" th:each="lodgingImg : ${lodgingDto.itemImgDtoList}"
+                    th:if="${#strings.equals(lodgingImg.repimgYn, 'N')} and ${#strings.contains(lodgingImg.imgUrl, 'images')}">
+                    <img th:src="${lodgingImg.imgUrl}" class="d-block w-100 rounded" th:alt="${lodgingImg.imgName}"
+                      th:if="${#strings.equals(lodgingImg.repimgYn, 'N')} and ${#strings.contains(lodgingImg.imgUrl, 'images')}"
+                      data-bs-target="#demo" th:data-bs-slide-to="${lodgingImgStat.index}" aria-label="Slide 2">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--                // 숙소 모달 -->
+</body>
+
+</html>

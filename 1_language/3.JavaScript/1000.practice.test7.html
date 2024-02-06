@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+        }
+
+/*         html {
+            scroll-behavior: smooth;
+        } */
+
+        section {
+            height: 100vh;
+            border: 1px solid black;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div>
+        <section class="sec">1</section>
+        <section class="sec">2</section>
+        <section class="sec">3</section>
+        <section class="sec">4</section>
+        <section class="sec">5</section>
+    </div>
+
+    <script>
+
+        const docEle = document.documentElement;
+        const section = document.querySelectorAll('.sec');
+
+        // let count = 0;
+        // let action = false;
+            // if (docEle.scrollTop == section[i].offsetTop) { action = false; };
+        
+        for (let i = 0; i < section.length; i++) {
+            section[i].addEventListener('wheel', function (e) {
+                console.log(section[i].offsetTop);
+                e.preventDefault();
+                
+                if (e.deltaY > 0) {
+                    if (docEle.scrollTop == section[section.length-1].offsetTop) { return; }
+                    let next = e.currentTarget.nextElementSibling.offsetTop
+                    docEle.scrollTop = next;
+                    
+                } else {
+                    if (docEle.scrollTop == section[0].offsetTop) { return; }
+                    let prev = e.currentTarget.previousElementSibling.offsetTop
+                    docEle.scrollTop = prev;
+                }
+
+                
+            });
+        };
+
+
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>flex</title>
+    <style>
+
+        body {
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+        }
+
+        .align {
+            width: 500px;
+            height: 500px;
+            display: flex;
+            /* flex-direction: column; */
+            flex-wrap: wrap;
+            border: 1px solid black;
+            margin-bottom: 50px;
+        }
+        
+        .align1 {
+            align-items: normal;
+        }
+        
+        .align2 {
+            align-items: flex-start;
+        }
+
+        .align3 {
+            align-items: flex-end;
+        }
+
+        .align4 {
+            align-items: center;
+        }
+
+        .align5 {
+            align-items: baseline;
+        }
+
+        .align6 {
+            align-items: stretch;
+        }
+
+
+        div {
+            width: 100px;
+            height: 100px;
+            border: 1px solid black;
+            background-color: pink;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="align align1">
+        <div>normal</div>
+        <div>normal</div>
+        <div>normal</div>
+        <div>normal</div>
+        <div>normal</div>
+        <div>normal</div>
+        <div>normal</div>
+        <div>normal</div>
+        <div>normal</div>
+        <div>normal</div>
+    </div>
+    <div class="align align2">
+        <div>flex-start</div>
+        <div>normal</div>
+        <div>normal</div>
+        <div>normal</div>
+        <div>normal</div>
+        <div>normal</div>
+        <div>normal</div>
+        <div>normal</div>
+        <div>normal</div>
+        <div>normal</div>
+    </div>
+    <div class="align align3">
+        <div>flex-end</div>
+        <div>normal</div>
+        <div>normal</div>
+        <div>normal</div>
+        <div>normal</div>
+        <div>normal</div>
+        <div>normal</div>
+        <div>normal</div>
+        <div>normal</div>
+        <div>normal</div>
+    </div>
+    <div class="align align4">
+        <div>center</div>
+        <div>normal</div>
+        <div>normal</div>
+        <div>normal</div>
+        <div>normal</div>
+        <div>normal</div>
+        <div>normal</div>
+        <div>normal</div>
+        <div>normal</div>
+        <div>normal</div>
+    </div>
+    <div class="align align5">
+        <div>baseline</div>
+        <div>normal</div>
+        <div>normal</div>
+        <div>normal</div>
+        <div>normal</div>
+        <div>normal</div>
+        <div>normal</div>
+        <div>normal</div>
+        <div>normal</div>
+        <div>normal</div>
+    </div>
+    <div class="align align6">
+        <div>strech</div>
+        <div>normal</div>
+        <div>normal</div>
+        <div>normal</div>
+        <div>normal</div>
+        <div>normal</div>
+        <div>normal</div>
+        <div>normal</div>
+        <div>normal</div>
+        <div>normal</div>
+    </div>
+</body>
+</html>

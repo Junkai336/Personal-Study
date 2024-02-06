@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        div {
+            display: inline-block;
+            border: 1px solid black;
+            width: 300px;
+            height: 300px;
+            margin: 20px 20px;
+            background-size: cover;
+            /* background-size: contain; */
+            background-repeat: no-repeat;
+            background-image: url(assets/images/italy1.jpg), url(assets/images/ellipse\ 1.jpg);
+        }
+
+        div:nth-of-type(1) {
+            background-blend-mode: normal;
+        }
+        div:nth-of-type(2) {
+            background-blend-mode: multiply;
+        }
+        div:nth-of-type(3) {
+            background-blend-mode: screen;
+        }
+        div:nth-of-type(4) {
+            background-blend-mode: overlay;
+        }
+        div:nth-of-type(5) {
+            background-blend-mode: darken;
+        }
+        div:nth-of-type(6) {
+            background-blend-mode: lighten;
+        }
+        div:nth-of-type(7) {
+            background-blend-mode: color-burn;
+        }
+        div:nth-of-type(8) {
+            background-blend-mode: hard-light;
+        }
+        div:nth-of-type(9) {
+            background-blend-mode: soft-light;
+        }
+        div:nth-of-type(10) {
+            background-blend-mode: difference;
+        }
+        div:nth-of-type(11) {
+            background-blend-mode: exclusion;
+        }
+        div:nth-of-type(12) {
+            background-blend-mode: hue;
+        }
+        div:nth-of-type(13) {
+            background-blend-mode: saturation;
+        }
+        div:nth-of-type(14) {
+            background-blend-mode: color;
+        }
+        div:nth-of-type(15) {
+            background-blend-mode: luminosity;
+        }
+    </style>
+</head>
+
+<body>
+    <div>normal</div>
+    <div>multifly</div>
+    <div>screen</div>
+    <div>overlay</div>
+    <div>darken</div>
+    <div>lighten</div>
+    <div>color-burn</div>
+    <div>hard-light</div>
+    <div>soft-light</div>
+    <div>difference</div>
+    <div>exclusion</div>
+    <div>hue</div>
+    <div>saturation</div>
+    <div>color</div>
+    <div>luminosity</div>
+</body>
+
+</html>

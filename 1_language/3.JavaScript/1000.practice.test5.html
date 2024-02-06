@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+
+    </style>
+</head>
+
+<body>
+    <div>parent's slibling</div>
+    <div>parent
+        <span>sibling</span>
+        <p>child</p>
+        <p>child</p>
+        <p>child</p>
+    </div>
+    <div>parent
+        <span>sibling</span>
+        <p>child</p>
+        <p>child</p>
+        <p>child</p>
+    </div>
+    <div>parent
+        <span>sibling</span>
+        <p>child</p>
+        <p>child</p>
+        <p>child</p>
+    </div>
+    <div>parent's slibling</div>
+    <script>
+        const div = document.querySelectorAll('div');
+        console.log(div);
+
+        console.log("div[0].previousSlibling : " + div[0].previousSibling);
+        console.log("div[0].previousElementSlibling : " + div[0].previousElementSibling);
+        console.log("div[0].nextSlibling : " + div[0].nextSibling);
+        console.log("div[0].nextElementSlibling : " + div[0].nextElementSibling);
+
+        console.log("");
+
+        console.log("div[1].children" + div[1].children[0]);
+        console.log("div[1].childNodes" + div[1].childNodes[0]);
+
+        const divchildren = div[1].children[1];
+        const divchildren2 = div[1].childNodes[0];
+        // const divchild = document.querySelectorAll('div[1].childNodes');
+
+        console.log(divchildren);
+        console.log(divchildren2);
+
+        divchildren.style.color = 'red';
+        // divchildren2.style.color = 'red';
+
+        // Nodes는 뭐가 있는지 확인용?
+    </script>
+</body>
+
+</html>

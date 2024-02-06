@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #gallery>div {
+            width: 200px;
+            text-align: center;
+        }
+
+        #gallery>img {
+            width: 200px;
+            height: 200px;
+        }
+
+        button {
+            margin: 0 2%;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="gallery">
+        <img src="../3.JavaScript/images/t1.jpg" alt="a1">
+        <div>
+            <button>이전</button>
+            <button>다음</button>
+        </div>
+    </div>
+
+    <script>
+        const button = document.querySelectorAll('#gallery button');
+        const img = document.querySelectorAll('#gallery img');
+
+        let slide = 1;
+
+        for (let i = 0; i < button.length; i++) {
+            button[i].addEventListener('click', function () {
+
+                    if(i==0) {
+                        slide--;
+                        if(slide == 0) {
+                            slide = 5;
+                        }
+                    }
+                    
+                    if(i==1) {
+                        slide++;
+                        if(slide == 6) {
+                            slide = 1;
+                        }
+                    }
+
+                    // console.log(slide);
+
+                    img[0].src = `../3.JavaScript/images/t${slide}.jpg`
+                    img[0].alt = `a${slide}`
+            })
+
+        }
+
+        // 한계: 이미지 개수가 바뀌면 slide의 값을 바꿔야 함
+
+
+
+
+    </script>
+</body>
+
+</html>
