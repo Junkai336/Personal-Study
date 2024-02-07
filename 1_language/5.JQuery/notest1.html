@@ -1,0 +1,213 @@
+<!-- 
+    제이쿼리
+        - 자바스크립트 언어를 간편하게 사용할 수 있도록 단순화시킨 오픈 소스 기반 자바스크립트 라이브러리
+        - Ajax 응용 프로그램 및 플러그인을 개발 가능
+
+        <script src="http://code.jquery.com/jquery-3.1.1.js"></script>
+
+        최신버전
+        <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+
+
+        기본 문법
+            - $(선택자).동작함수();
+            - $ : 제이쿼리에 접근할 수 있게 해주는 식별자 (HTML 요소 선택)
+
+
+        $() 함수
+            - 선택된 HTML 요소를 제이쿼리에서 이용할 수 있는 형태로 생성
+            - $() 함수를 통해 생성된 요소를 제이쿼리 객체(JQuery object)라고 함
+
+
+        Document 객체 ready() 메소드
+            - $(document).ready(function() { ... });
+                - 문서가 모드 로드된 뒤에 코드가 실행되도록 설정한다.
+                - = $(function() { ... }); ?
+
+            - $(window).load(function() { ... });
+                - 창이 모두 로드되는 시점에서 코드 실행
+
+
+        $("p").on("click", function() {
+            $("span").css("fontSize","28px");
+        });
+            - 이 경우 p요소와 span요소를 모두 선택한다.
+            - 클래스, 태그 이름을 가지는 HTML 요소를 모두 선택할 수 있다.
+
+
+        $("img[alt='flower']").attr("src", "emamples/img/ooo.png");
+            - 속성(attribute)을 사용하여 조건에 맞는 특정 HTML 요소를 선택할 수 있다.
+
+
+        선택한 요소 변수 저장 (갱신은 필요함)
+            - var items = $("li");
+        $(function () {
+            $("button").on("click", function() {
+                $("#len").text("저장된 <li>요소의 총 개수: " + items.length + " 개");
+                $("#tbl1 tbody").children("tr:first");
+                });
+            });
+-->
+
+
+
+<!-- 
+    필터링
+
+    $(functionm () {
+        $("button").on("click". function () {
+            $("li:has(span)").text("<span>요소를 가지고 있음");
+        });
+    });
+
+        - :eq(n) : 선택한 요소 중 '인덱스가 n인 요소' 선택
+        - :gt(n) : 선택한 요소 중 인덱스가 n보다 큰 요소 '모두' 선택
+        - :lt(n) : 선택한 요소 중 인덱스가 n보다 작은 요소 '모두' 선택
+        - :even : 선택한 요소 중 인덱스가 짝수인 요소 '모두' 선택
+        - :odd : 선택한 요소 중 인덱스가 홀수인 요소 '모두' 선택
+        - :first : 선택한 요소 중 '첫 번째' 요소 선택
+        - :last : 선택한 요소 중 '마지막' 요소 선택
+
+        - :contains(텍스트) : 선택한 요소 중 '지정한 텍스트를 포함하는 요소' '모두' 선택
+        - :has(선택자) : 선택한 요소 중 '지정한 선택자와 일치하는 자손 요소를 가지는' 요소 '모두' 선택
+        - :not(선택자) : 선택한 요소 중 '지정한 선택자와 일치하지 않는 요소' '모두' 선택
+        
+        - :empty : 선택한 요소 중 '자식 요소를 가지고 있지 않은 요소' '모두' 선택
+        - :parent : 선택한 요소 중 '자식 요소를 가지고 있는 요소' '모두' 선택
+
+        - :animated : 선택한 요소 중 '애니메이션 효과가 실행 중인 요소' '모두' 선택
+        - :header : 선택한 요소 중 'h1 ~ h6 인 요소' '모두' 선텍
+        - :lang(언어) : 선택한 요소 중 '지정한 언어의 요소' 모두 선택
+        - :root : 선택한 요소 중 '최상위 루트 요소' 선택
+        - :target : 선택한 요소 중 '웹 페이지의 URL의 fragment 식별자와 일치하는 요소' '모두' 선택      <- ?
+
+
+
+    input 요소 선택
+
+    $(function () {
+        $("button").on("click", function() {
+            $(":checked").next().text("체크 되어 있는 요소")
+        });
+    });
+
+        - :button : type이 button인 요소 모두 선택
+        - :checkbox : type이 checkbox인 요소 모두 선택
+        - :file : type이 file인 요소 모두 선택
+        - :image : type이 image인 요소 모두 선택
+        - :password : type이 password인 요소 모두 선택
+        - :radio : type이 radio인 요소 모두 선택
+        - :reset : type이 reset인 요소 모두 선택
+        - :submit : ...
+        - :text : ...
+
+        - :input : <input>, <textarea>, <select>, <button> 요소 모두 선택
+        
+        - :checked : type이 "checkbox" 또는 "radio" 인 요소 중 체크되어 있는 요소 모두 선택
+        - :selected : <option> 요소 중 선택된 요소 모두 선택
+
+        - :focus : 현재 포커스가 가지고 있는 요소 선택
+        - :disabled : 비활성화되어 있는 요소 모두 선택
+        - :enabled : 활성화되어 있는 요소 모두 선택
+-->
+
+
+
+<!-- 
+    getter, setter 메소드
+        - 선택자에 의해 선택된 요소의 값을 읽거나 설정
+        - getter
+            - 아무런 인수를 전달하지 않고 호출 (읽어오기)
+            - 선택된 요소가 여러개면 가장 첫번째 요소의 값만 반환
+        - setter
+            - 대입하고자 하는 값을 인수로 전달하여 호출 (설정)
+            - 선택된 모든 요소에 인수로 전달된 값을 설정
+
+            - .html() : 해당 요소의 HTML 컨텐츠 반환 or 설정
+            - .text() : 해당 요소의 텍스트 컨텐츠 반환 or 설정
+            - .width() : 선택한 요소 중 첫번째 요소의 너비 반환 or 설정
+            - .height() : 선택한 요소 중 첫번째 요소의 높이 반환 or 설정
+            - .attr() : 해당 요소의 명시된 속성의 속성값을 반환 or 설정
+                ex) var imgSrc = $("img").attr("src");
+                ex) $("img").attr("src", "ooo.png")
+            - .position() : 선택한 요소 중 첫번째 요소에 대해 특정 위치에 존재하는 객체를 반환  <- ?
+            - .val() :  <form> 요소의 값을 반환하거나 설정
+        
+        $(function () {
+            $("button").on("click", function () {
+                var newText = $("h1").html();           // <h1> 요소의 텍스트를 읽어온다.
+                $("#text").html(newText);               // id가 text인 요소에 새로운 텍스트를 설정한다.
+            });
+        });
+
+
+
+    메소드 체이닝
+        - 여러 개의 메소드가 연속으로 호출되는 것
+        - $("#list").find("li").eq(1).html("두번째 아이템 선택했다고 설정")
+        
+        $(function () {
+            $("button").on("click", function () {
+                $("ul.ulclass")
+                    .find("li")
+                    .eq(1)
+                    .html("2번쨰 요소 선택하고 값을 설정함")
+                    .end()
+                    .eq(2)
+                    .html("3번째 요소'도' 선택하고 값을 설정함")
+            });
+        });
+
+        - .end() : 바로 이전에 선택했던 요소의 집합을 다시 선택할 수 있다.
+        - .find() : 요소의 하위에 속한 요소들을 가져온다.
+
+-->
+
+<!-- 
+
+    요소의 추가
+
+        - .append() : 선택한 요소의 마지막에 새로운 요소 추가
+        - .prepend() : 선택한 요소의 처음에 새로운 요소 추가
+            ex) $("li").prepend("<p>새로 추가된 컨텐츠</p>")
+                <li><p>새로추가된컨텐츠 기존컨텐츠</p></li>
+
+        - .appendTo() : 선택한 요소를 해당 요소의 마지막에 삽입
+        - .prependTo() : 선택한 요소를 해당 요소의 처음에 삽입
+
+        - .before() : 선택한 요소 바로 앞에 새로운 요소 추가
+        - .after() : 선택한 요소 바로 뒤에 새로운 요소 추가
+            ex) $("#firstRow").after(<tr><td>새로운 행</td></tr>)
+        
+        - .insertBeofre() : 선택한 요소를 해당 요소 앞에 삽입
+        - .insertAfter() : 선택한 요소를 해당 요소 뒤에 삽입 (after와 소스와 타겟의 위치가 서로 반대다.)
+            ex) $("<td>새로운 셀</td>").insertBefore("#secondColumn");
+
+        - .wrap() : 선택한 요소를 포함하는 새로운 요소 추가
+            ex) $(".content").wrap("<div class="wrapper'></div>); (wrapper div가 content div를 감싼다.) (content div가 2개면 각각 1개씩 감싼다.)
+        - .wrapAll() : 선택한 모든 요소를 포함하는 새로운 요소 추가     <- ?
+            ex) wrap과 다르게 .content div가 2개면 2개 다 감싸는 1개의 wrapper가 생긴다.
+        - .wrapInner() : 선택한 요소에 포함되는 새로운 요소 추가        <- ?
+            ex) wrap과 다르게 .content div 안에 wrapper가 생긴다.
+
+
+
+    요소의 복사
+
+        .clone() : 선택한 요소나 컨텐츠 복사하여 새로운 요소나 컨텐츠 생성
+            ex) $("#firstItem").clone().appendTo("#list");
+
+    요소의 대체
+
+        .replaceAll() : 선택한 요소를 지정된 요소로 대체
+            - 
+        .replaceWith() : 선택한 모든 요소를 지정된 요소로 대체
+            - 
+
+    요소의 삭제
+
+        .remove() : 
+        .detach() : 
+        .empty() : 
+        .unwrap() : 
+-->
