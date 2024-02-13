@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://code.jquery.com/jquery-3.7.1.js"
+        integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+    <script>
+        $(document).ready(function () {
+
+            $("span").eq(0).load("hello.txt");
+
+            $("button").eq(0).on("click", function () {
+
+                // CORS 때문에 로컬에선 일단 안되는 듯
+
+                // GET 방식으로 서버에 HTTP Request 보내기
+                $.get("hello.txt", "hello world", function (data, status) {
+                    $("p").eq(0).html(data + " " + status);
+                    // 데이터와 성공여부
+                });
+
+            });
+
+            $("button").eq(1).on("click", function () {
+
+                // CORS 때문에 로컬에선 일단 안되는 듯
+
+                $.post("hello.txt", "hello world", function (data, status) {
+                    $("p").eq(1).html(data + " " + status);
+                });
+
+            });
+
+        });
+    </script>
+</head>
+
+<body>
+    <span></span>
+
+    <button type="button">Get</button>
+    <button type="button">Post</button>
+    <p></p>
+    <p></p>
+</body>
+
+</html>

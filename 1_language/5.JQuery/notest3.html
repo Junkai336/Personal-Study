@@ -1,0 +1,106 @@
+<!-- 
+
+    Ajax 연동
+
+        - Asynchronous(비동기식) JavaScript and XML
+        - 웹페이지 전체를 다시 로딩하지 않고도, 일부분 갱신 가능
+        - 백그라운드 영역에서 서버와 데이터를 교환하고 웹페이지에 표시할 수 있음
+        
+        - JQuery는 ajax 프레임워크 중 하나
+        - JQuery 메소드를 사용하면 HTTP 요청(request)를 쉽게 보낼 수 있고 데이터 종류에 따라 알맞는 메소드를 사용하여 서버에 데이터 요청 가능
+
+
+        ex) $("").on("click", function() {
+                $("").load("/ooo.txt");         // 화면에 텍스트 파일 출력
+        })
+
+
+    HTTP 요청 방식
+
+        - GET 방식
+            - 주소에 데이터를 추가하여 전달하는 방식
+            - GET 방식 요청은 브라우저에 의해 캐시(cached)되어 저장됨
+            - 보통 히스토리에 쿼리 문자열(Query String)에 포함되어 전송되므로 길이 제한이 있다. (URL주소가 가질 수 있는 2048길이 정도?)
+            - 보안상 취약점이 존재 (아무나 볼 수 있음)
+            - ASCII 문자 타입 데이터만 전송 가능
+
+        - POST 방식
+            - 데이터를 별도로 첨부하여 전달하는 방식
+            - 브라우저에 의해 캐시되지 않고 브라우저 히스토리에 남지 않음
+            - 쿼리 문자열과는 별도로 전송
+            - 데이터 길이제한 없고 보안성 높음
+            - 데이터 타입 제한 없음
+
+
+
+        - $.get() : $.get(URL주소 [,콜백함수]);
+                        - URL주소 : HTTP 요청을 보낼 서버 주소
+                        - 콜백함수 : HTTP 요청이 성공했을 때 실행할 함수
+
+
+
+        - $.post() : $.post(URL주소 [,데이터] [,콜백함수])
+                        - 데이터 : HTTP 요청과 함께 서버로 보낼 데이터 전달
+
+
+
+        - $.ajax() : $.ajax(URL주소 [,옵션])
+                        비동기식 Ajax를 이용하여 HTTP 요청 전송
+                        - 옵션 : HTTP 요청을 구성하는 키와 값의 쌍으로 구성되는 헤더의 집합
+
+                    ex) $.ajax({
+                            url: "hello.php",                   // 클라이언트가 HTTP 요청을 보낼 서버의 URL 주소
+                            data: { name: "홍길동"},            // HTTP 요청과 함께 서버로 보낼 데이터
+                            method: "GET",                      // HTTP 요청 방식
+                            dataType: "json"                    // 서버에서 보내줄 데이터 타입
+                    })
+
+                    .done(function(json) {
+                        // HTTP요청이 성공하면 요청한 데이터가 done() 메소드로 전달됨
+                        alert("요청 성공")
+                    })
+                    
+                    .fail(function(xhr, status, errorThrown) {
+                        // HTTP요청이 실패하면 오류와 상태에 관한 정보가 fail() 메소드로 전달됨
+                        alert("요청 실패")
+                    })
+                    
+                    .always(function(xhr, status) {
+                        // HTTP요청이 성공하든 실패하든 언제나 .always() 메소드가 실행됨
+                        alert("요청 완료")
+                    })
+
+
+
+        - $.getScript() : 웹 페이지에 스크립트 추가
+
+
+
+        - $.getJSON() : 전달받은 주소로 GET 방식의 HTTP 요청을 전송하여, 응답으로 JSON 파일 전송 받음
+
+
+
+        - .load() : 서버에서 데이터를 읽은 후, 읽어 들인 HTML 코드를 선택한 요소에 배치함
+
+    
+    
+    Ajax, Form 요소
+
+        - Ajax는 form 요소를 통해 입력받은 데이터를 직렬화(serialization) 하여 전송
+                    - 직렬화: 입력받은 여러 데이터를 하나의 쿼리 문자열로 만드는 것. 이렇게 하면 form 요소를 통해 입력받은 데이터를 한번에 서버로 보낼 수 있다.
+
+                    - .serialize() : HTML Form 요소를 통해 입력된 데이터를 쿼리 문자열로 변환
+                    - .serializeArray() : 입력된 데이터를 문자열이 아닌 배열 객체로 변환
+
+                    ex)     $("form").on("submit", function(event) {                            // <form>요소에 "submit" 이벤트가 발생할 때,
+                                event.preventDefault();                                         // 서버로 전송하지 않음.
+                                $(".text").html($(this).serialize());                           // 입력받은 데이터를 직렬화하여 나타냄.
+    });
+
+
+
+
+
+
+
+-->
