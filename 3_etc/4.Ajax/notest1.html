@@ -1,0 +1,115 @@
+<!-- 
+    Ajax
+
+        - HTML, CSS, JS, DOM, XML 등 기존에 사용되던 기술을 함께 사용하는 개발 기법
+        - 웹페이지 전체를 다시 로딩하지 않고도, 일부분만 갱신 가능
+        - 백그라운드 영역에서 서버와 통신 후 그 결과를 웹페이지 일부분에만 표시 가능
+        - JSON, XML, HTML, 텍스트 파일 등 형태의 데이터를 주고받을 수 있다.
+        - 웹페이지가 로드된 후 서버로 데이터 요청을 보내고 받을 수 있다.
+        - 백그라운드 영역에서 서버로 데이터를 보낼 수 있다.
+
+        - 클라이언트가 서버에 데이터를 요청하는 클라이언트 풀링 방식 사용
+            (서버 푸시 방식의 실시간 서비스는 만들 수 없다.)        
+        - 바이너리 데이터를 보내거나 받을 수 없다.                  
+        - Ajax 스크립트가 포함된 서버가 아닌 다른 서버로 Ajax 요청을 보낼 수 없다.
+        - 클라이언트의 PC로 Ajax 요청을 보낼 수 없다.
+
+            - 바이너리 데이터 : 컴퓨터에서 효율적으로 저장하고 처리할 수 있도록 0과 1의 시퀸스를 사용하여 정보를 표현한 것
+                                (이미지, 오디오, 비디오 파일 등이 공간을 절약하고 효율적인 처리를 위해 바이너리 형식으로 저장됨)
+                                (멀티미디어 파일, 직렬화된 데이터 등)
+                                (https://easyitwanner.tistory.com/327)
+            - 클라이언트 풀링 방식 : 사용자가 직접 원하는 정보를 서버에게 요청하여 얻는 방식
+            - 서버 푸시 방식 : 사용자가 요청하지 않아도 서버가 알아서 자동으로 특정 정보를 제공하는 것
+
+    구성요소
+
+        - 웹페이지의 표현 : HTML, CSS
+        - 데이터에 접근하거나 화면 구성을 동적으로 조작하기 위해 사용 : DOM 모델
+        - 데이터 교환 : JSON, XML
+        - 웹 서버와 비동기식 통신 : XMLHttpRequest 객체
+        - 사용자의 작업 흐름을 제어하는데 사용 : JS
+
+    순서
+
+        - 사용자에 의한 요청이벤트 발생
+        - 이벤트 핸들러에 의해 자바스크립트 호출
+        - 자바스크립트가 XMLHttpRequest 객체를 사용하여 서버로 요청 보냄 (웹 브라우저는 요청을 보내고 나서, 서버 응답 기다릴 필요 없이 다른 작업 처리 가능)
+        - 서버는 전달받은 XMLHttpReuqest 객체를 가지고 Ajax 요청 처리
+        - 서버는 처리한 결과를 HTML,XML 또는 JSON 데이터로 웹브라우저에 반환 (전달되는 응답은 필요한 새로운 페이지를 전부 보내는 것이 아닌 데이터만 전달)
+        - 서버로부터 전달받은 데이터를 가지고 웹 페이지 일부분만 갱신하는 자바스크립트 호출
+
+-->
+
+<!-- 
+    XMLHttpRequest 객체
+
+        - Ajax에서 웹 브라우저가 서버와 데이터를 교환할 때 사용
+        - 웹 브라우저가 백그라운드에서 계속해서 서버와 통신할 수 있는 이유
+
+    생성
+
+        - var 변수명 = new XMLHttpRequest(); <인터넷 익스플로러 7이상, 크롬, 파폭, 사파리, 오페라>
+        - var 변수명 = new ActiveXObject("Microsoft.XMLHTTP") <인터넷 익스플로러 5,6>
+
+        ex)
+        function sendRequest() {
+			var httpRequest;
+
+			function createRequest() {
+				if (window.XMLHttpRequest) {	                                                    // 익스플로러 7과 그 이상의 버전, 크롬, 파이어폭스, 사파리, 오페라 등
+					return new XMLHttpRequest();
+				} else {						                                                    // 익스플로러 6과 그 이하의 버전
+					return new ActiveXObject("Microsoft.XMLHTTP");
+				}
+			}
+
+			function receiveResponse() {
+				                                                                                    // XMLHttpRequest 객체의 현재 상태가 요청 완료이고, 서버에 문서가 존재하면 받은 데이터를 출력함.
+				if (httpRequest.readyState == XMLHttpRequest.DONE && httpRequest.status == 200 ) {
+					document.getElementById("text").innerHTML = httpRequest.responseText;
+				}
+			}
+
+			httpRequest = createRequest();	                                                        // XMLHttpRequest 객체를 생성함.
+			httpRequest.onreadystatechange = receiveResponse;			                            // XMLHttpRequest 객체의 현재 상태를 파악함.
+			                                                                                        // GET 방식의 비동기식 요청으로 Http 요청을 생성함.
+			httpRequest.open("GET", "/examples/media/ajax_intro_data.txt", true);
+			httpRequest.send();			                                                            // Http 요청을 보냄.
+		}
+
+
+
+        서버에 요청하기
+
+            - Ajax에서는 XMLHttpRequest 객체를 사용하여 서버와 데이터 교환
+            - 서버에 요청을 보내기 위해서 우선 XMLHttpRequest 인스턴스를 생성해야 함
+            - XMLHttpRequest 인스턴스의 open() 메소드와 send() 메소드를 사용하여 요청을 보낼 수 있다.
+
+            - open() : open(전달방식, URL주소, 동기여부);
+                - 서버로 보낼 Ajax 요청의 형식 설정
+                - 전달방식 : GET, POST
+                - URL 주소 : 요청을 처리할 서버의 파일 주소(.php 등)
+                - 동기여부 : 동기식, 비동기식
+
+            - send() : send() = GET방식 / send(문자열); = POST 방식
+                - GET방식
+                    - 주소에 데이터를 추가하여 전달하는 방식
+                    - HTTP 요청은 브라우저에 의해 캐시되어 저장
+                    - 쿼리문자열에 포함되어 전송
+                - POST방식
+                    - 데이터를 별도로 첨부하여 전달하는 방식
+                    - 브라우저에 의해 캐시되지 않고 브라우저 히스토리에 남지 않음
+                    - HTTP 요청에 의한 데이터는 쿼리 문자열과 별도로 전송
+
+            GET 방식 요청
+                - httpRequest.open("GET", "/ooo.php", true);
+                - httpRequest.send();
+                - if (httpRequest.readyState == XMLHttpRequest.DONE && httpRequest.status == 200 ) { ... } -> DONE이면 서버에 요청한 데이터의 처리가 완료되어 응답할 준비가 완료되었다는 의미
+                                                                                                            -> 200이면 요청한 문서가 서버상에 존재한다는 의미
+            POST 방식 요청
+                - httpRequest.open("POST", "/ooo.php", true);
+                - httpRequest.setRequestHeader("Content-Type", "application/x-www-form-unlencoded");    // POST 방식의 요청은 데이터를 Http 헤더에 포함시켜 전송함
+                - httpRequest.send("city=Seoul&zipcode=06141");
+
+
+-->
