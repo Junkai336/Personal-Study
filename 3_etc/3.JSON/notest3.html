@@ -1,0 +1,67 @@
+<!-- 
+
+    자바스크립트, JSON
+
+        - JSON : 자바스크립트의 객체 표기법을 제한하여 만든 텍스트 기반 데이터 교환 표준
+        
+        - JSON.stringify(객체) : 인수로 전달받은 자바스크립트 객체를 문자열로 변환하여 반환
+            ex)
+                var dog = {name: "a", age: 1};
+                var data = JSON.stringify(dog);
+
+        - JSON.parse(text) : 인수로 전달받은 문자열을 자바스크립트 객체로 변환하여 반환 , 해당 문자열은 JSON 형식의 문자열이어야 함
+            ex)
+                var data = {name: "a", age: 1};
+                var dog = JSON.parse(data);
+                -> js객체니까 dog.name , dog.age 로 접근 가능
+
+        - toJSON() : 자바스크립트 Date 객체의 데이터를 JSON 형식 문자열로 변환
+                        Date.prototype 객체에서만 사용 가능
+                        UTC 표준 시간대의 날짜를 ISO 8601 형식의 문자열로 반환
+
+                        YYYY-MM-DDTHH:mm:ss.sssZ
+
+                        ex)
+                            var date = new Date();
+                            var str = date.toJSON();
+
+                            Thu Feb 22 2024 16:55:51 GMT+0900 (한국 표준시)     <- date
+                            2024-02-22T07:55:51.849Z                            <- toJSON
+
+
+-->
+
+
+
+
+
+
+
+
+
+<!-- 
+
+    PHP, JSON
+
+        - json.encode() : 전달받은 값을 JSON 형식의 문자열로 변환
+            ex) string json_encode(mixed $value)
+                - $value : 변환할 값 , 타입은 resource 타입 제외 PHP 모든 타입 가능 (UTF-8로 인코딩된 값을 인수로 전달해야 정상 작동)
+            ex)
+                $value = array('apple'=>'Fruits', '1'=>1, '참'=>true); // PHP 배열
+                echo json_encode($value);
+                    -> {"apple":"Fruits","1":1,"\ucc38":true}
+                    -> 한글은 UTF-8로 인코딩되어 유니코드 코드 포인트 값을 ㅗ저장
+
+        - json.decode() : 전달받은 JSON 형식의 문자열을 PHP 변수로 변환
+            ex) mixed json_decode(string $json)
+                    -> $json : 변환활 문자열 전달, 유효한 JSON 형식의 문자열이어야 함 아니면 null
+                    -> 두번째 인수로 true를 전달하면 결과를 PHP 객체가 아닌 연관 배열로 반환
+            ex)
+                <?php
+	                $json = '{"apple":"Fruits", "1":1, "참":true}';
+	                var_dump(json_decode($json, true));
+                ?>
+            -> array(3) { ["apple"]=> string(6) "Fruits" [1]=> int(1) ["참"]=> bool(true) }
+
+
+-->
