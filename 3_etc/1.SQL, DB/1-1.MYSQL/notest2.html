@@ -1,0 +1,158 @@
+<!-- 
+
+    CREATE
+        - CREATE DATABASE 데이터베이스이름 : 새로운데이터베이스 생성
+        
+        - SHOW DATABASES : 생성된 데이터베이스 목록 확인
+
+        - USE 데이터베이스이름 : 데이터베이스 선택
+
+
+        
+        - CREATE TABLE : 새로운 테이블을 생성. 데이터베이스는 하나 이상의 테이블로 구성됨.
+
+            CREATE TABLE 테이블이름
+            (
+                필드이름1 필드타입1,
+                필드이름2 필드타입2,
+                ...
+            )
+
+        - SHOW TABLES : 생성된 테이블 목록
+
+        - DESC 테이블명 : 특정 테이블에 어떤 칼럼이 있는지 어떤 구조인지 조회하는 명령어
+
+
+
+        제약조건
+
+            - NOT NULL : 해당 필드는 NULL 값을 저장할 수 없게 됨
+            - UNIQUE : 해당 필드는 서로 다른 값을 가져야만 함
+            - PRIMARY KEY : 해당 필드가 NOT NULL과 UNIQUE 제약 조건의 특징을 모두 가지게 됨
+            - FOREIGN KEY : 하나의 테이블을 다른 테이블에 의존하게 만듬
+            - DEFAULT : 해당 필드의 기본값을 설정함                     <- ?
+
+            - AUTO_INCREMENT : 해당 필드의 값을 1부터 시작하여 새로운 레코드가 추가될 때마다 1씩 증가된 값을 저장함
+
+
+
+
+    ALTER
+        - ALTER DATABASE : 데이터베이스의 전체적 특성을 수정할 수 있게 함 (데이터베이스 특성은 데이터베이스 디렉토리의 db.opt 파일에 저장되어 있음)
+
+            - ALTER DATABASE 데이터베이스이름 CHARACTER SET=문자집합이름
+
+            - ALTER DATABASE 데이터베이스이름 COLLATE=콜레이션이름
+
+            - 콜레이션(collation) : 데이터베이스에서 검색이나 정렬과 같은 작업을 할 때 사용하는 비교를 위한 규칙의 집합
+
+            ex) ALTER DATABASE hotel CHARACTER SET=euckr_bin COLLATE=euckr_korean_ci;
+
+                - CHARACTER SET
+                    - utf8 : UTF-8 유니코드를 지원하는 문자셋 (1~3byte)
+                    - euckr : 한글을 지원하는 문자셋 (1~2byte)
+
+                - COLLATE
+                    - utf8_bin
+                    - utf8_general_ci (기본 설정)
+                    - euckr_bin
+                    - euckr_korean_ci (ci : case-insensitive , 대소문자를 구분하지 않게 설정됨)
+
+        - ALTER TABLE : 테이블 수정, 테이블에 필드를 추가 삭제 변경
+
+            - ALTER TABLE 테이블이름 ADD 필드이름 필드타입 : 테이블에 필드 추가
+
+            - ALTER TABLE 테이블이름 DROP 필드이름 : 테이블의 필드 삭제
+
+            - ALTER TABLE 테이블이름 MODIFY COLUMN 필드이름 필드타입 : 테이블의 필드 타입 변경
+                ex) ALTER TABLE Reservation MODIFY COLUMN ReserveDate VARCHAR(10000);
+
+
+
+
+    DROP
+        - DROP DATABASE 데이터베이스이름 : 해당 데이터베이스 삭제
+
+        - DROP TABLE 테이블이름 : 해당 테이블 삭제
+
+        - TRUNCATE TABLE 테이블이름 : 테이블의 데이터만 지우고 싶을 때 사용 (테이블은 그대로 남고, 테이블에 저장된 데이터만 모두 삭제됨)
+
+        - DROP DATABASE, DROP TABLE 문으로 DB나 TABLE을 삭제하려고 할 때 존재하지 않으면 에러가 발생하므로
+            - DROP DATABASE IF EXISTS 데이터베이스명;
+            - DROP TABLE IF EXISTS 테이블명;
+            으로 하면 에러 방지 가능
+-->
+
+
+
+
+
+<!-- 
+    INSERT
+        - 테이블에 새로운 레코드 추가
+
+        - INSERT INTO 테이블이름(필드이름1, 필드이름2, 필드이름3, ...) VALUES (데이터값1, 데이터값2, 데이터값3, ...)
+        
+        - INSERT INTO 테이블이름 VALUES (데이터값1, 데이터값2, 데이터값3, ...) : 데이터베이스의 스키마와 같은 순서대로 필드의 값이 자동 대입
+
+            - 생략할 수 있는 필드
+                - NULL을 저장할 수 있도록 설정된 필드
+                - DEFAULT 제약 조건이 설정된 필드
+                - AUTO_INCREMENT 키워드가 설정된 필드
+
+
+
+
+    UPDATE
+        - 레코드의 내용 수정
+
+        - UPDATE 테이블이름 SET 필드이름1=데이터값1, 필드이름2=데이터값2 WHERE 필드이름=데이터값 : WHERE 절의 조건을 만족하는 레코드의 값만을 수정
+
+        ex) UPDATE Reservation SET RoomNum = 2002 WHERE Name = '홍길동';
+
+
+
+
+    DELETE
+        - 테이블의 레코드를 삭제
+
+        - DELETE FROM 테이블이름 WHERE 필드이름=데이터값 : WHERE 절의 조건을 만족하는 레코드만을 삭제
+
+        - DELETE FROM 테이블이름 : 해당 테이블에 저장된 모든 데이터 삭제
+
+        cf) DROP TABLE : 해당 테이블까지 삭제
+
+
+
+
+    SELECT
+        - 테이블의 레코드 선택
+
+        - SELECT 필드이름 FROM 테이블이름 WHERE 조건
+
+        - SELECT * FROM 테이블이름 : 해당 테이블의 모든 필드 선택 가능 (*)
+
+        ex) SELECT * FROM Reservation WHERE ID <= 3 AND ReservDate > '2024-01-01';
+
+        - SELECT DISTINCT 필드이름 FROM 테이블이름 : 중복된 값은 단 한 번만 선택됨
+
+        - SELECT ~ ORDER BY ooo : ooo 순으로 정렬 (기본값: 오름차순)
+            - 필드명 + (ASC,DESC)
+            - ASC : 오름차순 (작은값부터 큰값쪽으로) [작은값이 위]
+            - DESC : 내림차순 (큰값부터 작은값쪽으로) [큰값이 위]
+            - BINARY : 대소문자까지 구분하여 정렬
+
+        ex) SELECT * FROM Reservation ORDER BY ReserveDate DESC, RoomNum ASC; : 먼저 내림차 후 오름차 정렬
+
+        - SELECT 필드이름 AS 별칭 FROM 테이블이름 : 필드에 새로운 별칭 부여
+
+        - SELECT 필드이름 FROM 테이블이름 AS 별칭 : 테이블에 새로운 별칭 부여
+
+            => 테이블과 필드에 임시로 별칭(alias)을 부여하고 SELECT 문에 사용 가능
+
+            - CONCAT : 인수로 전달받은 문자열을 모두 결합하여 하나의 문자열로 반환하는 함수
+
+            ex) SELECT ReservDate, CONCAT(RoomNum, " : ", Name) AS ReservInfo FROM Reservation;
+                => roomnum과 name의 문자열이 합쳐진 별칭 부여된 필드가 보여짐 (새로운 필드를 만드는건 아닌듯???)
+
+-->
