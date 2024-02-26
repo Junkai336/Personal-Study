@@ -48,6 +48,7 @@ public class Casting {
         System.out.println(result2);
         System.out.println(result3);
         System.out.println(result4);
+        System.out.println("gg");
         // System.out.println(result5);
         // System.out.println(result6);
                 
