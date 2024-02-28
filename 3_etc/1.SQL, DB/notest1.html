@@ -47,6 +47,8 @@
 
 -->
 
+
+
 <!-- 
 
     범위 검색
@@ -75,9 +77,80 @@
         - SELECT 칼럼명 FROM 테이블명 WHERE 칼럼명 IN (값1, 값2, ...) : 칼럼이 값1 또는 값2에 해당하는 값만 출력
         - SELECT 칼럼명 FROM 테이블명 WHERE 칼럼명 NOT IN (값1, 값2, ...) : 칼럼이 값1, 값2 어디에도 해당하지 않는 것만 출력
 
+-->
+
+
+
+<!--
+
+    칼럼에 별칭 붙이기
+
+        - SELECT 칼럼명 AS 지정할명칭 FROM 테이블명
+
+        - SELECT NAME 'Hello' FROM member = SELECT NAME AS 'Hello' FROM member : AS를 생략할 수도 있다.
+
 
 
     문자길이 채우기
 
-        - 
+        - SELECT LPAD(데이터, 고정길이, 문자) FROM DUAL : 고정길이 안에 데이터를 출력하고 남는 공간을 문자로 채운다. 문자가 LPAD는 왼쪽을 채우고 RPAD는 오른쪽을 채운다.
+                                                            고정길이에 숫자 변수같은거 넣어도 됨
+
+            - SELECT LPAD('A', 4, 'B') AS TEST_LPAD FROM DUAL : BBBA
+            - SELECT RPAD('A', 4, 'B') AS TEST_RPAD FROM DUAL : ABBB
+
+        REPLICATE(문자열 또는 데이터, 정수 또는 정슈 유형의 식) : 문자열 또는 데이터를 정수 또는 정수 유형의 식만큼 출력한다.
+
+            - SELECT REPLICATE('0', 5) : 00000
+
+            좌우측으로 붙이기
+
+                - SELECT REPLICATE('0', 5 - LEN('AA')) + AA : 000AA
+                - SELECT 'AA' + REPLICATE('0', 5 - LEN('AA')) : AA000
+
+                -> LEN : 인수의 길이 리턴
+                -> + 뒤에 붙일 문자열과 똑같은 값을 넣어주면 고정길이 5에서 뒤에 붙을 문자열의 길이만큼 뺀다. = 0이 고정길이 5에서 AA만큼 뺀 3개 출력 뒤 AA 출력
+
+
+                - SELECT 'AA' + REPLICATE('0', 5) : 00000AA
+                
+                -> LEN() 없으면 그냥 개수만큼 뒤나 앞에 붙음
+
+
+                - SELECT 'AA' + REPLICATE('0', 6 - LEN('AABB')) + 'BB' : AA00BB
+
+
+
+    문자 합치기
+
+        - ||(쌍파이프) : 문자(데이터)와 문자(데이터) 사이에 넣음
+
+            - SELECT NAME || '는 ' || CLASS || '반이고 ' || POINT || '점이다' AS 'ALL IN ONE WITH CHARS'
+
+        - CONCAT(문자{데이터}, 문자{데이터}) AS '칼럼명'
+
+            - SELECT CONCAT(NAME, '는 ', CLASS, '반이고 ', POINT, '점이다') ALL IN ONE
+-->
+
+
+
+<!-- 
+
+    날짜 계산하기
+
+        - ORACLE
+
+            - SYSDATE 함수 : 실행될 때의 시간을 리턴
+                - SELECT SYSDATE + 1 : 1일 후 출력
+                - SELECT SYSDATE + 1/24 : 1시간 후
+                - SELECT SYSDATE + 1/24/60 : 1분 후
+                - SELECT SYSDATE + 1/24/60/60 : 1초 후
+
+
+        - MYSQL
+
+
+
+        - MSSQL
+
 -->
