@@ -146,11 +146,81 @@
                 - SELECT SYSDATE + 1/24/60 : 1분 후
                 - SELECT SYSDATE + 1/24/60/60 : 1초 후
 
+            - ADD_MONTHS(날짜, 숫자) : 날짜에서 숫자만큼 월을 더한다
+                - SELECT ADD_MONTHS(SYSDATE, 3) : 3달 후 출력 -3이면 3달 전
+
+            - SELECT LAST_DAY(SYSDATE) : 9월이면 9월30일 출력됨
+
+            - SELECT SYSDATE - TO_DATE('20240201', 'YYYYMMDD') : 현재 날짜와 2024/02/01 의 차이를 구함
+
+            - SELECT TRUNC(SYSDATE) - TO_DATE('20240201', 'YYYYMMDD') : 날짜빼기를 하면 시간부분도 계산되어 소수점이 나오는데, 이 경우 년월일만 남기고 시간 부분은 모두 0으로 잘라 사용됨
+
+
 
         - MYSQL
+
+            - DATE_ADD(날짜, INTERVAL 숫자계산형식)
+
+                - 월 : DATE_ADD(SYSDATE, INTERVAL 1 MONTH) : 현재 날짜에서 1월 더한다.
+                - MONTH, DAY, HOUR, MINUTE, SECOND
+
 
 
 
         - MSSQL
+
+            - DATEADD(시간단위, 더할수치, 기준시간)
+
+                - SELECT DATEADD(MONTH, 1, GETDATE()) : 현재날짜에서 1월 더함
+
+                - SELECT DATEADD(DAY, -(DAY(GETDATE()-1)), GETDATE()) : 월의 첫째날 구하기
+                - SELECT DATEADD(MONTH, 1, GETDATE()) - DAY(GETDATE()) : 월의 마지막날 구하기 (다음 달에서 현재 날짜만큼 날 빼면 자동적으로 현재 월의 마지막 날 출력)
+
+            - DATEDIFF(시간단위, 시작시간, 종료시간)
+
+                - SELECT DATEDIFF(MI, GETDATE(), GETDATE()+2) : 2880분(2일) 출력
+
+
+
+
+    SQL 값이 NULL 일 경우
+
+        - ORACLE
+
+            - NVL(EXPR1, EXPR2) : EXPR1이 NULL이면 EXPR2의 값을 / EXPR1이 NULL이 아니면 EXPR1 값 출력 / EXPR = expression (표현식)
+                ex) SELECT NAME, NVL(SALARY, 'NO PAY') AS SALARY : SALARY가 NULL이면 'NO PAY' 아니면 SALARY 출력 (SALARY의 값을 출력한다는 뜻인듯)
+            
+            - NVL2(EXPR1, EXPR2, EXPR3) : EXPR1이 NULL 이 아니면 EXPR2 / EXPR1이 NULL이면 EXPR3 값 출력
+                ex) SELECT NAME, NVL2(SALARY, 'PAY', 'NO PAY') : SALARY가 NULL이 아니면 'PAY', NULL이면 'NO PAY' 출력
+
+        - MYSQL
+
+            - IFNULL(EXPR1, EXPR2) : NVL과 동일
+
+        - MSSQL
+
+            - ISNULL(EXPR1, EXPR2) : NVL과 동일
+
+        - 공통
+
+            - COALESCE(EXPR1, EXPR2, EXPR3) : 가장 앞에 있는 EXPR 값이 NULL 이 아닌 것을 반환
+                ex) SELECT NAME, COLEASCE(SALARY, POINT, 'NOTHING') AS 'SALARY OR POINT' : SALARY 출력 , NULL이면 POINT , POINT조차 NULL이면 "NOTHING"
+
+
+-->
+
+<!-- 
+
+    테이블 조인
+
+        - LEFT JOIN
+
+            - SELECT ~ FROM TABLE_A LEFT JOIN TABLE_B ON TABLE_A.KEY = TABLE_B.KEY
+            - A,B 테이블 중에서 A 값의 전체와 A의 KEY와 B의 KEY가 같은 결과를 리턴
+            ex) SELECT * FROM A LEFT JOIN B ON A.ID = B.ID : A의 결과가 전부 출력, 그리고 ID값이 A=B 면 B가 A에 연결되어 출력된다.
+
+            - SELECT ~ FROM TABLE_A LEFT JOIN TABLE_B ON TABLE_A.KEY = TABLE_B.KEY WHERE B.KEY IS NULL :
+            - JOIN 하는 두 테이블 중 한 테이블에만 있는 값 출력
+            ex) SELECT * FROM A LEFT JOIN B ON A.ID = B.ID WHERE B.ID IS NULL : B와 연결되지 않는 A만 출력 (교집합 제외)
 
 -->
