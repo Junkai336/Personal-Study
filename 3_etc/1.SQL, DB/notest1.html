@@ -217,10 +217,32 @@
 
             - SELECT ~ FROM TABLE_A LEFT JOIN TABLE_B ON TABLE_A.KEY = TABLE_B.KEY
             - A,B 테이블 중에서 A 값의 전체와 A의 KEY와 B의 KEY가 같은 결과를 리턴
-            ex) SELECT * FROM A LEFT JOIN B ON A.ID = B.ID : A의 결과가 전부 출력, 그리고 ID값이 A=B 면 B가 A에 연결되어 출력된다.
+            ex) SELECT * FROM A LEFT JOIN B ON A.ID = B.ID : A의 결과가 전부 출력, 그리고 ID값이 A=B 면 B가 A에 연결되어 출력된다. (A + A와 B의 아이디가 같은 것 중에 A,B교집합)
 
             - SELECT ~ FROM TABLE_A LEFT JOIN TABLE_B ON TABLE_A.KEY = TABLE_B.KEY WHERE B.KEY IS NULL :
             - JOIN 하는 두 테이블 중 한 테이블에만 있는 값 출력
-            ex) SELECT * FROM A LEFT JOIN B ON A.ID = B.ID WHERE B.ID IS NULL : B와 연결되지 않는 A만 출력 (교집합 제외)
+            ex) SELECT * FROM A LEFT JOIN B ON A.ID = B.ID WHERE B.ID IS NULL : B와 연결되지 않는 A만 출력 (교집합 제외) {A와 B의 아이디가 같을 때 B와 공통요소가 조금이라도 있는 것들은 전부 출력되지 않는다.}
 
+
+
+        - INNER JOIN
+
+            - SELECT ~ FROM TABLE_A INNER JOIN TABLE_B ON TABLE_A.KEY = TABLE_B.KEY
+            - 테이블 간 서로 연결되는 값만 출력
+            EX) SELECT * FROM A INNER JOIN B ON A.ID = B.ID : A와 B의 ID값이 동일하다면 모두 출력된다. (교집합만)
+
+
+
+        - FULL OUTER JOIN (MYSQL에 없음 대신 LEFTJOIN과RIGHTJOIN의UNION)
+
+            - SELECT ~ FROM TABLE_A FULL OUTER JOIN TABLE_B ON TABLE_A.KEY = TABLE_B.KEY
+            - 두 테이블의 모두의 값을 출력
+            ex) SELECT * FROM A FULL OUTER JOIN B ON A.ID = B.ID : ID 값이 같은 애들은 연결되어 출력 + ID 값이 달라도 다 출력 (정렬되는 합집합)
+
+
+
+        - SELF JOIN
+
+            - 원하는 데이터들이 하나의 테이블에 있을 때 사용
+            - SELECT A.ID AS 'ID', A.NAME AS 'NAME', B.NAME AS 'MANAGER_NAME' FROM A AS A JOIN A AS B ON A.MANAGER_ID = B.ID
 -->
