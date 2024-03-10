@@ -77,6 +77,93 @@
         - SELECT 칼럼명 FROM 테이블명 WHERE 칼럼명 IN (값1, 값2, ...) : 칼럼이 값1 또는 값2에 해당하는 값만 출력
         - SELECT 칼럼명 FROM 테이블명 WHERE 칼럼명 NOT IN (값1, 값2, ...) : 칼럼이 값1, 값2 어디에도 해당하지 않는 것만 출력
 
+
+
+    LIKE 연산자
+
+        - 해당하는 단어만 있으면 검색이 된다.
+
+        - SELECT * FROM 테이블명 WHERE 칼럼명 LIKE 'PATTERN'
+
+            - PATTERN 中
+                - % : 모든 문자
+                - _ : 한 글자
+
+            - ex) SELECT * FROM TABLE WHERE NAME LIKE '%라면%' : 앞뒤에 무슨 글자가 오든지 '라면' 이라는 문자가 있는 ROW를 출력 (진라면, 신라면, 라면, 라면볶이, 진라면 큰컵)
+
+            - ex) SELECT * FROM TABLE WHERE NAME LIKE '%라면' : 앞에 무슨 글자가 오든지 '라면' 으로 끝나는 문자가 있는 ROW 출력 (진라면, 신라면, 라면)
+            - ex) SELECT * FROM TABLE WHERE NAME LIKE '라면%' : 뒤에 무슨 글자가 오든지 '라면' 으로 시작하는 문자가 있는 ROW 출력 (라면볶이, 라면)
+            - ex) SELECT * FROM TABLE WHERE LIKE '_라면%' : 뒤에 아무 글자가 오든 상관없이 맨 앞에 한 글자 뒤에 '라면' 글자가 있는 ROW 출력 (진라면 큰컵)
+            -                                   '__라면%' : '라면' 앞에 두글자가 와야 함
+            -                                   '__라면__' : 앞뒤 각각 2글자 있어야 함
+            - ex) SELECT * FROM TABLE WHERE NAME LIKE '라면' : '라면' 문자를 그대로 가진 ROW만 출력
+
+
+
+    특정 개수의 값 출력
+
+        - 많은 데이터들 가운데 특정 개수의 데이터만 출력하고 싶을 때
+
+            MSSQL
+                - SELECT TOP 숫자   (숫자: 표시할 개수)
+                - SELECT TOP 숫자%  (숫자: 표시할 개수의 비율)
+
+                - ex) SELECT TOP 3 * FROM TABLE ORDER BY NAME DESC : 이름기준 내림차순 3개의 ROW만 출력
+                - ex) SELECT TOP 50 PERCENT * FROM TABLE ORDER BY NAME DESC : 이름기준 내림차순 전체기준 50%의 ROW만 출력 (*부분에 필드가 들어가는 걸거임)
+
+            MYSQL
+                - SELECT * FROM 테이블명 LIMIT n : n개의 ROW만 출력
+
+            ORACLE
+                - SELECT ROWNUM, * FROM TABLE : 조회된 결과에 순서대로 순번을 붙여준다.
+                - SELECT ROWNUM, * FROM TABLE WHERE ROWNUM <= 2 : 2개만 출력
+-->
+
+
+
+<!-- 
+
+    조건에 따라 값 정해주기
+
+        - CASE [EXPR]   WHEN COMPARISON_EXPR1 THEN RETURN_EXPR1
+                        WHEN COMPARISON_EXPR2 THEN RETURN_EXPR2
+                        WHEN COMPARISON_EXPR3 THEN RETURN_EXPR3
+                        ELSE ELSE_EXPR
+            END
+
+            => CASE 옆에 [EXPR]이 있을 경우 EXPR의 값을 조건이랑 비교해 값을 리턴
+            => COMPARISON_EXPR1이 참 => RETURN_EXPR1 반환
+            => COMPARISON_EXPR2이 참 => RETURN_EXPR2 반환
+            => 모두 거짓일 경우 => ELSE_EXPR 반환
+
+            
+            
+            EX)
+
+                SELECT * , CASE WHEN AGE BETWEEN 14 AND 16 THEN '중학생'
+                                WHEN AGE BETWEEN 17 AND 19 THEN '고등학생'
+                                WHEN AGE >= 20 THEN '성인'
+                                ELSE '어린이'
+                            END AS 'IDENTITY'
+                        FROM TABLE
+
+        - CASE문 중첩 사용
+            EX)
+
+                SELECT * , CASE WHEN AGE BETWEEN 14 AND 20 THEN (CASE NAME WHEN '철수' THEN 'A'
+                                                                            WHEN '훈이' THEN 'B'
+                                                                            WHEN '정훈' THEN 'C'
+                                                                            ELSE 'D' END)
+                                ELSE 'NO'
+                            END AS GRADE
+                        FROM TABLE
+
+                        => 훈이가 14살~20살이 아니면 NO, 14살~20살이면 B가 된다. (처음 CASE 조건을 거치기 때문)
+                        => 14~20살이지만 철수,훈이,정훈이 아닌 경우 'D' 를 반환한다.
+
+                        => 14~20살이 아니면 NO
+                        => 14~20살일 경우 다음 CASE문 필터링
+
 -->
 
 
@@ -132,6 +219,31 @@
             - SELECT CONCAT(NAME, '는 ', CLASS, '반이고 ', POINT, '점이다') ALL IN ONE
 -->
 
+<!-- 
+
+    문자열 길이 출력 함수
+
+        - 문자열의 길이를 출력
+
+        MYSQL
+            - LENGTH(문자 혹은 칼럼)
+            - BYTE의 길이를 가져온다 (영문자: 1BYTE , 한글: 3BYTE) 철수는 6BYTE HELLO는 5BYTE
+
+            - CHAR_LENGTH(문자 혹은 칼럼)
+            - 문자/칼럼의 문자 개수를 출력한다. / 철수 2 , HELLO 5
+
+        ORACLE
+            - LENGTHB()
+
+            - LENGTH()
+
+        MSSQL
+            - DATALENGTH()
+            
+            - LEN()
+
+
+-->
 
 
 <!-- 
