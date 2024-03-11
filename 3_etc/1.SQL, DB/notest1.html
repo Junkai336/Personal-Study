@@ -278,6 +278,45 @@
             - SELECT INSTR('2', '1')
 
 
+
+    문자/날짜 형 변환
+
+        - ORACLE
+
+            - TO_CHAR(데이터, '출력 형식') : 숫자 또는 날짜 데이터를 문자형으로 변경
+
+                - SELECT TO_CHAR(SYSDATE, 'YYYY-MM-DD') : 오늘 날짜의 출력 형식을 결정해서 문자로 리턴
+
+            - TO_DATE(데이터, '날짜 형식')
+
+                - SELECT TO_DATE('20080101', 'YYYY/MM/DD') : 20080101이라는 문자를 2008/01/01 형태의 날짜로 리턴
+
+
+
+        - MYSQL
+
+            - DATE FORMAT(날짜, 출력 형식) : 날짜를 문자열로 변환
+
+                - SELECT DATE_FORMAT('2019-09-16 20:23:12', '%Y/%M/%D') : 2019/09/16
+
+            - STR_TO_DATE(문자, 출력 형식) : 문자열을 날짜로 변환
+
+                - SELECT STR_TO_DATE('20080101', '%Y-%M-%D') : 2008-01-01 날짜로 리턴
+
+
+
+        - MSSQL
+
+            - CONVERT(포맷[길이], 날짜, 변환 형식) : 날짜를 문자로 변환
+
+                - SELECT CONVERT(VARCHAR, GETDATE(), 120) : 2024-03-11 21:03:03
+                => 120 : YYYY-MM-DD HH24:MI:SS 형식, 다른 숫자들은 다른 형식 의미, 찾아봐야함
+
+            - CONVERT(날짜 형식, 문자) : 문자를 날짜로 변환
+
+                - SELECT CONVERT(DATE, '2008-01-01') : 2008-01-01 문자가 날짜로 변경
+                - SELECT CONVERT(DATETIME, '2008-01-01 15:14:13') : 2008-01-01 15:14:13 문자가 날짜/시간으로 변경됨
+
 -->
 
 
@@ -499,4 +538,15 @@
 
             ex) SELECT CLASS, COUNT(SALARY) FROM TABLE GROUP BY CLASS
 
+-->
+
+<!-- 
+
+    CHAR : 길이가 고정된 문자열 타입 / 지정된 크기만큼 데이터가 들어오지 않는 경우 남는 공간을 공백으로 채우며 최대 길이는 255자
+
+    VARCHAR : 가변 문자열 타입 / 저장시 공백이 추가되지 않는다. / 변경할 값이 저장된 사이즈보다 클 때 데이터 파편화 발생
+
+    https://wildeveloperetrain.tistory.com/155
+    https://velog.io/@kdh10806/CHAR-vs-VARCHAR
+    
 -->
