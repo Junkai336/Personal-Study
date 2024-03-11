@@ -243,6 +243,41 @@
             - LEN()
 
 
+
+    데이터를 대소문자로 변환하기
+
+        - LOWER() : 값을 소문자로 변경
+
+            ex) SELECT LOWER(COLOR) FROM TABLE
+                => ReD -> red
+
+        - UPPER() : 값을 대문자로 변경 
+
+            ex) SELECT * FROM TABLE WHERE UPPER(COLOR) = 'BLUE'
+                => 대소문자를 구분할 경우 대소문자를 맞춰서 출력하는 식
+
+        - INITCAP() : 값의 첫 번째 문자만 대문자로 변환해 출력 (나머지 문자는 소문자로 됨)
+
+
+
+    문자가 있는지 찾는 함수
+
+        - MSSQL
+
+            - SELECT CHARINDEX('1', '2')
+            - 2라는 문자열 내에서 1이라는 문자가 있는지 없는지 확인. 
+            - 있다면 문자의 위치를 리턴 (123456번째)
+            - 없다면 0 리턴
+
+            ex) SELECT NAME FROM TABLE WHERE CHARINDEX('naver', E-MAIL) > 0
+                => E-MAIL에 'naver'란 문자가 포함된 NAME 필드가 출력된다.
+
+
+        - ORACLE, MYSQL
+
+            - SELECT INSTR('2', '1')
+
+
 -->
 
 
@@ -292,6 +327,38 @@
 
                 - SELECT DATEDIFF(MI, GETDATE(), GETDATE()+2) : 2880분(2일) 출력
 
+
+
+    돌아오는 요일 날짜 계산
+
+        - NEXT_DAY(날짜, '요일')
+        - NEXT_DAY(날짜, 숫자)      {숫자 기술 시 : 일요일=1 토요일=7}
+
+        ex) 철수의 생일 : 1999/05/25
+
+            - SELECT NAME, BIRTH_DAY, NEXT_DAY(BIRTH_DAY, '금요일') AS NEXT_FRI
+            => 철수의 생일 1999/05/25(화) 이후 오는 금요일의 날짜 1999년 5월 28일(금) 리턴
+
+
+
+    DB에서 현재시간 가져오기
+
+        - WHERE절 등 현재시간이 필요한 곳에서 어디든지 사용할 수 있다.
+
+        - ORACLE
+
+            - SELECT SYSDATE FROM DUAL
+
+        - MYSQL
+
+            - SELECT NOW()
+
+        - MSSQL
+
+            - SELECT GETDATE() : 2024-03-11 13:33:000
+            
+            ex) SELECT * FROM TABLE A WHERE TIME_STAMP < GETDATE()
+                => TIME_STAMP가 현재시간 이전인 데이터만 출력한다.
 
 
 
@@ -357,4 +424,79 @@
 
             - 원하는 데이터들이 하나의 테이블에 있을 때 사용
             - SELECT A.ID AS 'ID', A.NAME AS 'NAME', B.NAME AS 'MANAGER_NAME' FROM A AS A JOIN A AS B ON A.MANAGER_ID = B.ID
+-->
+
+<!-- 
+
+    그룹단위 결과출력
+
+        - GROUP BY
+
+            - 반드시 그룹 함수 ( COUNT, MAX, MIN, AVG, SUM ) 들과 함께 쓰인다. <-
+            - GROUP BY 절이 그룹 함수들의 연산에 기준이 된다.
+            - 칼럼을 기준으로 같은 값이면 GROUP BY로 묶이는 듯?????
+
+            ex) SELECT COMPANY, SUM(SALARY) FROM TABLE GROUP BY COMPANY
+                => COMPANY가 A,B,C 3개 있을 때 각각 나뉘어서 SALARY 합계값 출력
+
+                COMPANY SUM(SALARY)
+                A       1100
+                B       1200
+                C       1000
+
+
+
+        - HAVING
+
+            - WHERE 절은 GROUP BY 절보다 먼저 처리된다.
+            - HAVING 절은 GROUP BY 절 이후에 처리된다. (WHERE절과 역할은 같다.)
+
+            ex) SELECT COMPANY, SUM(SALARY) FROM TABLE GROUP BY COMPANY HAVING SUM(SALARY) >= 1200
+                => 이 경우는 COMPANY B의 SUM 1200만 출력된다.
+
+
+
+        - SUM(EXPR)
+
+            - EXPR의 총합을 구하는 함수
+            
+            ex) SELECT SUM(SALARY) FROM TABLE
+            ex) SELECT CLASS, SUM(SALARY) FROM TABLE GROUP BY CLASS
+                => 같은 CLASS로 묶어서 SALARY를 합한 값을 출력한다.
+
+
+
+        - AVG(EXPR)
+
+            - EXPR의 평균을 구하는 함수
+
+            ex) SELECT AVG(SALARY) FROM TABLE
+            ex) SELECT CLASS, AVG(SALARY) FROM TABLE GROUP BY CLASS
+
+
+        그룹 함수들을 사용할 때 EXPR에는 칼럼명이 아니라 CASE 등 조건을 사용할 수 있다.
+
+
+        
+        - MAX(EXPR)
+
+            - EXPR 중 최댓값 반환
+
+
+
+        - MIN(EXPR)
+
+            - EXPR 중 최솟값 반환
+
+            ex) SELECT MAX(SALARY), MIN(SALARY) FROM TABLE GROUP BY CLASS
+
+
+
+        - COUNT(EXPR)
+
+            - EXPR의 '행의 개수'를 반환
+            - NULL값은 개수 포함 X
+
+            ex) SELECT CLASS, COUNT(SALARY) FROM TABLE GROUP BY CLASS
+
 -->
