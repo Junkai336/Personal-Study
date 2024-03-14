@@ -562,14 +562,30 @@
 
     서브쿼리
 
+        - 하나의 SQL문 안에 포함된 다른 SQL문
+
+        - 조건에 따른 데이터 필터링 : 다른 테이블의 결과에 따라 데이터를 필터링할 때 사용
+        - 비교에 따른 데이터 검색 : 서브쿼리를 사용하여 두 개 이상 테이블 비교 후 원하는 결과 도출
+        - 그룹화된 데이터 비교 : 그룹화된 데이터 비교 후 원하는 결과 도출
+
         일반 서브쿼리
             - 하나의 변수처럼 사용, 쿼리 결과에 따라 구분
 
             - 단일행 서브쿼리(SingleRow Subquery)
                 - 쿼리 결과가 단일행만 리턴
 
+                ex)
+                    SELECT FIRSTNAME, LASTNAME FROM EMPLOYEES
+                        WHERE EMPLOYEEID = (SELECT MANAGERID FROM EMPLOYESS WHERE EMPLOYEEID = 100);
+                    => EMPLOYEEID 가 100인 MANAGERID가 나오고 이후 외부쿼리의 EMPLOYEEID와 일치하는 행 반환
+
             - 다중행 서브쿼리(MultieRow Subquery)
                 - 쿼리 결과가 다중행을 리턴
+
+                ex)
+                    SELECT FIRSTNAME, LASTNAME FROM EMPLOYEES
+                        WHERE DEPARTMENT IN (SELECT DEPARTMENT FROM DEPARTMENTS WHERE LOCATION = 'NEW YORK');
+                    => LOCATION이 NEW YORK인 부서의 DEPARTMENT 값 반환 후 이 값을 포함하는 직원 반환
 
             - 다중칼럼 서브쿼리(MultieColumn Subquery)
                 - 쿼리 결과가 다중칼럼을 리턴
@@ -584,7 +600,13 @@
 
         스칼라 서브쿼리(Scalar Subquery)
             - 하나의 칼럼처럼 사용되는 서브쿼리
+
+            ex) SELECT FIRSTNAME, LASTNAME, (SELECT MAX(SALARY) FROM SALARIES) AS MAXSALARY FROM EMPLOYEES;
+            => SALARIES 테이블에서 최대 급여 반환 후 이 값을 모든 직원의 각 행에 추가하여 함께 반환
             
+            ex) SELECT FIRSTNAME, LASTNAME, SALARY FROM EMPLOYEES
+                    WHERE SALARY > (SELECT AVG(SALARY) FROM EMPLOYEES);
+            => SALARY가 평균보다 높은 직원들 출력
             
 
         상호 연관 서브쿼리(Correlative Subquery)
@@ -597,6 +619,37 @@
 
 
 -->
+
+
+
+<!-- 
+
+    SQL 프로시저 변수 (좀더찾아보기)
+
+        DECLARE
+            - DECLARE @VariableName DataType;
+            - DECLARE @VariableName DataType = Values;
+            - @VariableName : 변수 이름
+            - DataType : 변수의 데이터 유형
+
+        SET
+            - SET @VariableName = Value;
+            - 변수 선언과 동시에 초기화
+
+        DEFAULT ?
+            - 새로운 레코드가 삽입될 때 열에 기본값 제공하는데 사용
+
+            ex) CREATE TABLE ORDER (
+                ID INT PRIMARY KEY,
+                JOININGDATE DATE DEFAULT CURRENT_DATE;
+            )
+        
+
+        ex) SELECT * FROM TABLENAME WHERE COLUMNNAME = @VariableName;
+
+-->
+
+
 
 <!-- 
 
