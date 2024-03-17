@@ -1,4 +1,4 @@
-package com.domain.practice;
+package com.SpringBootProject.domain.practice;
 
 import org.springframework.stereotype.Repository;
 

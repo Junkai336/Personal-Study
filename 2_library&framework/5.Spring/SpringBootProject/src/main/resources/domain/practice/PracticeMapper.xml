@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.domain.practice.PracticeMapper">
+<mapper namespace="com.SpringBootProject.domain.practice.PracticeMapper">
 
     <!-- id가 mapper랑 연결되는 거고 resultType은 엔티티인듯?-->
     <select id="getFileList" parameterType="hashmap" resultType="com.qms.domain.file.CommonFile" >
