@@ -15,11 +15,14 @@
     <version>1.0.0</version> <!-- ?? -->
     <packaging>war</packaging> <!-- ?? -->
     <name>SpringBootProject</name>
-    <description>마이바티스, 매퍼, mssql, dao 연습용 프로젝트</description>
+    <description>마이바티스, 매퍼, mssql, jdbc, sql, 모달매퍼 등 연습용 프로젝트</description>
 
     <properties>
         <java.version>8</java.version>
         <lombok.version>1.16.12</lombok.version>
+        <mybatis.version>3.3.0</mybatis.version>
+        <jdbc.version>6.1.5</jdbc.version>
+        <modelmapper.version>0.7.5</modelmapper.version>
     </properties>
 
 
@@ -36,15 +39,45 @@
             <scope>provided</scope>
         </dependency>
 
+        <!-- lombok -->
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <version>${lombok.version}</version>
         </dependency>
 
+        <!-- devtools -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-devtools</artifactId>
+            <scope>runtime</scope>
+        </dependency>
+
+        <!-- ?? 모델매퍼? 모달매퍼? -->
+        <dependency>
+            <groupId>org.modelmapper</groupId>
+            <artifactId>modelmapper</artifactId>
+            <version>${modelmapper.version}</version>
+        </dependency>
+
+        <!-- mybatis 3.3.0 -->
+        <dependency>
+            <groupId>org.mybatis</groupId>
+            <artifactId>mybatis</artifactId>
+            <version>${mybatis.version}</version>
+        </dependency>
+
+        <!-- jdbc인데 버전때문에 에러날 수도 -->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-jdbc</artifactId>
+            <version>${jdbc.version}</version>
+        </dependency>
+
+        <!-- mssql -->
+        <dependency>
+            <groupId>com.microsoft.sqlserver</groupId>
+            <artifactId>mssql-jdbc</artifactId>
             <scope>runtime</scope>
         </dependency>
 
