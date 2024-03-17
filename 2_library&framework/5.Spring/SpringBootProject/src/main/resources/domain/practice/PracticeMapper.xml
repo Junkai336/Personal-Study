@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.domain.practice.PracticeMapper">
+
+    <!-- id가 mapper랑 연결되는 거고 resultType은 엔티티인듯?-->
+    <select id="getFileList" parameterType="hashmap" resultType="com.qms.domain.file.CommonFile" >
+        <![CDATA[
+		select
+		ID
+		,TARGET_TYPE
+		,TARGET_ID
+		from file_l
+		]]>
+        <where>
+            <if test="true">
+                AND TARGET_ID = '${targetId}'
+            </if>
+            <if test="targetType != null and targetType !=''">
+                AND TARGET_TYPE = '${targetType}'
+            </if>
+        </where>
+    </select>
+</mapper>

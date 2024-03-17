@@ -18,7 +18,7 @@
     <description>마이바티스, 매퍼, mssql, jdbc, sql, 모달매퍼 등 연습용 프로젝트</description>
 
     <properties>
-        <java.version>8</java.version>
+        <java.version>1.8</java.version>
         <lombok.version>1.16.12</lombok.version>
         <mybatis.version>3.3.0</mybatis.version>
         <jdbc.version>6.1.5</jdbc.version>
