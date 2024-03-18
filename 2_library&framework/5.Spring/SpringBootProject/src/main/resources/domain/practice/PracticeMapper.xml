@@ -2,9 +2,34 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.SpringBootProject.domain.practice.PracticeMapper">
+    <insert id="insert" parameterType="hashmap">
+        INSERT INTO HELLOMANN (COLUMN1, COLUMN2, COLUMN3)
+        VALUES ('A', 'B', 'C')
+    </insert>
+
+    <select id="select" parameterType="hashmap">
+        SELECT *
+        FROM HELLOMANN
+    </select>
+
+    <update id="update" parameterType="hashmap">
+        UPDATE HELLOMANN
+        SET COLUMN1 = 'Z',
+            COLUMN2 = 'X',
+            COLUMN3 = 'C'
+        WHERE COLUMN1 = 'A'
+          AND COLUMN2 = 'B'
+          AND COLUMN3 = 'C'
+    </update>
+
+    <delete id="delete" parameterType="hashmap">
+        DELETE
+        FROM HELLOMANN
+    </delete>
+
 
     <!-- id가 mapper랑 연결되는 거고 resultType은 엔티티인듯?-->
-    <select id="getFileList" parameterType="hashmap" resultType="com.qms.domain.file.CommonFile" >
+    <select id="getFileList" parameterType="hashmap" resultType="com.qms.domain.file.CommonFile">
         <![CDATA[
 		select
 		ID

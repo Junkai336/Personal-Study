@@ -11,9 +11,9 @@
     <title>Title</title>
 </head>
 <body>
-<button type="button">테이블 만들기</button>
-<button type="button">단순 insert</button>
-<button type="button">단순 update</button>
-<button type="button">단순 delete</button>
+<button type="button" class="createtable">테이블 만들기</button>
+<button type="button" class="simpleinsert">단순 insert</button>
+<button type="button" class="simpleupdate">단순 update</button>
+<button type="button" class="simpledelete">단순 delete</button>
 </body>
 </html>

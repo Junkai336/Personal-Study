@@ -76,6 +76,13 @@
 <!--            <artifactId>spring-boot-starter-thymeleaf</artifactId>-->
 <!--        </dependency>-->
 
+<!--        @INJECT 어노테이션 사용 목적-->
+        <dependency>
+            <groupId>javax.inject</groupId>
+            <artifactId>javax.inject</artifactId>
+            <version>1</version>
+        </dependency>
+
         <!-- jstl -->
         <!-- 스프링부트가 내장톰캣을 가지고 있지만 JSP 템플릿 엔진이 존재하지 않아 JSP 라이브러리인 JSTL 사용할 수 있게 해야 함 -->
         <dependency>

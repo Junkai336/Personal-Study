@@ -14,4 +14,6 @@ public class PracticeController {
         return "crud";
     }
 
+
+
 }
