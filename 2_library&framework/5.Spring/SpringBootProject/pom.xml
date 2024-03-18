@@ -70,7 +70,7 @@
             <scope>runtime</scope>
         </dependency>
 
-<!-- 타임리프가 templates 폴더를 쓴다. -->
+<!-- 타임리프가 templates 폴더를 쓴다. jsp랑 같이 쓰면 따로 경로 지정을 해야할 것임-->
 <!--        <dependency>-->
 <!--            <groupId>org.springframework.boot</groupId>-->
 <!--            <artifactId>spring-boot-starter-thymeleaf</artifactId>-->
