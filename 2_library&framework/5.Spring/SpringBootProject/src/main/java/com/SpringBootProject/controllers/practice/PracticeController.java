@@ -7,14 +7,12 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class PracticeController {
 
-<<<<<<< HEAD
-    @RequestMapping(value = "crud", method = GET)
+    @RequestMapping(value = "crud")
     public String crud() {
         return "crud";
     }
 
 
 
-=======
->>>>>>> a285ca4cd7badf677e94825aa1d2bbea02b646a4
+
 }
