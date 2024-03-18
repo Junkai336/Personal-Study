@@ -7,7 +7,7 @@
         VALUES ('A', 'B', 'C')
     </insert>
 
-    <select id="select" parameterType="hashmap">
+    <select id="select" parameterType="hashmap" resultType="String">
         SELECT *
         FROM HELLOMANN
     </select>
@@ -26,24 +26,4 @@
         DELETE
         FROM HELLOMANN
     </delete>
-
-
-    <!-- id가 mapper랑 연결되는 거고 resultType은 엔티티인듯?-->
-    <select id="getFileList" parameterType="hashmap" resultType="com.qms.domain.file.CommonFile">
-        <![CDATA[
-		select
-		ID
-		,TARGET_TYPE
-		,TARGET_ID
-		from file_l
-		]]>
-        <where>
-            <if test="true">
-                AND TARGET_ID = '${targetId}'
-            </if>
-            <if test="targetType != null and targetType !=''">
-                AND TARGET_TYPE = '${targetType}'
-            </if>
-        </where>
-    </select>
 </mapper>

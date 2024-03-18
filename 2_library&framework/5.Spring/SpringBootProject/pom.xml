@@ -22,6 +22,7 @@
         <lombok.version>1.16.12</lombok.version>
         <mybatis.version>3.3.0</mybatis.version>
         <jdbc.version>6.1.5</jdbc.version>
+        <apachecommons.version>2.9.0</apachecommons.version>
         <modelmapper.version>0.7.5</modelmapper.version>
     </properties>
 
@@ -56,11 +57,25 @@
             <version>${mybatis.version}</version>
         </dependency>
 
-        <!-- jdbc인데 버전때문에 에러날 수도 -->
+        <dependency>
+            <groupId>org.mybatis.spring.boot</groupId>
+            <artifactId>mybatis-spring-boot-starter</artifactId>
+            <version>1.3.2</version>
+        </dependency>
+
+<!--        jdbc -->
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-jdbc</artifactId>
             <version>${jdbc.version}</version>
+        </dependency>
+
+<!--        apache commons -->
+<!--        왜 넣는진 모름 -->
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-dbcp2</artifactId>
+            <version>${apachecommons.version}</version>
         </dependency>
 
         <!-- mssql -->
@@ -118,6 +133,11 @@
             <artifactId>junit-jupiter</artifactId>
             <version>RELEASE</version>
             <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>jakarta.activation</groupId>
+            <artifactId>jakarta.activation-api</artifactId>
+            <version>2.1.2</version>
         </dependency>
     </dependencies>
 

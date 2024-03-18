@@ -419,6 +419,15 @@
 
 
 
+    날짜 여부
+
+        - ISDATE(EXPRESSION)
+
+            - ex) PRINT ISDATE (GETDATE());
+            - 해당 문자열이 date, time, datetime 값인 경우 1반환 아닐 경우 0 반환
+
+
+
     SQL 값이 NULL 일 경우
 
         - ORACLE
@@ -555,6 +564,7 @@
             - NULL값은 개수 포함 X
 
             ex) SELECT CLASS, COUNT(SALARY) FROM TABLE GROUP BY CLASS
+            ex) COUNT(*), COUNT(열이름), COUNT(DISTINCT 열이름) 등을 사용해 NULL이나 중복값 쉽게 검증 가능
 
 -->
 
@@ -620,7 +630,83 @@
 
 -->
 
+<!-- 
 
+    중복값 제거
+
+        - 특정 테이블로부터 중복 없이 값 출력
+        - SELECT DISTINCT 열이름 FROM 테이블 : DISTINCT 뒤에 지정한 열이 한개일 경우
+        - SELECT DISTINCT 열이름1, 열이름2 FROM 테이블 : 여러 개의 열 이름은 하나의 집합으로 생각하여 이 집합의 중복을 제거     <- ?
+
+
+
+    새롭게 지정하고 싶은 열이름
+
+        - SELECT 열이름 "새로운 열이름" FROM 테이블명;
+
+
+
+    숫자 함수
+
+        - ROUND() : 소숫점의 자릿수를 지정하여 반올림
+        
+        - TRUNC() : 해당 소수점 자리에서 잘라낼 때 사용
+        
+        - MOD(M,N) : M을 N으로 나눈 나머지를 나타냄
+
+        - ABS() : 값을 절대값으로 변환할 때 사용
+
+        - SIGN() : 숫자가 양수면 1, 음수면 -1, 0이면 0 반환
+        
+        - SQRT() : 제곱근
+
+        - POWER(데이터, N) : N승
+
+
+
+    공백 제거
+
+        - SELECT 열이름1, RTRIM (열이름2) FROM 테이블명 : 오른쪽 공백 제거
+
+        - SELECT 열이름1, LTRIM (열이름2) FROM 테이블명 : 왼쪽 공백 제거
+
+        - SELECT 열이름1, TRIM (열이름2) FROM 테이블명 : 모든 공백 제거
+
+
+
+    OR
+
+
+
+    ALL, SOME, ANY
+
+
+
+    EXIST, NOT EXISTS
+
+        - 서브쿼리를 지정하여 행의 존재 여부 테스트
+
+        - EXISTS (subquery)
+
+            - ex) SELECT 'Y' AS IS_EXISTS WHERE EXISTS (SELECT * FROM TBA WHERE SCORE = 100)
+
+        - NOT EXISTS (subquery)
+
+            - ex)                               NOT EXISTS
+
+
+
+    NEWID
+
+        - uniqueidentifier 형식의 고유한 값을 만들어주는 함수
+        - NEWID()
+        - ex) SELECT NEWID() : 06FF01F3-0D15-417C-AA20-0F5B15C31FF6
+
+
+
+    COALESCE
+
+-->
 
 <!-- 
 
@@ -649,7 +735,37 @@
 
 -->
 
+<!-- 
 
+    테이블 및 데이터 복사
+
+        SELECT INTO
+
+            - 데이터를 포함한 테이블 정보를 모두 한번에 복사 가능
+
+            - SELECT 칼럼명 INTO 생성테이블 FROM 원본테이블 WHERE 조건
+
+            ex) SELECT * INTO TB_A FROM TB_B
+
+        SELECT INSERT
+
+            - 2개의 테이블이 완전 동일한 스키마를 가진 경우
+
+                - INSERT INTO 삽입할테이블명 SELECT * FROM 조회할테이블명
+
+            - 2개의 테이블의 칼럼 중 일부만 같은 경우
+
+                - INSERT INTO 삽입할테이블명 (컬럼1, 컬럼2, ...) SELECT 컬럼1, 컬럼2, ... FROM 조회할테이블명
+
+                - ex) INSERT INTO TB_A (COLA, COLB, COLC) SELECT COLA, COLB, COLC FROM TB_B
+
+
+
+    뷰 생성
+
+
+
+-->
 
 <!-- 
 
@@ -660,4 +776,14 @@
     https://wildeveloperetrain.tistory.com/155
     https://velog.io/@kdh10806/CHAR-vs-VARCHAR
     
+-->
+
+<!-- 
+
+    PARTITION?
+
+    OVER?
+
+    RANK?
+
 -->
