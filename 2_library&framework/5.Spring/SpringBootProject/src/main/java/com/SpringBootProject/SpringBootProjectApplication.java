@@ -1,8 +1,15 @@
 package com.SpringBootProject;
 
+import org.apache.ibatis.session.SqlSessionFactory;
+import org.mybatis.spring.SqlSessionFactoryBean;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.Bean;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+
+import javax.sql.DataSource;
 
 // enablewebmvc 어노테이션을 쓰면 jsp가 제대로 실행안됨
 // Spring Boot 의 고유기능을 사용하기 위해서는 @EnableWebMvc 는 사용하지 않습니다.
@@ -14,5 +21,5 @@ public class SpringBootProjectApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(SpringBootProjectApplication.class, args);
 	}
+		}
 
-}

@@ -1,13 +1,14 @@
 package com.SpringBootProject.domain.practice;
 
-import com.SpringBootProject.core.MyBatisMapper;
+import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Map;
 
 @Repository
-public interface PracticeMapper extends MyBatisMapper {
+@Mapper
+public interface PracticeMapper {
     int insert(Map<String, Object> param);
 //    List<TableMap> select(Map<String, Object> param);
     int update(Map<String, Object> param);
