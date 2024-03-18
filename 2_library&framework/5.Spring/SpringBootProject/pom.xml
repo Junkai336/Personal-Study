@@ -15,7 +15,7 @@
     <version>1.0.0</version> <!-- ?? -->
     <packaging>war</packaging> <!-- ?? -->
     <name>SpringBootProject</name>
-    <description>마이바티스, 매퍼, mssql, jdbc, sql, 모달매퍼 등 연습용 프로젝트</description>
+    <description>마이바티스, 모델매퍼, mssql, jdbc, sql, mapper, jsp, axboot 등 연습용 프로젝트</description>
 
     <properties>
         <java.version>1.8</java.version>
@@ -24,7 +24,6 @@
         <jdbc.version>6.1.5</jdbc.version>
         <modelmapper.version>0.7.5</modelmapper.version>
     </properties>
-
 
 
     <dependencies>
@@ -71,9 +70,24 @@
             <scope>runtime</scope>
         </dependency>
 
+<!-- 타임리프가 templates 폴더를 쓴다. -->
+<!--        <dependency>-->
+<!--            <groupId>org.springframework.boot</groupId>-->
+<!--            <artifactId>spring-boot-starter-thymeleaf</artifactId>-->
+<!--        </dependency>-->
+
+        <!-- jstl -->
+        <!-- 스프링부트가 내장톰캣을 가지고 있지만 JSP 템플릿 엔진이 존재하지 않아 JSP 라이브러리인 JSTL 사용할 수 있게 해야 함 -->
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-thymeleaf</artifactId>
+            <groupId>javax.servlet</groupId>
+            <artifactId>jstl</artifactId>
+        </dependency>
+
+        <!-- tomcat-embed-jasper -->
+        <!-- jasper는 스프링부트에서 JSP 템플릿 엔진을 사용할 수 있도록 해주는 라이브러리 -->
+        <dependency>
+            <groupId>org.apache.tomcat.embed</groupId>
+            <artifactId>tomcat-embed-jasper</artifactId>
         </dependency>
 
         <dependency>
@@ -99,7 +113,6 @@
             <scope>test</scope>
         </dependency>
     </dependencies>
-
 
 
     <build>
