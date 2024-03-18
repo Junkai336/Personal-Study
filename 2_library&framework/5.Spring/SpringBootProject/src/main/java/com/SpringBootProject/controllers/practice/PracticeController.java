@@ -4,11 +4,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import static org.springframework.web.bind.annotation.RequestMethod.GET;
-
 @RestController
 public class PracticeController {
 
+<<<<<<< HEAD
     @RequestMapping(value = "crud", method = GET)
     public String crud() {
         return "crud";
@@ -16,4 +15,6 @@ public class PracticeController {
 
 
 
+=======
+>>>>>>> a285ca4cd7badf677e94825aa1d2bbea02b646a4
 }
