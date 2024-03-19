@@ -15,14 +15,13 @@ public class PracticeService {
     @Inject
     private PracticeMapper practiceMapper;
 
-    public void insert(Map<String, Object> param) {
-        practiceMapper.insert(param);
+    public void create() { practiceMapper.create();}
+    public void insert() { practiceMapper.insert(); }
+    public void update() {
+        practiceMapper.update();
     }
-    public void update(Map<String, Object> param) {
-        practiceMapper.update(param);
-    }
-    public void delete(Map<String, Object> param) {
-        practiceMapper.delete(param);
+    public void delete() {
+        practiceMapper.delete();
     }
 
 }

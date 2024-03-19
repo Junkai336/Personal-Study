@@ -9,10 +9,12 @@ import java.util.Map;
 @Repository
 @Mapper
 public interface PracticeMapper {
-    int insert(Map<String, Object> param);
+
+    void create();
+    void insert();
 //    List<TableMap> select(Map<String, Object> param);
-    int update(Map<String, Object> param);
-    int delete(Map<String, Object> param);
+    void update();
+    void delete();
 }
 
 //mybatis 사용 시 mapper interface가 반드시 필요한 경우는

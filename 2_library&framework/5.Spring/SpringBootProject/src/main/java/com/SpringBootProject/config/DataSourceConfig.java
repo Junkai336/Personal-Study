@@ -13,10 +13,14 @@ public class DataSourceConfig {
     @Bean
     public DataSource dataSource() {
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
+//        dataSource.setDriverClassName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+//        dataSource.setUrl("jdbc:sqlserver://localhost:7700;databaseName=mybatispractice");
+//        dataSource.setUsername("sa");
+//        dataSource.setPassword("gkql123");
         dataSource.setDriverClassName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-        dataSource.setUrl("jdbc:sqlserver://localhost:7700;databaseName=mybatispractice");
+        dataSource.setUrl("jdbc:sqlserver://125.189.149.10:1433;databaseName=SNSINC_TEST");
         dataSource.setUsername("sa");
-        dataSource.setPassword("gkql123");
+        dataSource.setPassword("");
         return dataSource;
     }
 }
