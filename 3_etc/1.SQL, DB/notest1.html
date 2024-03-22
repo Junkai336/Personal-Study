@@ -190,9 +190,9 @@
 
             - SUBSTRING(문자열, 시작위치, 길이) : 
 
-            - LEFT(문자열, 길이) : 
+            - LEFT(문자열, 길이) : 왼쪽부터 길이만큼 출력
 
-            - RIGHT(문자열, 길이) : 
+            - RIGHT(문자열, 길이) : 오른쪽부터 길이만큼 출력
 
 
 
@@ -677,8 +677,28 @@
     OR
 
 
+    ON
+
+
 
     ALL, SOME, ANY
+
+        - 비교 연산자와 함께 사용
+        - 하위 쿼리가 반환하는 값 집합과 값을 비교
+
+        ALL
+            - 하위 쿼리가 반환하는 모든 값과 값을 비교
+            - 하위 쿼리에서 반환된 모든 값에 대해 참이면, 외부 쿼리는 참 반환
+            - 비교가 하나라도 실패하면, 외부 쿼리는 거짓 반환
+            - ex)
+                SELECT * FROM PRODUCTS WHERE PRICE > ALL (SELECT PRICE FROM PRODUCTS WHERE CATEGORY = '전자제품');
+
+        ANY, SOME
+            - 하위 쿼리가 반환하는 값 중 하나와 값을 비교
+            - 하위 쿼리에서 반환된 값 중 적어도 하나에 대해 비교가 참이면, 외부 쿼리는 참 반환
+            - 비교가 전부 실패하면, 외부 쿼리는 거짓 반환
+            - ex)
+                SELECT * FROM ORDERS WHERE TOTAL_AMOUNT > ANY (SELECT TOTAL_AMOUNT FROM ORDERS WHERE STATUS = '배송완료');
 
 
 
@@ -747,6 +767,8 @@
 
             ex) SELECT * INTO TB_A FROM TB_B
 
+
+
         SELECT INSERT
 
             - 2개의 테이블이 완전 동일한 스키마를 가진 경우
@@ -761,9 +783,81 @@
 
 
 
-    뷰 생성
+        UNION 문
+
+            - 2개 이상의 SELECT 문의 결과를 결합하는데 사용
+            - 중복 행은 제거됨
+            - ex)
+                SELECT COLUMN1, COLUMN2 FROM TABLE1
+                UNION
+                SELECT COLUMN1, COLUMN2 FROM TABLE2
 
 
+
+        INTERSECT 문
+
+            - 2개 이상의 SELECT 문의 결과 중 공통된 행만 반환
+            - ex)
+                SELECT PRODUCT_ID, PRODUCT_NAME FROM PRODUCTS
+                INTERSECT
+                SELECT COLUMN1, COLUMN2 FROM TABLE2
+
+
+
+        EXCEPT 문
+
+            - 첫번째 SELECT 문의 결과에서 두 번째 SELECT 문의 결과를 제외한 행 반환
+            - ex)
+                SELECT COLUMN1, COLUMN2 FROM TABLE1
+                EXCEPT
+                SELECT COLUMN1, COLUMN2 FROM TABLE2
+
+
+
+        CREATE INDEX 문
+
+            - 인덱스 생성 (데이터베이스 검색 속도 향상시키는 데 사용)
+            - ex)
+                CREATE INDEX INDEX_NAME ON TABLE_NAME (COLUMN1, COLUMN2, ...)
+
+
+
+        DROP TABLE
+
+            - 테이블 삭제
+            - ex) DROP TABLE TABLE_NAME;
+
+
+
+        TRUNCATE TABLE
+
+            - 테이블의 모든 데이터 삭제
+            - 테이블 구조는 유지됨
+            - ex) TRUNCATE TABLE TABLE_NAME;
+
+
+
+        GRANT 문
+
+            - 사용자에게 특정 권한 부여
+            - ex)
+                GRANT permission ON object TO user;
+                GRANT SELECT, INSERT ON ORDERS TO SALES_USER;
+
+
+
+        REVOKE 문
+
+            - 사용자로부터 특정 권한 회수
+            - ex)
+                REVOKE permission ON object FROM user;
+                REVOKE INSERT ON ORDERS FROM SALSE_USER;
+
+
+
+        COMMIT; : 트랜잭션을 확성하여 데이터베이스에 변경 사항 반영
+
+        ROLLBACK : 트랜잭션을 취소하여 변경 사항 롤백
 
 -->
 

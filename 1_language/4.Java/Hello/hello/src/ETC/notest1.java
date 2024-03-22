@@ -9,6 +9,9 @@
 
     StringTokenizer
 
+    Scan.next()
+
+    Scan.nextLine()
 
     
  */
