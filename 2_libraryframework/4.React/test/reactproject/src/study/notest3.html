@@ -1,0 +1,178 @@
+<!-- 
+
+    JSX
+        - 자바스크립트 확장 문법
+        - 자바스크립트 코드 내에서도 HTML 코드처럼 UI를 바로 표현할 수 있음
+        - 표준 자바스크립트 문법이 아니기 때문에, 웹 브라우저가 이해하지 못 함
+        - JSX 코드는 웹 브라우저에서 실행되기 전 Babel같은 도구를 사용하여 표준 자바스크립트 문법으로 변환
+
+    Webpack
+        - 자바스크립트 애플리케이션을 위한 번들링과 컴파일을 결합한 정적 모듈 번들러
+        - 자바스크립트 모듈 + 웹 앱 구성하는 모든 리소스를 모듈로 취급 (html, stylesheet, img, font 등)
+        - 사용하지 않는 리소스 제거와 같은 최적화 작업 수행하여 웹 앱 성능 향상
+        - 번들링을 통해 웹 브라우저의 HTTP 요청 횟수의 제약을 피할 수 있도록 함
+        - Code Splitting 기능을 사용하면 웹 앱의 로딩 속도 개선 가능
+        - CRA(Create-React-App) 으로 React 개발 환경 설정시 자동 설치
+        - Webpack 공식 홈페이지 (https://webpack.kr/)
+
+        Code Splitting
+            - 애플리케이션 규모가 커질수록 번들로를 통해 만들어지는 결과물 또한 용량이 커지게 됨 -> 애플리케이션 로딩 시간이 길어질 수 있다.
+            - 이 기능을 통해 코드를 분할하고, 사용자가 당장 필요로 하지 않는 리소스는 지연 로딩함으로써 애플리케이션 성능 향상 가능
+
+    Babel
+        - 자바스크립트 컴파일러
+        - 최신 자바스크립트 문법(ES6) or 실험적인 자바스크립트 문법으로 작성된 코드 -> 이전버전인 ES% 문법의 자바스크립트 코드로 변환해주는 툴
+        - 구 버전의 웹 브라우저에서 최신 자바스크립트 문법의 특정 코드가 실행되지 않을 수 있고 특정 브라우저에서만 실행되지 않는 코드들도 있음
+        - Babel과 같은 트랜스파일러(transpiler)를 사용하여 작성한 자바스크립트 코드가 어떤 환경에서도 정상적으로 동작할 수 있도록 이전 버전 JS로 변환해주는 것
+        - JSX 문법도 표준 JS 문법이 아니므로 Babel을 통해 ES5 문법의 자바스크립트 코드로 변환되어야 웹브라우저가 정상적으로 인식
+        - Babel 공식 홈페이지 (https://babeljs.io/docs/en/)
+
+-->
+
+<!-- 
+
+    JSX
+        - XML 구문에 JS 코드를 결합한 구문을 사용하기 때문에 XML 표준을 준수해야 함
+        - XML 트리 : https://www.tcpschool.com/xml/xml_basic_structure
+        - 요소가 반드시 닫혀야 오류가 발생하지 않음 ( <img> <br> 같은 요소도 self-closing 해야함 => <hr />)
+        - 컴포넌트에는 최상위 요소가 '단 하나만' 존재해야 함
+
+            export default function App() {
+                return (
+                    <h1>Hello, World!</h1>
+                    <p>React도 안녕!</p>        <- 최상위 요소가 2개라 에러임
+            );
+            }
+
+        - React DOM에 의해 관리되는 모든 요소들은 최종적으로 id:root인 <div> 요소안에 렌더링됨.
+        - 이 <div> 요소를 루트 DOM 노드라고 부름
+        - 속성값이 root인 div 요소를 루트 DOM 노드라고 부름 (public/index.html) / 내부에 들어가는 요소들은 React DOM에서 관리
+
+            <div id="root">
+                <div>
+                    <h1>Hello, World!</h1>
+                    <p>React도 안녕!</p>
+                </div>
+            </div>
+
+        - <fragment>
+            - fragment 요소를 최상위 요소로 사용하면 별도의 요소를 추가하지 않고도 여러 자식 요소들을 그룹화 가능
+            - HTML 페이지에는 실제 렌더링되지 않음
+            - fragment의 축약형 문법에서는 키(key)와 속성(attribute)를 사용할 수 없다                               <- ?
+
+                <fragment>
+                    <h1>asd</h1>
+                    <p>asd</p>
+                </fragment>
+
+        - 자바스크립트 표현식은 중괄호로 감싸져야 정상적으로 컴파일 { ... }
+
+
+
+        DOM 속성 (attribute)
+            - 카멜표기법(carmelCase) { maxlength -> maxLength } {예외: 사용자지정속성, aria- , data- 는 소문자로 표기}
+            - className : class 라는 단어가 JS 문법에서 class를 생성하기 위한 키워드로 이미 예약됨
+            - htmlFor : for 라는 단어가 JS 문법과 중복되므로 JSX에서는 바꿔서 사용
+                ex) <label htmlFor="name">이름 : </label>
+
+
+
+            [지원되는 HTML DOM 속성 리스트] (참고)
+
+            accept acceptCharset accessKey action allowFullScreen alt async autoComplete autoFocus autoPlay capture cellPadding cellSpacing challenge charSet checked cite classID className colSpan cols content contentEditable contextMenu controls controlsList coords crossOrigin data dateTime default defer dir disabled download draggable encType form formAction formEncType formMethod formNoValidate formTarget frameBorder headers height hidden high href hrefLang htmlFor httpEquiv icon id inputMode integrity is keyParams keyType kind label lang list loop low manifest marginHeight marginWidth max maxLength media mediaGroup method min minLength multiple muted name noValidate nonce open optimum pattern placeholder poster preload profile radioGroup readOnly rel required reversed role rowSpan rows sandbox scope scoped scrolling seamless selected shape size sizes span spellCheck src srcDoc srcLang srcSet start step style summary tabIndex target title type useMap value width wmode wrap
+
+            [지원되는 SVG 속성 리스트]
+
+            accentHeight accumulate additive alignmentBaseline allowReorder alphabetic amplitude arabicForm ascent attributeName attributeType autoReverse azimuth baseFrequency baseProfile baselineShift bbox begin bias by calcMode capHeight clip clipPath clipPathUnits clipRule colorInterpolation colorInterpolationFilters colorProfile colorRendering contentScriptType contentStyleType cursor cx cy d decelerate descent diffuseConstant direction display divisor dominantBaseline dur dx dy edgeMode elevation enableBackground end exponent externalResourcesRequired fill fillOpacity fillRule filter filterRes filterUnits floodColor floodOpacity focusable fontFamily fontSize fontSizeAdjust fontStretch fontStyle fontVariant fontWeight format from fx fy g1 g2 glyphName glyphOrientationHorizontal glyphOrientationVertical glyphRef gradientTransform gradientUnits hanging horizAdvX horizOriginX ideographic imageRendering in in2 intercept k k1 k2 k3 k4 kernelMatrix kernelUnitLength kerning keyPoints keySplines keyTimes lengthAdjust letterSpacing lightingColor limitingConeAngle local markerEnd markerHeight markerMid markerStart markerUnits markerWidth mask maskContentUnits maskUnits mathematical mode numOctaves offset opacity operator order orient orientation origin overflow overlinePosition overlineThickness paintOrder panose1 pathLength patternContentUnits patternTransform patternUnits pointerEvents points pointsAtX pointsAtY pointsAtZ preserveAlpha preserveAspectRatio primitiveUnits r radius refX refY renderingIntent repeatCount repeatDur requiredExtensions requiredFeatures restart result rotate rx ry scale seed shapeRendering slope spacing specularConstant specularExponent speed spreadMethod startOffset
+            stdDeviation stemh stemv stitchTiles stopColor stopOpacity strikethroughPosition strikethroughThickness string stroke strokeDasharray strokeDashoffset strokeLinecap strokeLinejoin strokeMiterlimit strokeOpacity strokeWidth surfaceScale systemLanguage tableValues targetX targetY textAnchor textDecoration textLength textRendering to transform u1 u2 underlinePosition underlineThickness unicode unicodeBidi unicodeRange unitsPerEm vAlphabetic vHanging vIdeographic vMathematical values vectorEffect version vertAdvY vertOriginX vertOriginY viewBox viewTarget visibility widths wordSpacing writingMode x x1 x2 xChannelSelector xHeight xlinkActuate xlinkArcrole xlinkHref xlinkRole xlinkShow xlinkTitle xlinkType xmlns xmlnsXlink xmlBase xmlLang xmlSpace y y1 y2 yChannelSelector z zoomAndPan
+
+
+
+-->
+
+<!-- 
+
+    엘리먼트
+        - element
+        - View에 렌더링 할 내용을 React에 알려주기 위한 수단
+        - React 애플리케이션을 구성하는 가장 작은 블록
+
+        ex) const element = <p className="greeting">Hello, World</p>
+
+        - HTML 태그의 이름을 값으로 가지는 type 필드 / 그 외 속성들을 값으로 전달받는 props 필드로 구성된 객체(object) 형태로 정의
+        - React는 이 객체를 읽어들여 DOM을 구성하고 최신 상태로 업데이트하는데 사용
+
+        - 일반 객체(plain object)로 손쉽게 생성할 수 있지만, 불변 객체이기 때문에 생성된 후에는 상태나 속성을 변경할 수 없다.
+        - React에서 UI를 업데이트하는 방법은 새로운 엘리먼트를 생성하고, 이를 render() 메소드에 전달하는 것
+
+    엘리먼트 렌더링
+        - index.js : React 애플리케이션의 진입점
+        - 루트 DOM 요소를 createRoot() 함수에 전달하여 새로운 루트 DOM 노드를 생성하여 반환
+        - 반환된 루트 DOM 노드의 render() 메소드에 화면에 나타나길 원하는 엘리먼트들을 전달하여 View를 렌더링
+
+        ex)
+
+        const root = createRoot(document.getElementById("root"));
+            root.render(
+                <StrictMode>
+                    <App />
+                </StrictMode>
+            );
+        
+        => 새롭게 생성한 element라는 엘리먼트를 화면에 렌더링할 수 있다.
+
+        const rootElement = document.getElementById("root");
+        const root = createRoot(rootElement);
+
+        const element = <h1>새로운 React 엘리먼트</h1>;
+
+        root.render(element);
+
+
+
+    컴포넌트
+        - React에서는 애플리케이션의 UI를 설계할 때 사용자가 볼 수 있는 화면을 여러 개의 컴포넌트로 나누어 구성함으로써 개별적으로 관리
+        - 재사용 가능한 탬플릿의 역할
+        - 데이터(props)를 입력 받아 View의 상태에 따라 화면에 어떻게 표시되는지를 정의하는 React 엘리멘트를 반환
+
+        - 함수 컴포넌트
+            - App 컴포넌트는 function 키워드를 사용한 함수 컴포넌트
+            - 컴포넌트를 정의하는 가장 간단한 방법은 자바스크립트 함수를 작성하는 것
+
+        - 클래스 컴포넌트
+            - Component 클래스를 상속해야 함
+            - render() 메서드를 반드시 구현해야 함
+            - render() 메서드를 통해 화면에 보여주어야 할 JSX 표현식(expression)을 반환하면 됨
+
+            ex)
+            import React from "react";
+                export default class App extends React.Component {
+                    render() {
+                        return <h1>Hello, World!</h1>;
+                    }
+                }
+
+            - 함수 컴포넌트, 클래스 컴포넌트는 기능적으로 완전히 동일하게 작동
+            - 클래스 컴포넌트는 state 기능과 생명 주기 메소드 사용 가능 (함수 컴포넌트도 Hook을 사용함으로써 state 기능과 생명 주기 메소드 사용 가능)
+            - 함수 컴포넌트는 선언하는 방법이 간결하고, 메모리 소비가 적음 
+            
+            - React 공식 문서에서는 함수 컴포넌트, hook 사용 권장
+
+        컴포넌트 렌더링
+            - 컴포넌트 생성시 반드시 컴포넌트의 이름을 대문자로 시작하도록 작성
+            - 소문자로 시작하는 이름의 컴포넌트를 정규 HTML 태그로 취급하기 때문 (ex:<h1>,<div>)
+            - 대문자로 시작되는 사용자 정의 컴포넌트 (예제 Greeting.js)는 React.createElement(Greeting)의 형태로 컴파일되어 JS 파일에서 사용자가 직접 정의했거나 import를 통해 가져온 컴포넌트를
+            가리키게 됨
+            - 소문자로 시작하는 내장 컴포넌트는 h1, div 같은 문자열 형태로 React.createElement() 메소드에 전달
+            - 사용자 정의 컴포넌트를 사용하는 이유는 React.createElement() 메소드 호출이나 JSX 구문으로 생성하는 Virtual DOM의 생성 코드를 사용자 정의 컴포넌트 쪽으로 이동시킴으로써
+            코드를 간결하게 만드는 목적
+
+-->
+
+<!-- 
+
+    import
+        - 다른 곳에 정의된 코드를 파일 내에서 사용할 수 있도록 불러오는 구문
+        - from 부분 폴더에 위치한 컴포넌트 파일을 찾아 그안에 작성된 코드를 현재 파일에서 사용할 수 있도록 import name from 이라는 이름으로 불러오라는 의미
+
+-->
