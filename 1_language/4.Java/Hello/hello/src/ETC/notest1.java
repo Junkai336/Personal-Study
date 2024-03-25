@@ -13,5 +13,9 @@
 
     Scan.nextLine()
 
-    
+    charAt()
+
+    charAt()-'0'
+
+
  */

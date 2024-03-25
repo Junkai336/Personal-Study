@@ -1,0 +1,184 @@
+<!-- 
+
+    CSS 스타일링 방식
+        - CSS 스타일링
+        - Sass
+        - CSS Module
+        - styled-components
+
+    CSS 클래스 스타일링
+        - HTML 태그에 인라인 스타일 적용하는 것과 마찬가지
+        - React 엘리먼트에 인라인 스타일 곧바로 적용
+        - React는 인라인 스타일 적용할 때 자바스크립트 객체를 할당해야 함
+        - CSS 속성명을 카멜 표기법으로 바꿔 작성
+
+        ex)
+            const appStyle = {
+                textAlign: "left"
+            };
+
+            const headerStyle = {
+                backgroundColor: "black",
+                color: "yellow",
+                textAlign: "center"
+            };
+
+            const App = () => {
+                return (
+                    <div style={appStyle}>
+                        <header style={headerStyle}>
+                        </header>
+                    </div>
+                )
+            }
+
+            export default App;
+
+            - 유지보수나 성능상 이슈로 권장되진 않음
+
+            ex)
+                [style.css]
+
+                .App {
+                    text-align: left;
+                }
+
+                .App-header {
+                    background-color: black;
+                    color: yellow;
+                }
+
+                [App.js]
+
+                import "./styles.css";
+
+                const App = () => {
+                    return (
+                    <div className="App">
+                        <header className="App-header">
+                        </header>
+                    </div>
+                    )
+                }
+
+                - 외부 CSS stylesheet 참조 방식
+                - 컴포넌트 개수가 증가할 수록, CSS 파일이 많아질수록 여러 컴포넌트에서 사용된 ClassName 속성값이 중복될 가능성도 높아짐
+
+
+
+    Sass
+        - Syntactically Awesome Stylesheet
+        - 기존 CSS 단점을 보완하기 위해 만들어진 스크립팅 언어
+        - CSS 전처리기(pre-processor)
+        - .sass , .scss 두가지 확장자 지원
+        - CSS 문법을 확장하여 만든 언어이기 때문에 기존 CSS 파일을 확장자만 바꿔도 정상 작동
+        - 웹 브라우저는 스크립팅 언어인 Sass 파일을 인식할 수 없기 때문에 별도의 컴파일러를 통해 웹 브라우저가 인식할 수 있는 CSS 코드로 변환되어야 함
+        - Sass 공식 홈페이지 (https://sass-lang.com/documentation/)
+
+        Sass
+            - Sass
+                - 들여쓰기를 사용하여 중첩 표현
+                - 속성을 줄바꿈으로 구분
+
+            - Scss
+                - Sassy CSS -> Sass보다 늦게 개발, 좀 더 넓은 범용성, CSS와의 완벽한 호환성
+                - 중괄호 {} 를 사용하여 중첩 표현
+                - 속성을 세미콜론 ; 으로 구분
+
+            ex)
+
+            CSS
+
+            nav ul {
+                margin: 0;
+                padding: 0;
+            }
+
+            ---
+
+            Sass
+
+            nav
+                ul
+                    margin: 0
+                    padding: 0
+
+            ---
+
+            Scss
+
+            nav {
+                ul {
+                    margin: 0;
+                    padding: 0;
+                }
+            }
+
+            ------------
+
+            SCSS 스타일링 예제
+
+            [Menu.js]
+
+            const Menu = () => {
+                return (
+                    <nav>
+                        <ul>
+                            <li></li>
+                            <li></li>
+                            <li></li>
+                        </ul>
+                    </nav>
+                );
+            };
+
+            export default Menu;
+
+
+
+            [styles.scss]
+
+            $primary-color: #333;
+            $secondary-color: #666;
+
+            @mixin hover-text {
+                text-transform: uppercase;
+                font-weight: 600;
+            }
+
+            nav {
+                margin: 20px;
+                background-color: $primary-color;
+
+                ul {
+                    list-style: none;
+                    margin: 0;
+                    padding: 0;
+
+                    li {
+                        padding: 20px;
+                        display: inline-block;
+                        text-align: center;
+
+                        &:hover {
+                            background-color: $secondary-color;
+                            @include hover-text;
+                        }
+                    }
+                }
+            }
+
+            $ : 변수 정의 사용
+            & : 부모 선택자 참조할 때 사용 / 예제에서 nav > ul > li 와 같은 의미
+            mixin : 반복적으로 재사용되는 CSS 스타일을 하나의 그룹으로 정의하여 사용
+
+            - Sass는 CSS 스타일링에서 여러 단점들 개선 / 전처리를 위한 별도의 컴파일러 필요하고 추가 시간 소요된다는 단점 있음
+-->
+
+
+
+<!-- 
+
+    CSS Module
+
+-->
