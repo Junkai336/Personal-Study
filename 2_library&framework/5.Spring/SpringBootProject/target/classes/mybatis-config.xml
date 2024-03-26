@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+<!--    <properties>-->
+<!--        <property name="poNoRole" value="'S'+convert(varchar(10), getdate(), 12)"/>-->
+<!--    </properties>-->
+
+    <settings>
+        <setting name="callSettersOnNulls" value="true"/>
+        <setting name="cacheEnabled" value="false" />
+        <!-- insert/update 진행 시 null이 포함되어 있는 경우 Mybatis는 기본적으로 에러를 발생 시킨다.        -->
+        <!-- jdbctypefornull: null이 포함될 경우 null값을 지정된 'value'값으로 insert하거나 update 시킨다. -->
+        <setting name="jdbcTypeForNull" value="NULL" />
+        <setting name="mapUnderscoreToCamelCase" value="true"/>
+    </settings>
+
+</configuration>
