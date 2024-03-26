@@ -181,4 +181,73 @@
 
     CSS Module
 
+        - 여러 컴포넌트에서 사용된 CSS 클래스명이 서로 중복될 가능성이 높은 문제점을 해결하기 위해 사용
+        - 클래스명을 고유한 이름으로 자동 변환 해줌으로써 서로 중첩되는 현상 미연 방지
+        - CSS 파일마다 고유한 네임스페이스를 자동으로 부여해주기 때문에 각각 React 컴포넌트는 완전히 분리된 스타일을 보장 받음
+        - 개발자 도구로 확인해보면 컴포넌트에 적용된 클래스명이 고유한 클래스명 ( [파일명]_[클래스명]__[해시값] ) 이런 식으로 되어 있음
+
+        - [모듈명].module.css
+        - import styles from "파일 경로"
+        - <div className="{styles.[클래스명]}">...</div>
+
+        cf) styles 라는 이름 대신 다른거 사용해도 ㄱㅊ
+        
+
+    여러개 클래스 적용하기
+
+        - CSS Module이 적용된 파일로부터 여러 개의 CSS 클래스를 불러와 적용하고 싶을 때 / ES6 문법부터 제공되는 템플릿 리터럴(template literal) 사용하여 여러개 클래스명 하나의 문자열로 합쳐서 적용 가능
+
+        ex)
+
+            import styles from "./First.module.css";
+
+            const First = () => {
+                return (
+                    <div className={`${styles.wrapper} ${styles.h1}`}
+                )
+            }
+
+        - join() 메소드도 가능
+
+        ex)
+        
+            <div className={[styles.wrapper, styles.h1].join(" ")}
+
+
+            장점
+                - 동일한 클래스명 재정의로 스타일 전역 오염 방지
+                - 컴포넌트 단위로 스타일 관리 가능 유지보수 편함
+
+            단점
+                - 모듈마다 별도 CSS 파일 작성해야 해서 별도로 많이 관리해야 함
+                - 클래스를 동적으로 추가할 경우 최종 렌더링된 결과물에서 변환된 클래스명이 가독성 어지럽힘
+
+
+
+        불리언 값에 따른 조건부 스타일
+
+            ex)
+                import styles from "./First.module.css";
+
+                const First = () => {
+                    let isHovered = false;
+
+                    return (
+                        <div className={`${styles.wrapper} ${styles.h1 && isHovered}`}>
+                            ..
+                        </div>
+                    );
+                };
+
+                export default First;
+
+                ?: 이러면 false만 적용되는데 true면 h1 나오는 듯???
+
+-->
+
+<!-- 
+
+    classnames 라이브러리
+
+
 -->
