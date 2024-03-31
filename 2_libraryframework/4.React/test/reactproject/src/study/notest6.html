@@ -202,6 +202,88 @@ export default ControlPanel;
 
     배열 렌더링
 
-    
+        map() 배열 렌더링
+            - 데이터에서 여러 개의 유사한 컴포넌트들을 가져와 표시해야 할 경우 종종 발생
+            - 자바스크립트 배열 객체 map() 메소드를 사용하면 반복되는 코드를 간결하게 구현 가능
+            - 인수로 전달된 콜백 함수(callback function)를 배열의 각 요소에 대해 한 번씩 순서대로 호출 후 그 반환값들을 모아 새로운 배열로 생성하여 반환
+            - arr.map(callback(currentValue[, index[, array]])[, thisArg])
+                - currentValue : 호출될 때 처리할 현재 요소의 값
+                - index : 처리할 현재 요소의 인덱스
+                - array : map() 메소드를 호출한 원본 배열
+                - 총 3개의 인수를 전달받음
+                - map() 메소드는 호출한 원본 배열의 값을 변형하지 않지만, 콜백 함수에 의해서 변형될 수는 있음
 
+                ex)
+                    const bucketItems = [
+                        "1여행",
+                        "2여행",
+                        "3여행",
+                        "4여행"
+                    ];
+
+                    const List = () => {
+                        const bucketList = bucketItems.map( (bucketItem) => <li>{bucketItem}</li> );
+
+                        return (
+                            <>
+                                <h1>버킷리스트</h1>
+                                <ul>{bucketList}</ul>
+                            </>
+                        )
+                    }
+
+                    -> bucketItems 배열의 각 요소에 대해 map() 메소드를 호출하여 각각 <li> 엘리먼트 생성
+                    -> 생성된 엘리먼트들을 새로운 JSX 엘리먼트 리스트인 bucketList에 저장
+                    -> <ul> 태그로 감싼 bucketList 반환
+                    -> 이 예제는 콘솔에서 리스트의 각 자식 요소들은 유일한 "key" prop 을 가지고 있어야만 한다는 경고가 발생
+
+            key prop 설정
+                - React에서는 엘리먼트 리스트를 만들 때 각 아이템마다 고유한 key를 지정해야 함
+                - key를 통해 해당 리스트에 저장된 아이템 간 식별을 안정적으로 수행 + 어떤 아이템 변경, 추가, 삭제 되었는지 빠르게 파악 가능
+                - 잘 선택된 key는 React가 리스트에 무슨 일이 일어났는지 파악하고 DOM 트리를 정확하게 업데이트하는 데 도움 줄 수 있음
+                - key 값은 같은 리스트에 포함된 아이템 사이에서만 고유한 값을 가지면 됨
+                - 전체 애플리케이션이나 단일 컴포넌트 전체를 모두 통틀어 고유한 값일 필요 X / 다른 리스트에서 같은 key 값을 사용해도 됨
+                - 일반적으로 key는 해당 데이터가 가지고 있는 고유한 값(id)를 사용하는 것이 좋음 (DB에서 가지고 온 데이터면 DB의 key 값이나 id값을 사용하는 것이 좋다)
+
+                const bucketList = bucketItems.map((bucketItem, index) => (
+                        <li key={index}>{bucketList}</li>
+                ));
+
+                -> 리스트 아이템에 key를 명시적으로 지정하지 않으면 기본적으로 index 값을 key로 사용
+                -> index 값을 key로 사용하는 것은 애플리케이션 성능 저하나 컴포넌트의 state와 관련된 문제가 발생할 수 있기 때문에 권장하지는 않음
+
+                ex)
+                    const bucketItems = [
+                        { id: 0, text: "1여행" },
+                        { id: 1, text: "2여행" },
+                        { id: 2, text: "3여행" },
+                        { id: 3, text: "4여행" }
+                    ];
+
+                    const List = () => {
+                        const bucketList = bucketItems.map( (bucketItem) => (
+                            <li key={bucketItem.id}>{bucketItem.text}</li> );
+                        )
+
+                        return (
+                            <>
+                                <h1>버킷리스트</h1>
+                                <ul>{bucketList}</ul>
+                            </>
+                        )
+                    }
+
+
+            (concat, filter, 배열렌더링 예제)
+            <a href="../component/item.jsx"></a>
+
+
+
+            concat() 메소드
+                - 메소드를 호출한 원본 배열의 마지막부터 인수로 전달받은 값들을 순서대로 추가한 새로운 배열을 생성하여 반환하므로 원본 배열의 불변성이 지켜지게 됨
+                - array.concat([value1[, value2[, valueN]]])
+
+            filter() 메소드
+                - 배열 내 각 요소에 대해 전달받은 콜백함수를 호출하여, true 값을 반환하는 모든 요소들을 새로운 배열로 생성하여 반환함
+                - array.filter(callback(element[, index[, array]])[, thisArg])
 -->
