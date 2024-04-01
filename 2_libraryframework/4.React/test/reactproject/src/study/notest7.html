@@ -22,7 +22,72 @@
             - React에서 기본적으로 제공하고 있는 내장 Hook
 
             1. State Hooks
+                - React 컴포넌트는 state를 활용하여 가변적인 상태(state)를 기억할 수 있음
+                - 사용자 입력을 저장하기 위해, 현재 카운터를 저장하기 위해 등 사용할 수 있음
+                
+                - state를 추가하기 위한 Hook
+                    - useState : 사용자가 직접 업데이트할 수 있는 state 변수 선언
+                    - useReducer : reducer 함수 내부의 업데이트 로직을 사용하여 state 변수를 선언
 
+
+
+                    useState Hook
+                        - const [state, setState] = useState(initialState)
+                        - 처음 렌더링을 수행할 때 초기 상태 값(initialState)을 인수로 전달 받고, 최신 state 값을 유지하는 변수와 그 값을 업데이트할 수 있는 함수 반환
+
+                        ex)
+
+                        import {useState} from "react";
+
+                        const Counter = () => {
+                            comst [state, setState] = useState(0);
+                            
+                            return (
+                                <div>
+                                    <h1>State 값 : {state}</h1>
+                                    <button onClick={() => setState(state + 1)}>1씩 증가</button>
+                                </div>
+                                );
+                            };
+
+                        export default Counter;
+                                
+
+
+                    useReducer Hook
+                        - const [state, dispatch] = useReducer(reducer, initialArg, init?)
+                        - useState보다 좀 더 복잡한 상황에서 state를 사용할 수 있도록 컴포넌트와 state의 업데이트 로직을 서로 분리시켜 관리 가능
+                        - 첫번째 인수 : reducer 함수를 전달 받음
+                        - 두번째 인수 : reducer의 기본값 전달 받음
+                        - 현재 state 값과 action을 발생시키는 dispatch 함수를 반환함
+                        - useReducer가 반환하는 dispatch 함수를 사용하면 state를 다른 값으로 업데이트하고 리렌더링하도록 설정할 수 있음
+                        - dispatch 함수에는 인수로 action 값을 전달해야 함
+                        - useReducer를 사용했을 때 장점은 컴포넌트에서 state 업데이트 로직을 컴포넌트 외부로 분리시킬 수 있다는 점
+
+                        ex)
+
+                        import { useReducer } from "react";
+
+                        // 컴포넌트와 분리된 state 업데이트 로직
+                        const reducer = (state, action) => {
+                            if (action.type === "increment") {
+                                return {
+                                    count: state.count + 1
+                                };
+                            }
+                        };
+
+                        const Counter = () => {
+                            const [state, dispatch] = userReducer(reducer, { count: 0 });
+
+                            return (
+                                <div>
+                                    <h1>State 값 : {state.count}</h1>
+                                    // dispatch 함수에 action.type 값으로 'increment'를 전달하여 리렌더링시킴
+                                    <button onClick={() => dispatch({ type: "increment "})}>1씩 증가</button>
+                                </div>
+                            )
+                        }
 
 
             2. Context Hooks
