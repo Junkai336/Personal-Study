@@ -100,6 +100,8 @@
                 - 인수로 전달된 값(initialValue)으로 초기화 된 변경 가능한 ref 객체를 반환
                 - 이 객체는 컴포넌트의 전 생명 주기동안 유지됨
                 - ref 객체는 current라는 프로퍼티 하나만 가지고 있으며, 이 current 값이 실제 엘리먼트를 가리키게 됨
+                - useRef를 사용하여 생성한 ref 객체를 JSX 노드의 ref 속성으로 전달하면, React는 전달 받은 ref 객체를 해당 노드의 current 프로퍼티를 설정함. 다음 렌더링 시에도 useRef는 동일한 ref 객체를 반환함
+                - ref 속성? (ElementRef?) : https://velog.io/@hyoribogo/react-useref
 
                 ex) 
                     import { useState, useRef } from 'react';
@@ -121,6 +123,22 @@
                             setIsPlaying(!isPlaying);
                         };
 
+                        return (
+                            <>
+                                <video
+                                    width="240"
+                                    ref={ref}
+                                    onPlay={() => setIsPlaying(true)}
+                                    onPause={( => setIsPlaying(false))}
+                                >
+                                <source src={video} type="video/mp4" />
+                                <br />
+                                <button onClick={handleClick}>{isPlaying ? "Pause" : "Play"}</button>
+                            </>
+
+                            export default VideoPlayer;
+                        )
+
                     }
 
 
@@ -131,6 +149,13 @@
                 사이드 이펙트(side effects)
                     - 일부 React 컴포넌트는 화면에 표시되는 동안 네트워크, 브라우저 API 또는 다른 라이브러리와 연결된 상태를 유지해야 하는 경우가 발생할 수 있음
                     - 이렇게 React에 의해 제어되지 않는 시스템을 외부 시스템(external system)이라고 부름
+                    - 대부분 React 컴포넌트는 순수 함수(pure function)처럼 동작하며 동일한 props를 인수로 전달 받으면 언제나 동일한 JSX 노드를 반환함
+                    - 반면에 함수 내의 코드가 실행되면서 함수 외부에 존재하는 값이나 상태 등을 변경시킴으로써 다른 곳에서 예기치 못한 결과를 발생시키는 경우도 있을 수 있음
+                    - React 에서는 컴포넌트가 화면에 렌더링된 후에 외부 시스템과 연결된 상태에서 비동기적으로 처리되어야 하는 작업들을 사이드 이펙트 또는 이펙트라고 부름
+                    - 사이드 이펙트는 외부 시스템과 함께 수행되기 때문에 그 결과를 정확히 예측할 수 없음
+                    - 컴포넌트 내에서 사이드 이펙트를 직접 수행하는 것은 컴포넌트 렌더링에 방해가 될 수 있으므로 사이드 이펙트는 렌더링 과정과는 분리되는 것이 좋고 렌더링이 끝난 후
+                    처리되는 것이 바람직함
+                    - React에서는 특정 데이터를 가져오기 위해 외부 API 등을 호출하는 경우 화면에 렌더링할 수 있는 데이터를 먼저 모두 렌더링 한 후 실제 데이터는 비동기로 가져오는 것을 권장함
 
 
 
