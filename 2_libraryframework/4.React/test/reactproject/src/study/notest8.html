@@ -459,4 +459,48 @@
             - useState와 같이 현재 경로에 대한 검색 파라미터와 이를 업데이트할 수 있는 함수를 배열 형태로 동시에 반환함
             - URL?key=value&key=value;
 
+            ex)
+
+                [Search.js]
+
+                import { createSearchParams, useSearchParams } from "react-router-dom";
+
+                const Search = () => {
+                    const [searchParams, setSearchParams] = useSearchParams();
+
+                    return (
+
+                        <input 
+                            value={searchParams.newsId}/>
+                            onChange={(e) => {
+                                setSearchParams(createSearchParams({ newsId: e.target.value }));
+                            }}
+                            placeholder="검색할 뉴스 ID를 입력하세요."
+                    );
+                };
+
+                export default Search;
+
+                -----
+
+                [Menu.js]
+
+                import { Link, Outlet } from "react-router-dom";
+                impoer Search from "./Search";
+
+                const Menu = () => {
+                    return (
+                        <div>
+                            <nav>
+                                ...
+                            </nav>
+                            뉴스 검색 : <Search />
+                            <hr />
+                            <Outlet />
+                        </div>
+                    )
+                }
+
+                export default Menu;
+
 -->
