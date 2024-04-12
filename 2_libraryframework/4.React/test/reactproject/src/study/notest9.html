@@ -64,4 +64,50 @@
             - Redux를 사용하게 되면 단 하나의 state를 바꾸기 위해 요청을 전달하는 Action과 상태를 바꿔주는 Redux를 생성해야 하는 등 추가적인 코드 양 늘어나게 됨
             - 프로젝트 특징과 확장성 등 충분히 고려하여 도입 여부 결정
 
+        Redux Toolkit, React Redux 패키지 설치
+            - npm install @reduxjs/toolkit react-redux
+            - yarn add @reduxjs/toolkit react-redux
+            - Redux 공식 개발 도구인 Redux Toolkit을 사용하여 React Redux 설정하기
+
+        Redux Store 생성하기
+            - app 폴더 / store.js 파일 생성
+
+            ex)
+
+                import { configureStore } from "@reduxjs/toolkit";
+
+                const store = configureStore({
+                    reducer: {}
+                });
+
+                export default store;
+
+        Redux Store를 React에 제공하기
+            - Store가 생성되면 src 폴더의 index.js 파일 내 존재하는 App 컴포넌트를 React Redux의 Provider 컴포넌트로 감쌈으로써 React 컴포넌트에서 Store를 사용할 수 있음
+            
+            ex)
+
+                import React, { StrictMode } from "react";
+                import { createRoot } from "react-dom/client";
+                import store from "./app/store";
+                import { Provider } from "react-redux";
+                import "./styles.css"
+
+                import App from "./App";
+
+                const root = createRoot(document.getElementById("root"));
+                root.render(
+                    <StrictMode>
+                        <Provider store={store}>
+                            <App />
+                        </Provider>
+                    </StrictMode>
+                );
+
+        Redux State Slice 생성하기
+            - Redux Toolkit 에서는 Action과 Reducer를 한번에 생성할 수 있는 createSlice() 함수를 제공함
+            - createSlice는 초기값, Reducer, Action을 하나의 객체로 전달 받으며, 생성된 slice 객체에서 Reducer와 Action을 다음과 같이 가져올 수 있음
+            - const { reducer } = counterSlice
+            - const { increment, decrement, incrementByAmount } = counterSlice.actions;
+
 -->
