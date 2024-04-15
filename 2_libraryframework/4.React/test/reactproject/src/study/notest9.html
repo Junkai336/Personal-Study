@@ -109,5 +109,170 @@
             - createSlice는 초기값, Reducer, Action을 하나의 객체로 전달 받으며, 생성된 slice 객체에서 Reducer와 Action을 다음과 같이 가져올 수 있음
             - const { reducer } = counterSlice
             - const { increment, decrement, incrementByAmount } = counterSlice.actions;
+            - src 폴더에 counterSlice.js 파일 생성 후 해당 파일에서 createSlice 불러오기
+            - Redux Toolkit으로 slice를 만들기 위해서는 slice를 식별할 수 있는 문자열과 state의 초기값, state를 업데이트하는 방법을 정의한 하나 이상의 Reducer 함수 필요
+            - slice가 생성되면 생성된 Redux 액션 생성자와 전체 slice에 대한 Reducer 함수를 내보낼 수 있습니다.
+
+            ex)
+
+                import { createSlice } from "@reduxjs/toolkit";
+
+                export const counterSlice = createSlice({
+                    name: "counter",
+                    // 초기값
+                    initialState: {
+                        value: 0
+                    },
+                    // 리듀서
+                    reducers: {
+                        // 액션
+                        increment: (state) => {
+                            state.value += 1;
+                        },
+                        decrement: (state) => {
+                            state.value -= 1;
+                        }
+                    }
+                });
+
+                export const { increment, decrement } = counterSlice.actions;
+
+                export default counterSlice.reducer;
+
+        Store에 Slice Reducer 추가하기
+            - counterSlice의 Reducer 함수를 가져와 Store에 추가하기 위한 코드를 store 컴포넌트에 추가
+            - Reducer 매개 변수 내부에 필드를 정의함으로써 Slice Reducer 함수를 사용하여 해당 상태의 모든 업데이트를 처리하도록 Store에 전달할 수 있음
+
+            ex)
+
+                import { configureStore } from "@reduxjs/toolkit";
+                import counterReducer from "../counterSlice";
+
+                const store = configureStore({
+                    reducer: {
+                        counter: counterReducer
+                    }
+                });
+
+                export default store;
+
+        React 컴포넌트에서 Redux state와 Action 사용하기
+            - 마지막으로 React Redux Hook 을 사용하여 React 컴포넌트가 Redux Store와 상호작용할 수 있도록 설정
+            - useSelector Hook을 사용하면 Store의 데이터를 읽을 수 있고
+            - useDispatch Hook을 사용하면 Action을 Dispatch 할 수 있음
+
+            ex)
+
+                import { useSelector, useDispatch } from "react-redux";
+                import { decrement, increment } from "./counterSlice";
+
+                const App = () => {
+                    const count = useSelector((state) => state.counter.value);
+                    const dispatch = useDispatch();
+
+                    return (
+                        <div>
+                            <button onClick={() => dispatch(decrement())}>1씩 감소</button>
+                            <span>{count}</span>
+                            <button onClick={() => dispatch(increment())}>1씩 증가</button>
+                        </div>
+                    );
+                };
+
+                export default App;
+
+-->
+
+<!-- 
+
+    Redux 활용
+
+        증감하는 수량 설정
+            - Action 객체의 payload 필드에는 Action 타입에 따라 실행에 필요한 추가적인 state 값 저장 가능
+
+            ex)
+                [counterSlice.js]
+
+                export const counterSlice = createSlice({
+                    reducers: {
+                        incrementByQuantity: (state, action) => {
+                            state.value += action.payload;
+                        }
+                    }
+                });
+
+                export const {
+                    increment,
+                    decrement,
+                    incrementByQuantity
+                } = counterSlice.actions;
+
+                export const selectCount = (state) => state.counter.value;
+
+                export default counterSlice.reducer;
+
+                [App.js]
+
+                import { useState } from "react";
+                import { useSelector, useDispatch } from "react-redux";
+                import {
+                    decrement,
+                    increment,
+                    incrementByQuantity,
+                    selectCount
+                } from "./counterSlice";
+
+                const App = () => {
+                    const count = useSelector(selectCount);
+                    const dispatch = useDispatch();
+                    const [incrementQuantity, setIncrementQuantity] = useState("0");
+
+                    return (
+                        <div>
+                            <div>
+                                <button onClick={() => dispatch(decrement())}>1씩 감소</button>
+                                <span>{count}</span>
+                                <button onClick={() => dispatch(increment())}>1씩 증가</button>
+                            </div>
+                            <div>
+                                <input
+                                    value={incrementQuantity}
+                                    onchange={(e) => setIncrementQuantity(e.target.value)}
+                                />
+                                <button
+                                    onClick={() => dispatch(incrementByQuantity(Number(incrementQuantity) || 0))
+                                    }
+                                >
+                                    씩 증가
+                                </button>
+                            </div>
+                        </div>   
+                    );
+                };
+
+                export default App;
+
+
+
+        비동기적으로 증감
+                - 1초 간의 딜레이 후 동작하는 기능 추가
+
+                [counterSlice.js]
+
+                export const incrementAsync = (quantity) => (dispatch) => {
+                    setTimeout(() => {
+                        dispatch(incrementByQuantity(quantity));
+                    }, 1000);
+                };
+
+                [App.js]
+
+                <button
+                    onClick={() =>
+                        dispatch(incrementAsync(Number(incrementQuantity) || 0))
+                    }
+                    >
+                    씩 증가(비동기)
+                </button>
 
 -->

@@ -8,6 +8,58 @@
 
 
     숫자 타입(numeric types)
-        - 
+        - 정수타입(integer types)
+            - MySQL은 SQL 표준 정수 타입인 INTEGER(or INT)와 SMALLINT 제공
+            - 표준 정수 타입의 범위를 더 확장한 TINYINT, MEDIUMINT, BIGINT 제공
+            - 각 정수 타입에 따라 요구되는 저장 공간, 표현할 수있는 최대값 최소값 달라짐
+            - 정수 타입은 음수까지 표현할 수 있는 SIGNED 타입 / 양수만 표현할 수 있는 UNSIGNED 타입으로도 구분됨
+            - 최대값,최소값,저장공간 크기 인터넷 참고
 
+            ex)
+                ALTER TABLE Reservation ADD Price INT;
+                    - 4바이트의 정수를 저장할 수 있는 Price 필드 추가
+                    - DESCRIBE 문으로 테이블 상세 정보 확인 가능 (DESC Reservation)
+
+        - 고정 소수점 타입(fixed-point types)
+            - 고정 소수점 타입인 DECIMAL은 실수의 값을 정확하게 표현하기 위해 사용됨
+            - DECIMAL 에서 사용하는 고정 소수점 방식은 실수를 표현할 때 소수부의 자릿수를 고정하여 표현
+            - 소수부의 자릿수를 미리 정해놓고, 고정된 자릿수로만 소수 부분을 표현하는 방식
+            - DECIMAL(M,D)
+                - M : 소수 부분을 포함한 실수의 총 자릿수 (최대값: 65)
+                - D : 소수 부분의 자릿수를 나타내며, D가 0이면 소수 부분을 가지지 않음
+
+            ex)
+                ALTER TABLE Reservation MODIFY COLUMN RoomNum DECIMAL(7,2);
+                    - RoomNum 필드는 -99999.99 부터 99999.99 까지 실수 저장 가능
+
+        - 부동 소수점 타입(floating-point types)
+            - MySQL에서 부동 소수점 타입인 FLOAT와 DOUBLE은 실수의 값을 대략적으로 표현하기 위해 사용됨
+            - FLOAT: 4바이트 , DOUBLE: 8바이트
+
+            - FLOAT(P)
+                - SQL 표준에서 FLOAT는 정밀도에 필요한 최소한의 비트 수를 명시할 수 있음
+                - P : 0부터 24까지의 값을 가질 때는 FLOAT 값으로 취급 / 25부터 53까지는 DOUBLE 값으로 취급
+
+            - FLOAT(M,D)
+            - DOUBLE(M,D)
+                - MySQL은 FLOAT와 DOUBLE을 고정 소수점 타입과 같이 사용할 수 있는 비표준 문법도 지원
+
+            ex)
+                ALTER TABLE Reservation MODIFY COLUMN RoomNum FLOAT(7,2);
+                    - RoomNum 필드는 -99999.99 부터 99999.99 까지 실수 저장 가능
+
+        - 비트값 타입(bit-value type)
+            - MySQL에서 비트값 타입인 BIT는 비트의 값을 저장함
+            - 0과 1로 구성되는 바이너리(binary) 값을 저장할 수 있음
+            - BIT(M)
+                - M : 범위는 1부터 64까지 설정할 수 있으며 명시한 M 비트의 값을 저장할 수 있음
+                - 명시한 M비트보다 짧은 길이의 비트 값을 입력하면, 입력한 값 앞에 0을 추가하여 자동으로 길이를 맞춤
+                
+            ex)
+                ALTER TABLE Reservation ADD Code BIT(7);
+
+            cf)
+                이진수 b'100' = 십진수 4
+                이진수 b'100001' = 십진수 33
+                MySQL에서는 바이너리 값을 출력하기 위해 BIN()과 같은 변환 함수 제공
 -->
