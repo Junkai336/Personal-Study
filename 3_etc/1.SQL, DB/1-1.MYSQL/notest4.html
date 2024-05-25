@@ -103,12 +103,184 @@
         [WHEN [condition] THEN result] ...
         [ELSE result]
         END
+          => condition 논리값이 참이면 then 절의 result 반환
+          => 논리값이 거짓이면 result 값 반환
+          => ELSE 절이 없으면 NULL 반환
 
     - IF()
+      - 첫번째 인수로 전달받은 표현식의 논리값에 따라 다른 값 반환
+      - IF(expr1, expr2, expr3)
+      - expr1이 참이면 expr2 반환
+      - expr1이 거짓이면 expr3 반환
+      ex) SELECT IF(0 < 1, 'yes', 'no');
 
     - IFNULL()
+      - 첫번째 인수로 전달받은 겂아 NULL인지 아닌지 검사하여 다른 값 반환
+      - IFNULL(expr1, expr2)
+      - expr1이 NULL이 아니면 expr1 반환
+      - expr1이 NULL이면      expr2 반환
+      ex) SELECT IFNULL(NULL, "전달받은 값이 NULL임");
 
     - NULLIF()
+      - 인수로 전달받은 두 값이 서로 같은지 검사하여 다른 값 반환
+      - NULLFIF(expr1, expr2)
+      - expr1과 expr2의 값이 서로 같으면 NULL
+      - 같지 않으면 expr1 반환
+      ex) CASE
+            WHEN expr1 = expr2
+            THEN NULL
+            ELSE expr1
+          END
 
+          SELECT NULLIF(3, 3) = NULL
+-->
+
+<!-- 
+  패턴매칭
+    - 특정 패턴을 검색하기 위한 패턴 매칭 연산자
+    - 임의의 문자나 문자열을 대체하기 위해 와일드카드 문자를 사용할 수 있음
+
+    - LIKE
+      - 특정 패턴을 포함하는 데이터만 검색하기 위해 사용
+      - '%' : 0개 이상의 문자라는 의미의 와일드카드 문자
+      - NOT LIKE : 특정 패턴을 포함하지 않는 데이터 검색
+
+      - 와일드카드
+        - % : 0개 이상의 문자를 대체함
+        - _ : 1개의 문자를 대체함
+
+    - REGEXP
+      - LIKE 연산자보다 더 복잡한 패턴 검색
+      - 정규표현식을 토대로 패턴 매칭 연산 제공
+
+      - 패턴
+        - . : 줄바꿈 문자(\n)를 제외한 임의의 한 문자
+
+        - * : 해당 문자 패턴이 0번 이상 반복
+        - + : 해당 문자 패턴이 1번 이상 반복
+
+        - ^ : 문자열의 처음
+        - $ : 문자열의 끝
+
+        - | : 선택을 의미 (OR)
+
+        - [...] : 괄호[] 안에 있는 어떠한 문자를 의미
+        - [^...] : 괄호[] 안에 있지 않은 어떠한 문자를 의미
+
+        - {n} : 반복되는 횟수를 지정
+        - {m,n} : 반복되는 횟수의 최솟값과 최댓값을 지정
+
+        ex) SELECT * FROM ~ WHERE NAME REGEXP '^홍|산$'; : 홍으로 시작하거나, 산으로 끝나는 레코드 선택
+
+        - NOT REGEXP : 해당 패턴과 일치하지 않는 데이터 찾기
+-->
+
+<!-- 
+  타입 변환
+    - 비교나 검색을 수행할 때 데이터 타입이 서로 다를 경우, 내부적으로 타입이 같아지도록 자동 변환하여 처리하지만,
+    - 사용자가 명시적으로 타입을 변환할 수 있도록 연산자, 함수 제공하기도 함
+
+    - BINARY
+      - 뒤에 오는 문자열을 바이너리 문자열로 변환
+      - 문자가 아닌 바이트를 기준으로 비교나 검색 작업 수행 가능
+      - 비교하려는 문자의 '바이트 값'을 비교
+      ex) SELECT BINARY 'a' = 'A', 'a' = 'A'
+                            0          1
+
+    - CAST()
+      - 인수로 전달받은 값을 명시된 타입으로 변환하여 반환
+      - 변환하고자 하는 타입을 AS 절로 직접 명시 가능
+      - CAST(expr AS type)
+      - ex) SELECT 4 / '2', 4 / 2, 4 / CAST('2' AS UNSIGNED);
+        =>            2 ,   2.0000 ,        2.0000
+
+      - AS 절에서 사용할 수 있는 타입
+        - BINARY
+        - CHAR
+        - DATE
+        - DATETIME
+        - TIME
+        - DECIMAL
+        - JSON
+        - NCHAR
+        - SIGNED [INTEGER]
+        - UNSIGNED [INTEGER]
+
+    - CONVERT()
+      - 인수로 전달받은 값을 명시된 타입으로 변환하여 반환
+      - 두번째 인수로 변환하고자 하는 타입을 직접 전달할 수 있음
+      - CONVERT(expr, type)
+      - CONVERT(expr USING transcoding_name)
+        - USING 절 : 서로 다른 문자셋(character set) 간의 데이터 변환을 위해 사용
+        - 이 때 사용할 수 있는 타입은 CAST() 함수와 같음
+      ex) SELECT CONVERT('abc' USING utrf8)
+-->
+
+<!-- 
+  제약조건
+    - 데이터의 무결성을 지키기 위해, 데이터를 입력받을 때 실행되는 검사 규칙
+
+    - NOT NULL
+      - 해당 필드는 NULL 값을 저장할 수 없음
+      - 이 제약 조건이 설정된 필드는 무조건 데이터를 가지고 있어야 함
+      - CREATE문, ALTER문으로 추가할 수 있음
+      - 해당 필드에 NULL 값을 저장할 수 없도록 설정하는 것으로, 해당 필드를 생략하지 못하도록 하는 제약 조건은 아님 
+        (INSERT 문으로 레코드 저장할 때 NOT NULL 제약 조건이 설정된 필드의 값을 생략할 수도 있음) <- 생략하면 0 저장되는듯?
+      ex:
+        CREATE TABLE 테이블이름 
+          (
+          필드이름 필드타입 NOT NULL,
+          ...
+          )
+      ex:
+        ALTER TABLE 테이블이름
+          ADD 필드이름 필드타입 NOT NULL
+          MODIFY COLUMN 필드이름 필드타입 NOT NULL
+
+    - UNIQUE
+      - 해당 필드는 서로 다른 값을 가져야 함
+      - 중복된 값을 저장할 수 없음
+      - CREATE문, ALTER문으로 추가할 수 잇음
+      ex:
+        CREATE TABLE 테이블이름
+        (
+          필드명 필드타입 UNIQUE,
+          ...
+        )
+          => 해당 필드에 UNIQUE 제약 조건 설정
+      ex:
+        CREATE TABLE 테이블이름
+        (
+          필드명 필드타입,
+          ...
+          [CONSTRAINT 제약조건이름] UNIQUE (필드이름)
+        )
+          => 해당 제약 조건에 이름을 설정할 수 있음
+
+      ex:
+        ALTER TABLE 테이블이름
+          ADD 필드이름 필드타입 UNIQUE
+        
+        ALTER TABLE 테이블이름
+          ADD [CONSTRAINT 제약조건이름] UNIQUE (필드이름)
+
+        ALTER TABLE 테이블이름
+          MODIFY COLUMN 필드이름 필드타입 UNIQUE
+
+        ALTER TABLE 테이블이름
+          MODIFY COLUMN [CONSTRAINT 제약조건이름] UNIQUE (필드이름)
+
+    - 제약조건에 이름 설정할 경우, 이름을 사용하여 제약 조건을 삭제할 수 있음
+      ex:
+        ALTER TABLE 테이블이름
+          DROP INDEX 제약조건이름
+
+      
+
+    - PRIMARY KEY
+
+    - FOREIGN KEY
+
+    - DEFAULT
 
 -->
