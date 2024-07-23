@@ -25,3 +25,34 @@
     let a = "a";
 
 -->
+
+<!-- 
+
+npm i @types/node
+  - Node.js 프로젝트에서 TypeScript를 사용할 때 필요한 TypeScript 타입 정보를 설치하는 명령어
+  - Node.js의 타입 정의 파일들이 프로젝트의 node_modules 디렉토리에 설치됨
+  - npm i : npm install 축약형
+  - types : 타입 정의 파일들을 설치하기 위한 스코프
+  - node : Node.js의 타입 정의 파일 의미
+
+npm install typescript -g
+  - 타입스크립트 설치
+  - -g : 전역으로 설치 컴퓨터 모든 곳에서 이 패키지를 사용할 수 있음. package.json에 포함되지 않고 시스템 전체에서 TypeScript 컴파일러 'tsc'를 사용할 수 있음
+
+전역 설치
+  - 시스템 전체에서 사용 가능
+  - npm install -g typescript
+  - 설치 위치 : C:\Users\<사용자 이름>\AppData\Roaming\npm\node_modules 또는 /usr/local/lib/node_modules
+  - 터미널에서 tsc 명령어를 직접 사용
+  - 여러 프로젝트에서 동일한 TypeScript 버전을 사용할 수 있지만 프로젝트 별로 TypeScript 버전을 다르게 사용할 수 없음
+
+로컬 설치
+  - 특정 프로젝트에서만 사용 가능
+  - npm install typescript --save-dev
+  - 터미널에서 npx tsc 명령어를 사용하거나 package.json의 scripts 항목에 정의하여 사용
+  - 프로젝트별로 TypeScript 버전을 독립적으로 관리 가능 하지만 프로젝트마다 TypeScript를 설치해야 함
+
+tsc -v
+
+
+-->

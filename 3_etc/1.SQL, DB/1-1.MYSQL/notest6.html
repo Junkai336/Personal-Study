@@ -6,7 +6,16 @@
     - 
 
   GROUP_CONCAT
-    - 
+    - 특정 그룹에 속하는 행들의 값을 하나의 문자열로 결합하여 반환
+    - 주로 GROUP BY 절과 함께 사용됨
+    - 결과를 하나의 문자열로 결합하여 보여주고자 할 때 유용함
+      EX)
+        SELECT  GROUP_CONCAT(열이름 SEPARATOR '구분자')
+        FROM    테이블이름
+        GROUP BY  그룹화할 열 이름
+
+        - 구분자 생략시 기본값 ,
+        - ALICE, BOB, CHARILE, DAVID 이런식임
 
   RECURSIVE
     - 
