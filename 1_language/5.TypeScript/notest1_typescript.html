@@ -53,6 +53,45 @@ npm install typescript -g
   - 프로젝트별로 TypeScript 버전을 독립적으로 관리 가능 하지만 프로젝트마다 TypeScript를 설치해야 함
 
 tsc -v
+  - 버전 확인
+
+tsc src/index.ts
+  - tsc 파일명 : 특정 파일을 컴파일 하도록 타입스크립트 컴파일러에게 지시하는 명령어
+  - 자바스크립트 파일이 생성됨. tsc src.index.js 하면 자바스크립트 코드 실행
+
+TSX(TypeScript Execute)로 실행하기
+  - ts-node는 Node 20 버전 이상에서는 더이상 동작하지 않음
+  - ts-node와 동작 방식 동일
+  - ts-node src/index.ts == tsx src/index.js
+  - 명령어 한 번으로 타입스크립트 코드를 바로 실행시켜주는 도구
+
+  - 설치 : npm i -g tsx
+  - 버전 확인 : tsx -v
+  - 자바스크립트 파일을 생성하지 않고 한번에 타입스크립트 파일을 실행함
+
+-->
+
+<!-- 
+
+타입스크립트 컴파일러
+  - 컴파일러 옵션 : 얼마나 엄격하게 타입 오류를 검사할 지, 자바스크립트 코드의 버전을 어떻게 할 지 등을 입맛에 맞게 자유롭게 정하는 것
+  - tsc --init
+  - tsconfig.json
+
+-->
+
+<!-- 
+  Remove-Item -Recurse -Force .\node_modules
+    - node_modules 폴더 삭제
+
+  Remove-Item -Force .\package-lock.json
+    - package-lock.json 파일 삭제
+
+  npm dedupe
+    - 중복된 패키지 정리
+
+  npm cache clean --force
+    - npm 캐시 정리
 
 
 -->
