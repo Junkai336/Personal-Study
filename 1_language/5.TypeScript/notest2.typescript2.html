@@ -2,4 +2,25 @@
 기본 타입
   - 타입스크립트가 자체적으로 제공하는 타입
 
+원시 타입(Primitive Type)
+  - number, string, boolean, null, undefined
+  - 동시에 하나의 값만 저장할 수 있음
+  - 숫자면 숫자, 문자면 문자만.
+
+  - let num: number = 123;
+  - : <- 타입 주석(type anotation)
+
+  - 중간에 넣을 값이 없어서 null을 넣는 경우 기본적으로 허용되지 않는데,
+  - tsconfig.json - compilerOptions 에서 strictNullChecks: false로 할 경우 원시타입에 null 값 넣을 수 있음
+
+  - strictNullChecks : 엄격한 null 검사. null 타입이 아닌 변수에 null 값을 할당하는 것을 허용할 것인가 말것인가. 기본값 true
+
+  - strict : strictNullChecks의 상위옵션. 명시적으로 하위옵션을 설정하지 않으면 strict가 false가 되면 strictNullChecks가 꺼짐
+
+  리터럴 타입
+    - 리터럴 = 값
+    - 값을 마치 타입처럼 사용할 수 있음
+    - let numA: 10 = 10;
+      => 10이라는 값만 저장할 수 있음
+
 -->
