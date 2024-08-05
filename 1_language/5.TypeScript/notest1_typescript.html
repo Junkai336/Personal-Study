@@ -29,6 +29,7 @@
 <!-- 
 
 npm i @types/node
+  - Node.js의 기본 명령어들의 타입이 정의되어 있음. 설치하지 않으면, 타입스크립트 컴파일 과정에서 이 명령어들을 알아들을 수 없기 때문에 반드시 설치해야 함.
   - Node.js 프로젝트에서 TypeScript를 사용할 때 필요한 TypeScript 타입 정보를 설치하는 명령어
   - Node.js의 타입 정의 파일들이 프로젝트의 node_modules 디렉토리에 설치됨
   - npm i : npm install 축약형
@@ -59,11 +60,14 @@ tsc src/index.ts
   - tsc 파일명 : 특정 파일을 컴파일 하도록 타입스크립트 컴파일러에게 지시하는 명령어
   - 자바스크립트 파일이 생성됨. tsc src.index.js 하면 자바스크립트 코드 실행
 
+node src/index.js
+  - Node.js 환경에서 index.js 파일을 실행하는 명령어 
+
 TSX(TypeScript Execute)로 실행하기
   - ts-node는 Node 20 버전 이상에서는 더이상 동작하지 않음
   - ts-node와 동작 방식 동일
   - ts-node src/index.ts == tsx src/index.js
-  - 명령어 한 번으로 타입스크립트 코드를 바로 실행시켜주는 도구
+  - 명령어 한 번으로 타입스크립트 코드를 바로 실행시켜주는 도구 (tsc 이후 node 명령어 거칠 필요 없이 바로)
 
   - 설치 : npm i -g tsx
   - 버전 확인 : tsx -v
@@ -80,7 +84,34 @@ TSX(TypeScript Execute)로 실행하기
 
 -->
 
-<!-- 
+<!--
+  node 설치
+  
+    - nvm 다운로드
+      - https://github.com/coreybutler/nvm-windows/releases
+
+    - 터미널 관리자실행
+      - nvm install 20.12.2 :       nvm에서 특정 버전 노드 설치하기
+      - nvm use 20.12.2 :           해당 버전 노드 사용하기
+      - node -v :                   사용중인 노드 버전 보기
+      - npm -v :                    현재 설치된 Node Package Manager 버전 확인 (Node.js 패키지 관리자) (Node.js 환경에서 JavaScript 패키지 관리 도구)
+      - nvm list :                  설치된 노드들 버전 보기
+
+    - 기본 Node.js 버전 설정
+      - nvm alias default 20.12.2 : 시스템을 다시 시작하거나 새로운 세션을 열 때마다 Node.js 20.12.2 버전 기본적으로 사용됨
+
+
+
+  npm 관련 명령어
+    - npm install :                 패키지 설치하거나 package.json에 명시된 모든 종속성 설치
+    - npm update :                  설치된 패키지를 최신 버전으로 업데이트
+    - npm uninstall :               패키지 제거
+    - npm init :                    새로운 Node.js 프로젝트 초기화하고 pacakage.json 파일 생성
+    - npm list :                    현재 프로젝트에 설치된 모든 패키지 나열
+    - npm run :                     package.json에 정의된 스크립트 실행
+
+
+
   Remove-Item -Recurse -Force .\node_modules
     - node_modules 폴더 삭제
 
@@ -92,6 +123,4 @@ TSX(TypeScript Execute)로 실행하기
 
   npm cache clean --force
     - npm 캐시 정리
-
-
 -->
