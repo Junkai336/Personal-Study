@@ -305,9 +305,169 @@
     - 모든 필드는 public static final 이어야 함
     - 모든 메소드는 public abstract 이어야 함
 
+  구현
+    - 인터페이스는 추상 클래스와 마찬가지로 자신이 직접 인터페이스 생성 불가
+    - 인터페이스가 포함하고 있는 추상 메소드를 구현해 줄 클래스를 작성해야 함
+    - class 클래스이름 implements 인터페이스이름 { ... }
+
+  ex)
+    interface Animal { public abstract void cry(); }
+    interface Pet { public abstract void play(); }
+
+    class Cat implements Animal, Pet {
+      public void cry() {
+        sout("야옹");
+      }
+      public void play() {
+        sout("ㅎㅇ");
+      }
+    }
+
+    class Dog implements Animal, Pet {
+      public void cry() {
+        sout("멍")
+      }
+      public void play() {
+        sout("ㅎㅇ2")
+      }
+    }
+
+    public class a {
+      public static void main(String[] args) {
+        Cat c = new Cat();
+        Dog d = new Dog();
+
+        d.cry();
+        d.play();
+        c.cry();
+        c.play();
+        
+      }
+    }
+
+    - 상속과 구현 동시에 가능
+    - class 클래스이름 extends 상위클래스이름 implements 인터페이스이름 { ... }
+
+    - 장점
+      - 일관되고 정형화된 표준화 가능
+      - 클래스 작성과 인터페이스 구현 동시에 진행 가능하므로 개발 시간 단축
+      - 클래스와 클래스 간 관계를 인터페이스로 연결하면, 클래스마다 독립적인 프로그래밍 가능
+
+    - 인터페이스를 구현하는 클래스는 인터페이스의 모든 추상 메소드를 구현해야 함
+
+
 
 내부클래스
+  - 하나의 클래스 내부에 선언된 또 다른 클래스
+  - class Outer { class Inner { ... } }
 
+  - 내부클래스 장점
+    - 내부 클래스에서 외부 클래스 멤버에 손쉽게 접근할 수 있음 (내부 클래스가 외부 클래스의 멤버[필드,메소드]에 접근할 수 있음)
+    - 서로 관련있는 클래스를 묶어 표현함으로써 코드 캡슐화 증가
+
+  정적 클래스(static class)
+    - 외부 클래스 영역에 선언된 클래스 중에서 static 키워드를 가지는 클래스
+    - 주로 외부 클래스의 클래스 메소드에 사용될 목적으로 선언
+    - 외부 클래스의 인스턴스가 있어야만 생성할 수 있는 클래스
+    - 정적 멤버만 접근 가능
+    - 외부 클래스의 인스턴스와 독립적으로 생성 가능
+
+  public class OuterClass {
+      private static String staticOuterField = "ㅎㅇㅇ";
+
+      public static class StaticInnerClass {
+        public void a() {
+          sout(staticOuterField);
+        }
+      }
+
+    public static void main(String[] args) {
+      OuterClass.StaticInnerClass staticInner = new OuterClass.StaticInnerClass();
+      staticInner.a();
+    }
+  }
+
+
+  인스턴스 클래스(instance class)
+    - 외부 클래스 영역에 선언된 클래스 중 static 키워드를 가지지 않는 클래스
+    - 외부 클래스의 인스턴스 변수나 인스턴스 메소드에 사용될 목적으로 선언
+    - 외부 클래스의 인스턴스와 독립적으로 생성할 수 있는 클래스
+    - 외부 클래스의 인스턴스가 있어야만 생성 가능
+
+  public class OuterClass {
+    private String outerField = "ㅎㅇ";
+
+    public class InnerClass {
+      public void a() {
+        sout(outerField);
+      }
+    }
+
+
+  public static void main(String[] args) {
+    OuterClass outer = new OuterClass();
+    OuterClass.InnerClass inner = outer.new InnerClass();
+    inner.a();
+    }
+  }
+
+
+  지역 클래스(local class)
+    - 외부 클래스의 메소드나 초기화 블록에 선언된 클래스
+    - 선언된 블록 내에서만 사용 가능 
+    - 메소드나 블록 내에서 정의된 클래스
+    - 메소드의 로컬 변수처럼 동작
+    - 메소드가 호출될 때 생성되고 메소드가 종료되면 사라짐
+
+    public class OuterClass {
+
+      public void createLocalClass() {
+        class LocalInnerClass {
+          public void a() {
+            sout("지역내부클래스")
+          }
+        }
+
+        LocalInnerClass localInner = new LocalInnerClass();
+        localInner.a();
+      }
+      public static void main(String[] args) {
+        OuterClass outer = new OuterClasS();
+        outer.createLocalClass();
+      }
+    }
+
+
+
+  익명 클래스(anonymous class)
+    - 클래스를 정의하고 즉시 인스턴스화할 때 사용되는 클래스
+    - 다른 내부 클래스와 달리 이름을 가지지 않는 클래스
+    - 클래스 선언과 동시에 객체를 생성하므로, 단 하나의 객체만 생성하는 일회용 클래스
+    - 생성자 선언불가
+    - 단 하나의 클래스나 인터페이스를 상속받거나 구현할 수 있음
+    - 선언과 동시에 생성하여 참조변수에 대입
+    - 클래스이름 참조변수이름 = new 클래스이름() { ... }
+
+  public class OuterClass {
+      interface Greet {
+        void sayHello();
+      }
+
+    public void createAnonymousClass() {
+      Greet greet = new Greet() {
+        @Override
+        public void sayHello() {
+          sout("ㅋㅋㄹㅃㅃ");
+        }
+      };
+      greet.sayHello();
+    }
+
+    public static void main(String[] args) {
+      OuterClass outer = new OuterClass();
+      outer.createAnonymousClass();
+    }
+}
 
 
 -->
