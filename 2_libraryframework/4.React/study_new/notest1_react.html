@@ -1,6 +1,27 @@
 <!-- 
 자바스크립트 문법
 
-  
+  형 변환
+    - Type Casting
+    - 어떤 값의 타입을 다른 타입으로 변경하는 것
+    - 묵시적 형 변환
+      - 개발자가 직접 설정하지 않아도 알아서 JS 엔진이 형 변환하는 것
+
+      let num = 10;
+      let str = "20";
+
+      const result = num + str
+        => 1020
+
+    - 명시적 형 변환
+      - 개발자가 직접 함수 등을 이용해 형 변환을 일으킴
+
+      let strToNum = Number(str);
+      const result2 = num + strToNum;
+        => 30
+
+      let str2 = "10개";
+      let strToNum2 = parseInt(str2); <- parseInt는 문자열이 나오기 전까지의 숫자를 변환 (asd123은 불가능)
+        => 10
 
 -->

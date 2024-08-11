@@ -4,14 +4,61 @@ java.lang.String 클래스
   - 이러한 객체를 자바에서 불변 객체라고 함
   - 자바에서 덧셈 연산자를 이용하여 문자열을 결합하면 기존 문자열의 내용이 변경되는 것이 아니라 내용이 합쳐진 String 인스턴스가 생성되는 것
 
-  - char charAt(int index)
+  - char charAt(int index) : 해당 문자열의 특정 인덱스에 해당하는 '문자 반환'
+    - 해당 문자열의 길이보다 큰 인덱스나 음수를 전달하면, IndexOutOfBoundsException 오류 발생
 
-  - int compareTo(String str)
+  - int compareTo(String str) : 해당 문자열을 인수로 전달된 문자열과 '사전 편찬 순'으로 비교
+  - int compareToIgnoreCase(String str) : 해당 문자열을 인수로 전달된 문자열과 '대소문자를 구분하지 않고' 사전 편찬 순으로 비교
+    - 두 문자열이 같다면 0
+    - 해당 문자열이 인수로 전달된 문자열보다 작으면 음수  (compareTo(인수)로 전달된 문자열이 사전순으로 뒤다.)
+    - 해당 문자열이 인수로 전달된 문자열보다 크면 양수    (compareTo(인수)로 전달된 문자열이 사전순으로 앞이다.)
 
-  - int compareToIgnoreCase(String str)
+  - String concat(String str) : 해당 문자열 뒤에 '인수로 전달된 문자열을 추가'한 새로운 문자열 반환
+    ex)
+      String str = new String("Java");
+      sout(str.concat(" 수업"))
 
-  - String concat(String str)
+  - int indexOf(int ch) : 해당 문자열에서 특정 문자나 문자열이 처음으로 등장하는 위치의 '인덱스 반환'
+  - int indexOf(String str) : 
+    - 전달된 문자나 문자열이 포함되어 있지 않으면 -1 반환
 
-  - int indexOf(int ch)
+  - int indexOf(int ch, int fromindex) : 해당 문자열에서 특정 문자나 문자열이 전달된 인덱스 '이후' '처음으로 등장하는 위치의 인덱스 반환'
+  - int indexOf(String str, int fromindex) : 
+
+  - int lastIndexOf(int ch) : 해당 문자열에서 특정 문자가 마지막으로 등장하는 위치의 인덱스를 반환
+  - int lastIndexOf(int ch, int fromindex) : 해당 문자열에서 특정 문자가 전달된 인덱스 '이후' '마지막으로 등장하는 위치의 인덱스 반환'
+
+  - String[] split(String regex) : 해당 문자열을 전달된 정규 표현식(regular expression)에 따라 나눠서 반환
+
+  - String substring(int beginIndex) : 해당 문자열을 전달된 인덱스부터 끝까지를 새로운 문자열로 반환
+  - String substring(int beginIndex, int endIndex) : 해당 문자열의 전달된 '시작 인덱스부터 마지막 인덱스까지를 새로운 문자열로' 반환
+
+  - String toLowerCase() : 해당 문자열의 모든 문자를 소문자로 변환
+  - String toUpperCas() : 해당 문자열의 모든 문자를 대문자로 변환
+
+  - String trim() : 해당 문자열의 맨 앞과 맨 뒤에 포함된 모든 공백 문자 제거
+
+  - length() : 해당 문자열의 길이 반환
+
+  - isEmpty() : 해당 문자열의 길이가 0이면 true , 아니면 false
+
+-->
+
+<!-- 
+java.lang.StringBuffer 클래스
+  - String 클래스의 인스턴스는 한 번 생성되면 그 값을 읽기만 할 수 있고 변경은 불가
+  - StringBuffer 클래스의 인스턴스는 그 값을 변경할 수 있고, 수정할 수 있음
+
+  - StringBuffer append()
+
+  - int capacity()
+
+  - StringBuffer delete(int start, int end)
+
+  - String deleteCharAt(int index)
+
+  - StringBuffer insert(int offset, )
+
+  - StringBuffer reverse()
 
 -->

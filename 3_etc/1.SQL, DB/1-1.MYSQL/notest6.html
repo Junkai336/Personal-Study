@@ -10,7 +10,42 @@
     - 
 
   윈도우 함수
-    - 
+    - 데이터의 집합을 나누고 각 집합에 대해 계산을 수행할 수 있는 도구
+
+    - ROW_NUMBER()
+      - 데이터의 특정 기준에 따라 각 행에 고유한 번호 할당
+      - SELECT ROW_NUMBER() OVER (PARTITION BY 그룹기준열 ORDER BY 정렬기준열) AS ROW_NUM
+        - PARTITION BY 절
+          - 데이터의 집합을 그룹으로 나누는 역할
+          - 각 그룹기준열 기준으로 데이터를 그룹화
+          - 이 절을 사용하지 않으면 전체 테이블을 하나의 그룹으로 간주
+
+          ex)
+            SELECT
+              NAME,
+              CLASS,
+              SCORE
+              AVG(SCORE) OVER (PARTITION BY CLASS) AS CLASS_AVG       <- 같은 CLASS 끼리의 점수의 평균을 구함
+            FROM
+              STUDENTS
+
+        - ORDER BY 절
+          - 각 그룹 내에서 ROW_NUMBER()를 매기는 순서를 결정
+          - 이 절을 사용하지 않으면 기본적으로 아무런 정렬 없이 번호가 매겨짐
+
+    - RANK()
+
+    - DENSE_RANK()
+
+    - NTITLE()
+
+    - LAG()
+
+    - LEAD()
+
+    - SUM()
+
+    - AVG()
 
   GROUP_CONCAT
     - 특정 그룹에 속하는 행들의 값을 하나의 문자열로 결합하여 반환
