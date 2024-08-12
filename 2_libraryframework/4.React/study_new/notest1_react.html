@@ -24,4 +24,37 @@
       let strToNum2 = parseInt(str2); <- parseInt는 문자열이 나오기 전까지의 숫자를 변환 (asd123은 불가능)
         => 10
 
+
+
+  NULL 병합 연산자
+    - 존재하는 값을 추려내는 기능
+    - null, undefined가 아닌 값을 찾아내는 연산자
+
+    let var1;
+    let var2 = 10;
+    let var3 = 20;
+
+    let var4 = var1 ?? var2;      => 10
+    let vat5 = var2 ?? var3;      => 10, 둘 다 존재하는 값일 경우 첫 번째 값이 반환이 됨.
+
+
+
+
+  typeOf 연산자
+    - 값의 타입을 문자열로 반환하는 기능을 하는 연산자
+
+    let var1 = 1;
+    let var2 = "ㅎㅇ";
+    let var3 = true;
+
+    console.log(typeof var1);    => number
+    console.log(typeof var2);    => string
+    console.log(typeof var3);    => boolean
+
+
+
+
+  후위 연산자는 그 라인이 끝나야 증감하거나 감소한다. variable++
+  == 은 '값'만 비교하고, === 은 '자료형'까지 비교한다.
+  NOT 연산자 !는 boolean 타입을 반대로 바꾼다.
 -->
