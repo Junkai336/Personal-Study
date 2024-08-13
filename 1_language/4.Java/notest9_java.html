@@ -3,34 +3,76 @@ java.lang.Math 클래스
   - Math 클래스는 수학에서 자주 사용하는 상수들과 함수들을 미리 구현해 놓은 클래스
   - Math 클래스의 모든 메소드는 클래스 메소드이므로 객체를 생성하지 않고도 바로 사용할 수 있음
 
-  - static double random() : 
+  - Math.E : 오일러의 수, 자연로그의 밑값, 약 2.718
+  - Math.PI : 원의 원주를 지름으로 나눈 비율, 원주율 값, 약 3.14159
 
-  - static double abs(double float int long a) : 
+  - static double random() : 0.0 이상 1.0 미만 범위에서 임의의 double형 값을 하나 생성하여 반환
+    - (int) (Math.random() * 100)     => 0 ~ 99
+    - (int) (Math.random() * 6) + 1   => 1 ~ 6
 
-  - static double ceil(double a) : 
+  - static double abs(double float int long a) : 전달된 값이 음수면 그 값의 절대값 반환, 양수면 그대로 반환
 
-  - static double floor(double a) : 
+  - static double ceil(double a) : 전달된 double 형 값에 소수 부분이 존재하면 무조건 올림
 
-  - static long round(double a) : 
+  - static double floor(double a) : 전달된 double 형 값에 소수 부분이 존재하면 무조건 버림
+
+  - static long round(double a) : 소수점 첫째 자리에서 반올림한 정수 반환
   - static int round(float a) : 
 
-  - static double rint(double a) : 
+  - static double rint(double a) : 전달된 double형 값과 가장 가까운 정수값을 double형으로 반환함
 
-  - static double max(double a, double b) : 
+  - static double max(double a, double b) : 전달된 두 값을 비교하여 그 중 큰 값 반환
   - static float max(float a, float b) : 
   - static long max(long a, long b) :
   - static int max(int a, int b) : 
 
-  - static double pow(double a, double b) : 
+  - min() : 전달된 두 값을 비교하여 그 중 작은 값 반환
 
-  - static double sqrt(double a) : 
+  - static double pow(double a, double b) : a의 b승 반환 (a^b)
 
-  - static double sin(double a) : 
-  - static double cos(double a) : 
-  - static double tan(double a) : 
+  - static double sqrt(double a) : 제곱근 값 반환
 
-  - static double toDegress(double angrad) : 
+  - static double sin(double a) : 사인 값 반환
+  - static double cos(double a) : 코사인 값 반환
+  - static double tan(double a) : 탄젠트 값 반환
 
-  - static double toRaidans(double angdeg) : 
+  - static double toDegress(double angrad) : 호도법의 라디안 값을 대략적인 육십분법의 각도 값으로 변환
 
+  - static double toRaidans(double angdeg) : 육십분법의 각도 값을 대략적인 호도법의 라디안 값으로 변환
+
+-->
+
+
+
+<!-- 
+래퍼 클래스(Wrapper class)
+  - 프로그램에 따라 기본 타입의 데이터를 객체 취급해야 하는 경우가 있음
+  - 예: 메소드의 인수로 객체 타입만 요구되면 기본 타입의 데이터는 그대로 사용할 수 없으므로 객체로 변환 후 작업 수행해야 함
+
+            <- 언박싱
+            -> 박싱
+  기본 타입      래퍼 클래스
+  - byte          - Byte
+  - short         - Short
+  - int           - Integer
+  - long          - Long
+  - float         - Float
+  - double        - Double
+  - char          - Character
+  - boolean       - Boolean
+
+    - 래퍼 클래스는 산술 연산을 위해 정의된 클래스가 아니므로 인스턴스에 저장된 값 변경 불가
+    - 값을 참조하기 위해 새로운 인스턴스를 생성하고, 생성된 인스턴스의 값만 참조 가능
+
+
+  오토 박싱, 오토 언박싱
+  - 필요한 상황에서 자동으로 박싱, 언박싱
+
+-->
+
+<!-- 
+ENUM 클래스
+  - 열거체(enumeration type)
+  - 열거체를 비교할 때 실제 값 + 타입 체크
+  - 열거체의 상수값이 재정의되더라도 다시 컴파일할 필요 없음
 -->
