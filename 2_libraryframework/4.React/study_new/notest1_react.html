@@ -58,3 +58,62 @@
   == 은 '값'만 비교하고, === 은 '자료형'까지 비교한다.
   NOT 연산자 !는 boolean 타입을 반대로 바꾼다.
 -->
+
+<!-- 
+  호이스팅
+    - 다른 언어에서 선언이 되지 않은 함수를 호출하려고 하면 에러가 나는게 일반적
+    - JS에서는 정상적으로 실행
+    - 끌어올리다 라는 의미
+    - 밑에 작성된 코드를 최상단으로 끌어올려서 실행시켜주는 기능
+    - 함수 선언이 무조건 위에 있지 않아도 되기 때문에 좀더 유연하게 함수 실행 가능
+
+                        인수
+    let area = getArea(10, 20);
+
+                        매개변수
+    function getArea(width, height) {
+      let area = width * height;
+
+      function another() {
+        console.log("중첩함수");
+      }
+
+      another();
+
+      return area;
+      console.log("반환값을 반환한 이후로는 더이상 밑의 코드를 실행하지 않음. 값을 반환하고 함수 종료.")
+    }
+
+  익명함수
+
+    let varA = getArea;             // 함수도 숫자나 문자처럼 값으로 취급하기 때문에 변수에 담을 수 있음
+    varA();                         // 변수 이름으로 호출
+
+    let varB = function funcA() {
+      console.log("")               // 변수의 값으로써 함수가 생성된 것. 함수를 만들자마자 변수에 담아버리는 것 가능. 함수의 이름으로는 호출 불가.
+    }
+
+    let varB = function () {        // 이름이 없는 함수. 익명 함수. 함수 선언문으로 만든 선언적 함수와 달리 호이스팅 불가.
+      console.log("익명함수")
+    }
+
+  화살표 함수
+
+    let varC = () => {                      // function 생략
+      return 1;
+    };
+
+    let varC = (value) => value + 1;         // 값을 반환하기만 하는 함수 (function 생략, 중괄호 생략)
+
+    console.log(varC(10));
+
+  콜백 함수
+    - 자신이 아닌 다른 함수의 인수로서 전달된 함수
+
+    function main(value) { ... }
+
+    function sub() { ... }
+
+    main(sub);
+
+-->
