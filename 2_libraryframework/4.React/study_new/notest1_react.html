@@ -108,12 +108,83 @@
     console.log(varC(10));
 
   콜백 함수
-    - 자신이 아닌 다른 함수의 인수로서 전달된 함수
+    - 자신이 아닌 다른 함수의 인수로써 전달된 함수
+    - 어떠한 함수를 다른 함수의 인수로 전달해서 나중에 해당 함수에서 알아서 호출하도록 설정한 함수
+    - 나중에 실행된다 라는 뜻으로도 쓰임
 
-    function main(value) { ... }
+    function main(value) { 
+      value();                <- 매개변수로 함수를 담고 있으면 main(sub)에서 sub 함수 호출.
+    }
 
     function sub() { ... }
 
     main(sub);
+
+    main(() => {
+      console.log("함수가 인수!")
+    });
+
+      콜백 함수 활용
+
+      function repeat(count, callback) {
+        for (let i = 0; i <= count; i++) {
+          callback(i);
+        }
+      }
+
+      repeat(5, function (i) {
+        console.log(i);
+      })
+
+      repeat(5, function (i) {
+        console.log(i * 2);
+      })
+
+-->
+
+<!-- 
+스코프
+  - 범위
+  - 변수나 함수에 접근하거나 호출할 수 있는 범위
+  - 전역(전체 영역) 스코프 : 전체 영역에서 접근 가능
+  - 지역(특정 영역) 스코프 : 특정 영역에서만 접근 가능
+  - 블록 {} : 블록 내에 선언된 변수들은 전부 지역 스코프를 가진다. + for문의 i도 지역스코프 가짐
+
+  let a = 1;
+
+  function funcA() {
+    let b = 2;
+    console.log(a);       <- 접근 가능
+
+    function funcB() {
+      ...
+    }
+  }
+
+  console.log(b);         <- 접근 불가 (함수 외부에서 접근 불가)
+
+  funcA();                <- 접근 가능
+
+  funcB();                <- 접근 불가
+
+-->
+
+<!-- 
+객체
+  - 원시 타입이 아닌 객체 타입의 자료형
+  - 여러가지 값을 동시에 저장할 수 있는 자료형을 의미
+
+  객체 생성
+    - let obj1 = new Object()     // 객체 생성자
+    - let obj2 = {}               // 객체 리터럴  (대부분 사용)
+
+    객체 프로퍼티 (객체 속성) : 객체의 실질적인 정보 (key: value)
+      let person = {
+        name: "a",
+        age: "1",
+        hobby: "b",
+        extra: {},
+        "like cat": true
+      }
 
 -->
