@@ -1,0 +1,38 @@
+<!-- 
+자바스크립트 심화
+
+  Truthy & Falsy
+    - 참이나 거짓을 의미하지 않는 값도 조건문 내에서 참이나 거짓으로 평가하는 특징
+
+    - Falsy한 값
+      - undefined
+      - null
+      - 0
+      - -0
+      - NaN
+      - ""
+      - 0n      // Big Integer
+
+    - Truthy한 값
+      - Falsy한 값 외에 전부
+      - [], {}, () => {}; 다 truthy함
+
+    - 활용
+
+      function printName(person) {
+        if(!person) return;                 // person === undefined || person === null
+
+        console.log("person.name");
+      }
+
+      let person = null;
+      printName(person)
+
+
+
+  단락 평가(Short-circuit Evaluation)
+    - 
+
+
+
+-->

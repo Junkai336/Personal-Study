@@ -27,7 +27,6 @@ let user3 = {
     bio: "ㅎㅇ",
     location: "부천시"
 };
-// ----
 let user4 = {
     id: 1,
     name: "ㅎㅇ",
@@ -35,5 +34,16 @@ let user4 = {
     birth: "1990.01.01",
     bio: "ㅎㅇ",
     location: "부천시"
+};
+let countryCodes = {
+    Korea: 'ko',
+    UnitedState: 'us',
+    UnitedKingdom: 'uk'
+};
+let countryNumberCodes = {
+    Korea: 410,
+    UnitedState: 840,
+    UnitedKingdom: 826,
+    // Korea2: 'd' 오류
 };
 export {};

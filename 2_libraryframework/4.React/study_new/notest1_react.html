@@ -187,4 +187,100 @@
         "like cat": true
       }
 
+  객체 프로퍼티
+    - 특정 프로퍼티에 접근
+    - 점 표기법
+      let name = person.name;
+      let name2 = person.name2;    <- 존재하지 않는 프로퍼티에 접근 undefined
+
+    - 괄호 표기법
+      let age = person["age"]       // 객체 프로퍼티 접근
+      let age = person[age]         // age를 변수로 인식
+
+      let property = "hobby";
+      let age = person[property];   // property 변수로 접근 + hobby 라는 객체 프로퍼티에 접근
+
+
+    - 프로퍼티 추가
+      person.job = "developer";
+      person["favoriteFood"] = "과자";
+
+      객체.변수명 = 값 x
+      객체[변수명] = 값 o
+
+    - 프로퍼티 수정
+      person.job = "educator";
+      person["favoriteFood"] = "물";
+
+    - 프로퍼티 삭제
+      delete person.job;
+      delete person["favoriteFood"];
+
+    - 프로퍼티 존재 유무 확인 (in 연산자)
+      let result1 = "name" in person;     // 반환값: true, false
+
+
+  - 상수 객체
+    const animal = {
+      type: "고양이",
+      name: "나비",
+      color: "black"
+    };
+
+    animal = { a: 1 };    // 에러 TypeError: Assignment to costant variable
+
+    animal.age = 2;         // 추가 (상수에서도 저장되어 있는 객체 프로퍼티 건드는 행위는 ok) (상수는 새로운 값을 할당하지 못하는 것을 말하는 것 animal = 123;)
+    animal.name = "까망이"  // 수정
+    delete animal.color     // 삭제
+
+
+  - 메서드
+    - 값이 함수인 프로퍼티
+    - 객체의 동작을 정의하는 데에 사용
+
+    // 메서드 선언
+    const person = {
+      name: "ㅎㅇ",
+      sayHi: function () {
+        console.log("ㅎㅇ?");
+      },
+      sayHi2: () => {
+        console.log("ㅎㅇ??");
+      },
+      sayHi3: () {
+        console.log("ㅎㅇ???");
+      },
+    };
+
+    // 메서드 호출
+    person.sayHi();
+    person["sayHi"]();
+-->
+
+<!-- 
+배열
+
+  - 배열 생성
+    let arrA = new Array();   // 배열 생성자
+    let arrB = [];            // 배열 리터럴 (대부분 사용)
+
+    let arrC = [
+      1,
+      2,
+      3,
+      true,
+      null,
+      undefined,
+      () => {},
+      {},
+      [],
+    }
+  
+    ]
+
+  - 배열 요소 접근
+  let item = arrC[0];
+
+  arrC[0] = "hello";
+
 -->

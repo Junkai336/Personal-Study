@@ -149,5 +149,65 @@
 Enum 타입
   - 열거형 타입 : 여러가지 값들에 각각 이름을 부여해 열거해두고 사용하는 타입
   - js에는 없고 ts에만 있음
+  - 숫자를 명시해주지 않아도 자동으로 위에서부터 0,1,2 숫자가 들어감
+  - enum 이름 { ... }
+
+  enum Role {
+    ADMIN,      <- 0
+    USER = 10,  <- 10 (숫자형 enum)
+    GUEST       <- 11
+  }
+
+  enum Language {
+    korean = "ko",
+    english = "en"
+  }
+-->
+
+<!-- 
+any 타입
+  - 특정 변수의 타입을 우리가 확실히 모를 때 사용
+  - 모든 타입이 될 수 있다.
+  - 모든 타입의 값에 any 타입을 집어넣을 수 있음
+  - 타입스크립트 검사를 전부 통과하는 치트키같은 타입 (타입 검사를 안하는 것과 똑같음)
+
+  let anyVar : any = 10;
+  anyVar = "hello";
+  anyVar.toUpperCase();
+  anyVar.toFixed();
+  
+  let num: number = 10;
+  num = anyVar;
+
+  => 컴파일 단계가 아닌 런타임 단계에서 오류 발생
+
+Unknown 타입
+    - 모든 타입의 값을 허용하지만,
+    - 값을 사용할 때 타입 검사를 통해 안전성을 유지해야 함
+    - 실제로 사용할 때 타입 검사, 타입 좁히기를 통해 특정 타입으로 좁혀야만 조작할 수 있음
+    - 변수에 저장할 값의 타입이 확실하지 않을 때 사용하면 any보다 안전함
+-->
+
+<!-- 
+Void 타입
+    - 아무것도 없음을 의미하는 타입
+    - 리턴문을 사용하고 싶지 않은 함수의 반환값 타입
+    function func1(): void {
+      console.log("hello");
+    }
+
+Never 타입
+    - 불가능한 타입
+    - 함수에 반환값 자체가 있는 것이 모순일 때 사용 (무한 반복문 등)
+    - 함수가 항상 예외를 던지거나, 무한 루프에 빠져서 정상적으로 종료되지 않는 경우
+    - never 타입에는 어떠한 값도 담을 수 없음. any 타입의 값조차 담을 수 없다.
+
+    function throwError(message: string): never {
+      throw new Error(message);                     // 실행되면 프로그램이 바로 종료될 것이기 때문에 never 타입이 적합
+    }
+
+    function infiniteLoop(): never {
+      while (true) { ... }
+    }
 
 -->
