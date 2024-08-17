@@ -1,0 +1,77 @@
+<!-- 
+컬렉션 프레임워크(collection framework)
+  - 다수의 데이터를 쉽고 효과적으로 처리할 수 있는 표준화된 방법을 제공하는 클래스 집합
+  - 데이터를 저장하는 자료 구조와 데이터를 처리하는 알고리즘을 구조화하여 클래스로 구현해놓은 것
+  - 컬렉션 프레임워크는 자바의 인터페이스를 사용하여 구현됨
+
+컬렉션 프레임워크 주요 인터페이스
+  - 데이터를 저장하는 자료 구조에 따라 주요 인터페이스 정의
+  - List, Set, Map 인터페이스
+  - List, Set 인터페이스는 Collection 인터페이스를 상속받음
+  - Map 인터페이스는 구조상의 차이로 별도로 정의됨
+
+주요 인터페이스 특징
+  - List<E> : 순서가 있는 데이터 집합 , 데이터 중복 허용 , Vector, ArrayList, LinkedList, Stack, Queue
+
+  - Set<E> : 순서가 없는 데이터 집합 , 데이터 중복 불가 , HashSet, TreeSet
+
+  - Map<K, V> : 순서 없음 , 키 값 한 쌍으로 이루어지는 데이터 집합 , 키는 중복 불가 , 값은 중복 허용 , HashMap, TreeMap, Hashtable, Properties
+
+  - <E> , <K, V> : 컬렉션 프레임워크를 구성하는 모든 클래스가 제네릭으로 표현되어 있음
+
+컬렉션 클래스(collection class)
+  - 컬렉션 프레임워크에 속하는 인터페이스를 구현한 클래스
+  - 컬렉션 프레임워크의 모든 컬렉션 클래스는 List, Set, Map 인터페이스 중 하나의 인터페이스 구현하고 있음
+
+    import java.util.*;
+
+    public class Collection01 {
+      public static void main(String[] args) {
+        ArrayList<String> arrList = new ArrayList<String>();
+
+        arrList.add("ㅋㅋㄹ");
+
+        for(int i = 0; i < arrList.size(); i++) {
+          sout(arrList.get(i));
+        }
+      }
+    }
+
+Collection 인터페이스
+  - List와 Set 인터페이스의 많은 공통된 부분을 Collection 인터페이스에서 정의하고 그것을 상속받음
+  - 컬렉션을 다루는데 가장 기본적인 동작들을 정의하고 메소드로 제공 중
+
+  - boolean add(E e) : 해당 컬렉션에 전달된 요소 추가
+
+  - void clear() : 해당 컬렉션의 모든 요소 제거
+
+  - boolean contains(Object o) : 해당 컬렉션이 전달된 객체를 포함하고 있는지 확인
+
+  - boolean equals(Object o) : 해당 컬렉션과 전달된 객체가 같은지 확인
+
+  - boolean isEmpty() : 해당 컬렉션이 비어있는지 확인
+
+  - Iterator<E> iterator() : 해당 컬렉션의 반복자 반환
+
+  - boolean remove(Object o) : 해당 컬렉션에서 전달된 객체 제거
+
+  - int size() : 해당 컬렉션 요소의 총 개수 반환
+
+  - Object[] toArray() : 해당 컬렉션의 모든 요소를 Object 타입의 배열로 반환
+
+-->
+
+<!-- 
+List 컬렉션 클래스
+    - 요소의 저장 순서 유지
+    - 같은 요소의 중복 저장 허용
+
+    ArrayList<E> 클래스
+
+    LinkedList<E> 클래스
+
+    Vector<E> 클래스
+
+    List 인터페이스 메소드
+
+-->
