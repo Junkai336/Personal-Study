@@ -24,6 +24,99 @@
   - 업 캐스팅 : 작은 타입을 큰 타입 취급        (모든 상황에 가능)
   - 다운 캐스팅 : 큰 타입을 작은 타입으로 취급  (대부분 상황에 불가)
 
+
+
+객체 타입 호환성
+  - 프로퍼티를 기준으로 슈퍼타입, 서브타입을 가짐
+  - 추가 프로퍼티가 없는, 조건이 더 적은 타입이 슈퍼타입이 됨
+
+  type Animal = {         // 슈퍼타입
+    name: string,
+    color: string,
+  };
+
+  type Dog = {            // 서브타입
+    name: string,
+    color: string,
+    breed: string
+  }
+
+  let animal = { ... }
+  let dog = { ... }
+
+  animal = dog;           (O)
+  dog = animal;           (X)
+
+초과 프로퍼티 검사
+  - 변수를 초기화할 때 초기화하는 값으로 객체 리터럴을 사용하면 발동하는 검사
+  - 객체 타입 변수를 초기화할 때 실제 타입에는 정의해놓지 않은 초과 프로퍼티를 작성하면 안되도록 막는 검사
+  - 객체 리터럴 사용시 딱 정의된 프로퍼티만 넣을 수 있도록 해야 함 
+
+  - 초과 프로퍼티 검사를 피하려면 새로운 변수를 만들고 값 할당하는 식으로 진행 (chapter9.ts)
+
+  - 함수의 매개변수에 객체를 전달할 때도 객체 리터럴을 전달할 때 초과 프로퍼티 검사가 진행됨 (서브타입을 인수로 전달하는 방식으로 우회 가능)
+
+  let Dog2: Animal = {
+    name: "이름",
+    color: "컬러",
+    // breed: "에러"     // 에러!
+  }
+
+  그러나
+
+  Dog2 = animal 은 가능하다.
+
+
+
+  대수 타입
+    - 여러개의 타입을 합성해서 새롭게 만들어낸 타입
+    - 합집합 타입, 교집합 타입
+
+    합집합 타입
+      - Union 타입
+      
+      let a : string | number | boolean | undefined | ...
+
+      a = 1;
+      a = "hello";
+      a = true;
+
+      let arr : (number | string | boolean)[] = [1, "hello", true];
+
+      type Dog = {
+      name : string;
+      color : string;
+      }
+
+      type Person = {
+        name: string;
+        language: string;
+      }
+
+      type Union1 = Dog | Person
+
+      let union1 : Union1 = {
+        name : "",
+        color : "",
+      }
+
+      let union2 : Union1 = {
+        name : "",
+        language : "",
+      }
+
+      let union3 : Union1 = {
+        name : "",
+        color : "",
+        language : "",
+      }
+
+    교집합 타입
+      - Intersection 타입
+      - 기본 타입은 웬만하면 교집합이 없어서 never 타입(공집합)이 되므로 주로 객체 타입에 많이 사용함
+
+      union3만 교집합에 포함 (모든 프로퍼티를 다 가지고 있어야 한다. name, color, language. 하나라도 빠지면 에러)
+      name 프로퍼티만 있는건 dog 타입과 person 타입 둘 다 해당되지 않음 (프로퍼티를 다 가지고 있다라는 전제하에 하나의 집합으로 보는듯?)
 -->
 
 

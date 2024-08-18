@@ -30,9 +30,82 @@
 
 
 
+
+
   단락 평가(Short-circuit Evaluation)
-    - 
+    - 첫번째 피연산자의 값이 확정되었을 때 두번째 피연산자의 값에 접근조차 하지 않는 것
+    - 조건문을 이용하지 않고도 특정 상황에서 어떠한 함수를 호출하지 않도록 방지하거나 어떠한 값들을 굳이 계산하지 않도록 제한하는 등 할 수 있음
+    - 논리 연산식에서 첫번째 피연산자의 값만으로도 연산의 결과를 확정할 수 있다면 두 번째 피연산자에는 접근조차 하지 않는 실행 방식
+    - true, false 뿐만 아니라 truthly, falshy한 값도 적용됨
+
+    function returnFalse() {
+      console.log("False 함수");
+      return false;
+    }
+
+    function returnTrue() {
+      console.log("True 함수");
+      return true;
+    }
+
+    console.log(returnFalse() && returnTrue());     // False 함수 , false 만 출력된다.
+
+    console.log(returnTrue() && returnFalse());     // True 함수, False 함수 둘 다 호출되고 false 가 출력된다.
+
+    console.log(returnTrue() || returnFalse());     // True 함수 , true 만 출력된다.
+
+    예시
+
+    let name = null
+    let defaultName = "Anoymous";
+
+    let displayName = name || defaultName;  // name이 falshy한 값이라 defaultName이 됨. 반대로 name이 있으면 name이 됨
+
+    예시2
+
+    function printName(person) {
+      if(!person) {
+        console.log("person에 값이 없음");
+        return;
+      }
+
+      console.log(person.name);
+    }
+
+    대신에
+
+    function printName(person) {
+      console.log(person && person.name);
+    }
+
+    function printName(person) {
+      const name = person && person.name;
+      console.log (name || "person의 값이 없습니다.");
+    }
+
+    - Truthy한 값 || Truthy한 값 일 경우에 첫 번째 Truthy한 값만 반환됨
+    - Truthy한 값 && Truthy한 값 일 경우에 두 번째 Truthy한 값만 반환됨
+
+    
+    결론
+
+      true || true : 첫번째 true를 만나면 전체 표현식의 결과가 이미 true 임이 확정되므로 "첫번째 true가 반환" (두번째 값은 평가되지 않음)
+      false || false : 첫번째 값이 false이기 때문에 두번째 값도 평가해야 전체 결과르 알 수 있으므로 "두번째 false가 반환"
+
+      true && true : 전체 표현식이 true가 되기 위해 두번째 값도 true여야 하므로 "두번째 true가 반환"
+      false && false : 첫번째 false를 만나면 전체 표현식의 결과가 이미 false 임이 확정되므로 "첫번째 false가 반환"
+
+      true && false : "두번째 false 반환"
+      false && true : "첫번째 false 반환"
+
+      true || false : "첫번쨰 true 반환"
+      false || true : "두번째 true 반환"
 
 
 
+
+
+  구조분해할당
+    - 배열이나 객체에 저장된 여러 개의 값들을 분해해서 각각 다른 변수에 할당하는 문법
+    
 -->
