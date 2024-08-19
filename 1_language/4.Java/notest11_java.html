@@ -156,8 +156,125 @@ List 컬렉션 클래스
 
 <!-- 
 Stack<E> 클래스
+  - List 컬렉션 클래스의 Vector 클래스를 상속받아 전형적인 스택 메모리 구조의 클래스 제공
+  - 스택 메모리 구조는 선형 메모리 공간에 데이터를 저장하면서 후입선출(LIFO)의 시멘틱을 따르는 자료 구조
+  - 가장 나중에 저장된 데이터(push)가 가장 먼저 인출(pop)되는 구조
+
+  - Stack<Integer> st = new Stack<Integer>();
+
+  - 스택 메모리 구조를 표현하기 위해 Vector 클래스의 메소드를 5개만 상속받아 사용
+
+    - boolean empty() : 해당 스택이 비어있으면 true, 비어있지않으면 false
+
+    - E peek() : 해당 스택의 제일 상단에 있는, 마지막으로 저장된 요소를 반환
+
+    - E pop() : 해당 스택의 제일 상단에 있는, 마지막으로 저장된 요소를 반환하고, 해당 요소를 스택에서 제거
+
+    - E push(E item) : 해당 스택의 제일 상단에 전달된 요소를 삽입
+
+    - int search(Object o) : 해당 스택에서 전달된 객체가 존재하는 위치의 인덱스 반환,
+                            이때 인덱스는 제일 마지막으로 저장된 요소의 위치부터 0이 아닌 1부터 시작함
+                            (맨 마지막 인덱스부터 0말고 1.. 2.. 3.. 이런 식 인듯)
+
+
+  ArrayDeque 클래스
+    - 더 복잡하고 빠른 스택 구현
+    - Deque 인터페이스 구현
+    - search() 메소드는 지원하지 않음
+    - Deque<Integer> st = new ArrayDeque<Integer>();
+
+
+    Stack<Integer> st = new Stack<Integer>();         // 스택 생성
+    Deque<Integer> st2 = new ArrayDeque<Integer>();
+
+    st.push(4);
+    st.push(2);
+    st.push(3);
+    st.push(1);
+
+    sout(st.peek());              // 1
+    sout(st);                     // [4, 2, 3, 1]
+
+    sout(st.pop());               // 1
+    sout(st);                     // [4, 2, 3]
+
+    sout(st.search(4));           // 3
+    sout(st.search(3));           // 1
+
 
 
 Queue<E> 인터페이스
+  - 클래스로 구현된 스택과 달리 자바에서 큐 메모리 구조는 별도의 인터페이스 형태로 제공됨
+
+  - Queue 인터페이스를 상속받는 하위 인터페이스
+    - Deque<E>
+    - BlockingDeque<E>
+    - BlockingQueue<E>
+    - TransferQueue<E>
+
+  - Queue 인터페이스를 직간접적으로 구현한 클래스는 상당히 많음
+  - Deque 인터페이스를 구현한 LinkedList 클래스가 큐 메모리 구조를 구현하는 데 가장 많이 사용됨
+
+  - Queue 메모리 구조는 선형 메모리 공간에 데이터를 저장하면서 선입선출(FIFO)의 시멘틱을 따르는 자료 구조
+  - 가장 먼저 저장된 데이터(push)가 가장 먼저 인출(pop)되는 구조
+
+  - LinkedList<String> qu = new LinkedList<String>();
+
+  - Queue 인터페이스는 큐 메모리 구조를 표현하기 위해 Collection 인터페이스 메소드만 상속받아 사용
+
+    - boolean add(E e) : 해당 큐의 '맨 뒤'에 전달된 요소 삽입, 삽입 성공시 true, 큐에 여유공간이 없어 삽입에 실패하면 illegalStateException 발생
+
+    - E element() : 해당 큐의 맨 앞에 있는, 제일 먼저 저장된 요소 반환
+
+    - boolean offer(E e) : 해당 큐의 맨 뒤에 / 전달된 요소를 삽입
+
+    - E peek() : 해당 큐의 맨 앞에 있는, 제일 먼저 저장된 요소 반환, 큐가 비어있으면 null 반환
+
+    - E poll() : 해당 큐의 맨 앞에 있는, 제일 먼저 저장된 요소 반환 후 해당 요소를 큐에서 제거, 큐가 비어있으면 null 반환
+
+    - E remove() : 해당 큐의 맨 앞에 있는, 제일 먼저 저장된 요소 제거
+
+
+  ArrayDeque 클래스
+    - 더 복잡하고 빠른 큐 구현
+    - Deque<Integer> qu = new ArrayDeque<Integer>();
+
+    LinkedList<String> qu = new LinkedList<String>();   // 큐 생성
+    // Deque<String> qu = new ArrayDeque<String>(); 
+
+    qu.add("넷")
+    qu.add("둘")
+    qu.add("셋")
+    qu.add("하나")
+
+    sout(qu.peek());  // 넷
+    sout(qu);         // [넷, 둘, 셋, 하나]
+
+    sout(qu.poll());  // 넷
+    sout(qu);         // [둘, 셋, 하나]
+
+    qu.remove("하나");
+    sout(qu);         // [둘, 셋]
+
+    cf) ArrayDeque 클래스는 스택과 큐 메모리 구조 모두 구현하는데 가장 적합한 클래스
+
+-->
+
+<!-- 
+
+Deque<E>
+  -
+
+BlockingDeque<E>
+  -
+
+BlockingQueue<E>
+  -
+
+TransferQueue<E>
+  -
+
+ArrayDeque
+  - 
 
 -->
