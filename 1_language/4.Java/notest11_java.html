@@ -261,20 +261,236 @@ Queue<E> 인터페이스
 -->
 
 <!-- 
-
 Deque<E>
-  -
+  - Double-Ended Queue
+  - 양쪽 끝에서 요소를 추가하거나 제거할 수 있음
+  - 양방향 삽입 및 삭제 가능
+  - 스택이나 큐로 사용할 수 있음
+  - 예시 구현 클래스 : ArrayDeque, LinkedList
 
 BlockingDeque<E>
-  -
+  - Deque를 확장한 인터페이스
+  - 스레드 간의 동기화 지원
+  - 요소를 추가하거나 제거할 때, 큐가 비어있거나 가득 차 있을 경우 스레드를 블록시킬 수 있음
+  - 멀티스레드 환경에서 안전하게 사용 가능
+  - 주요 메소드 : offerFirst, offerLast, takeFirst, takeLast
 
 BlockingQueue<E>
-  -
+  - 스레드 간의 동기화를 지원하는 큐
+  - 스레드가 큐에서 요소를 추가하거나 제거할 때, 큐의 상태에 따라 스레드를 블록시킬 수 있음
+  - 주로 프로듀서-컨슈머 패턴에서 사용됨
+  - 주요 구현 클래스 : ArrayBlockingQueue, LinkedBlockingQueue, PriorityBlockingQueue
 
 TransferQueue<E>
-  -
+  - BlockingQueue의 확장 인터페이스
+  - 데이터를 소비할 준비가 된 스레드에만 데이터를 전송할 수 있음
+  - transfer() 메소드를 통해 소비자가 대기 중일 때만 데이터 전달
+  - 소비자가 대기중이지 않으면 transfer() 메소드는 소비자가 대기할 때까지 블록됨
+  - 주요 구현 클래스 : LinkedTransferQueue
 
 ArrayDeque
-  - 
-
+  - Deque 인터페이스를 구현한 클래스
+  - 크기가 가변적인 배열로 구현된 덱
+  - 빠른 요소 삽입 및 삭제 가능
+  - 스레드에 안전하지 않음
+  - 동기화가 필요하지 않은 상황에서 스택 또는 큐로 사용할 수 있음
+  - LinkedList보다 메모리 효율성이 높고 성능이 뛰어남
 -->
+
+<!-- 
+Set 컬렉션 클래스
+  - 요소의 저장 순서를 유지하지 않음
+  - 같은 요소의 중복 저장 불가
+
+  HashSet<E> 클래스
+    - 해시 알고리즘을 사용하여 검색 속도가 매우 빠름
+    - 내부적으로 HashMap 인스턴스를 이용하여 요소 저장
+
+    - 요소의 저장 순서를 바꿔도 저장되는 순서에는 영향을 미치지 않음
+    - 이미 존재하는 요소를 추가하려고 하면, 해당 요소를 저장하지 않고 false 반환
+
+      HashSet<String> hs = new HashSet<String>();
+
+      hs.add("홍");
+      hs.add("이");
+      
+      sout(hs.add("임"));
+      sout(hs.add("임"));     // 저장 안됨
+
+      for(String e : hs) {
+        ...
+      }
+
+      Iterator<String> iter = hs.iterator();
+
+      while(iter.hasNext()) {
+        sout(iter.next());
+      }
+
+      sout(hs.size());
+
+  TreeSet<E> 클래스
+    - 데이터가 정렬된 상태로 저장되는 이진 검색 트리(binary search tree) 형태로 요소 저장
+    - 이진 검색 트리는 데이터를 추가하거나 제거하는 등 기본 동작 시간이 매우 빠름
+    - TreeSet 인스턴스에 저장되는 요소들은 모두 정렬된 상태로 저장됨
+
+    - subSet() 메소드
+      - public NavigableSet<E> subSet(E fromElement, E toElement)
+        - 첫번째 매개변수로 전달된 값에 해당하는 요소부터 두번째 매개변수로 전달된 값에 해당하는 요소 바로 직전까지의 요소 반환
+
+      - public NavigableSet<E> subSet(E fromElement, boolean frominclusive, E toElement, boolean toInclusive)
+        - 두번째와 네번째 매개변수로 각각 첫번째 세번째 매개변수로 전달된 값에 해당하는 요소를 포함할 것인지 아닌지 명시 가능
+        - 10(포함?미포함?) ~ 20(포함?미포함?) 이 얘기인듯?
+
+  LinkedHashSet
+    - 요소를 삽입한 순서를 유지 (순서를 유지하는 Set)
+    - 이중 연결 리스트를 사용하여 요소의 순서를 기억함
+    - 1, 2, 3 순서로 요소를 추가하면 반복(iteration)할 때도 이 순서가 유지됨
+    - 중복 불가
+    - HashSet과 마찬가지로 해시 기반으로 요소 관리
+    - 요소의 순서를 유지하기 위해 이중 연결 리스트 구조를 사용하므로 HashSet에 비해 더 많은 메모리를 차지
+
+
+  cf) Collection 인터페이스에서는 Iterator 인터페이스를 구현한 클래스의 인스턴스를 반환하는 iterator() 메소드를 정의하여 각 요소에 접근하도록 하고 있음.
+-->
+
+<!-- 
+Map 컬렉션 클래스
+  - Collection 인터페이스와 다른 저장 방식을 가짐
+  - Map 인터페이스를 구현한 Map 컬렉션 클래스들은 키와 값을 하나의 쌍으로 저장하는 방식 사용 (key-value)
+  - 키 : 값을 찾기 위한 이름
+
+  - 요소의 저장 순서 유지하지 않음
+  - 키는 중복 불가
+  - 값은 중복 가능
+
+  HashMap<K, V> 클래스
+    - 해시 알고리즘을 사용하여 검색 속도가 매우 빠름
+
+    HashMap<String, Integer> hm = new HashMap<String, Integer>();
+
+    hm.put("십", 10);
+    hm.put("일", 1);
+
+    sout(hm.keySet());
+
+    for(String key : hm.keySet()) {
+        sout(String.format("키 : %s, 값 : %s", key, hm.get(key)));
+    }
+
+    hm.remove("십");
+
+    Iterator<String> keys = hm.keySet().iterator();
+
+    while(keys.hasNext()) {
+      String key = keys.next();
+      sout(String.format("키 : %s, 값 : %s", key, hm.get(key)));
+    }
+
+    hm.replace("십", 100);
+
+    hm.size();
+
+  HashTable<K, V>
+    - HashMap 클래스와 같은 동작을 하는 클래스
+    - 기존 코드와의 호환성을 위해서만 남아 있음
+
+  TreeMap<K, V>
+    - 키와 값을 한 쌍으로 하는 데이터를 이진 검색 트리 형태로 저장
+    - 이진 검색 트리는 데이터를 추가하거나 제거하는 등 기본 동작 시간이 매우 빠름
+
+
+
+    HashMap<K, V> 메소드
+
+      - void clear() : 
+
+      - boolean containsKey(Object key) : 
+
+      - boolean containsValue(Object value) : 
+
+      - V get(Object key) : 
+
+      - boolean isEmpty() : 
+
+      - Set<K> keySet() : 
+
+      - V put(K key, V value) : 
+
+      - V remove(Object Key) : 
+
+      - boolean remove(Object key, Object value) : 
+
+      - V replace(K key, V value) : 
+
+      - boolean replace(K key, V oldValue, V newValue) : 
+
+      - int size() : 
+
+
+
+    TreeMap<K, V> 메소드
+
+      - Map.Entry<K,V> ceilingEntry(K key) : 
+
+      - K ceilingKey(K key) : 
+
+      - void clear() : 
+
+      - boolean containsKey(Object key) : 
+
+      - boolean containsValue(Object Value) : 
+
+      - NavigableMap<K, V> descendingMap() : 
+
+      - Set<Map.Entry<K, V>> entrySet() : 
+
+      - Map.Entry<K, V> firstEntry() : 
+
+      - K firstKey() : 
+
+      - Map.Entry<K, V> floorEntry(K key) : 
+
+      - K floorKey(K key) : 
+
+      - V get(Object key) : 
+
+      - SortedMap<K, V> headMap(K toKey) : 
+
+      - Map.Entry<K, V> higherEntry(K key) :
+        
+      - K higherKey(K key) : 
+
+      - Set<K> keySet() : 
+
+      - Map.Entry<K, V> lasyEntry() : 
+
+      - K lastKey() : 
+
+      - Map.Entry<K, V> lowerEntry(K key) : 
+
+      - K lowerKey(K key) : 
+
+      - Map.Entry<K, V> pollFirstEntry() : 
+
+      - Map.Entry<K, V> pollLastEntry() : 
+
+      - V put(K key, V value) : 
+
+      - V remove(Object key) : 
+
+      - boolean remove(K key, V value) : 
+
+      - V replace(K key, V value) : 
+
+      - boolean replace(K key, V oldValue, V newValue) : 
+
+      - int size() : 
+
+      - SortedMap<K, V> subMap(K fromKey, K toKey) : 
+
+      - SortedMap<K, V> tailMap(K fromKey)
+
+      cf) Map.Entry 인터페이스는 Map 인터페이스의 내부 인터페이스. 맵에 저장되는 엔트리의 조작을 위한 메소드가 정의되어 있음
+      cf) 자바 공식 문서에서 키와 값으로 구성되는 데이터를 매핑(mapping) 또는 엔트리(entry)라고 기술함
+--> 
