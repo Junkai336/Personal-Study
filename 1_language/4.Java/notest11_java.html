@@ -403,94 +403,275 @@ Map 컬렉션 클래스
 
     HashMap<K, V> 메소드
 
-      - void clear() : 
+      - void clear() : 해당 맵의 모든 매핑을 제거
 
-      - boolean containsKey(Object key) : 
+      - boolean containsKey(Object key) : 해당 맵이 전달된 키를 포함하고 있는지 확인
 
-      - boolean containsValue(Object value) : 
+      - boolean containsValue(Object value) : 해당 맵이 전달된 값에 해당하는 하나 이상의 키를 포함하고 있는지 확인
 
-      - V get(Object key) : 
+      - V get(Object key) : 해당 맵에서 전달된 키에 대응하는 값을 반환, 해당 맵이 전달된 키를 포함한 매핑을 포함하고 있지 않으면 null 반환
 
-      - boolean isEmpty() : 
+      - boolean isEmpty() : 해당 맵이 비어있는지 확인
 
-      - Set<K> keySet() : 
+      - Set<K> keySet() : 해당 맵에 포함되어 있는 모든 키로 만들어진 Set 객체 반환
 
-      - V put(K key, V value) : 
+      - V put(K key, V value) : 해당 맵에 전달된 키에 대응하는 값으로 특정 값 매핑함
 
-      - V remove(Object Key) : 
+      - V remove(Object Key) : 해당 맵에서 전달된 키에 대응하는 매핑을 제거함
 
-      - boolean remove(Object key, Object value) : 
+      - boolean remove(Object key, Object value) : 해당 맵에서 특정 값에 대응하는 특정 키의 매핑을 제거함
 
-      - V replace(K key, V value) : 
+      - V replace(K key, V value) : 해당 맵에서 전달된 키에 대응하는 값을 특정 값으로 대체함
 
-      - boolean replace(K key, V oldValue, V newValue) : 
+      - boolean replace(K key, V oldValue, V newValue) : 해당 맵에서 특정 값에 대응하는 전달된 키의 값을 새로운 값으로 대체함
 
-      - int size() : 
+      - int size() : 해당 맵의 매핑의 총 개수 반환
 
 
 
     TreeMap<K, V> 메소드
 
-      - Map.Entry<K,V> ceilingEntry(K key) : 
+      - Map.Entry<K,V> ceilingEntry(K key) : 해당 맵에서 전달된 키와 같거나, 전달된 키보다 큰 키 중에서 가장 작은 키와 그에 대응하는 값의 엔트리 반환, 해당 키 없으면 null 반환
 
-      - K ceilingKey(K key) : 
+      - K ceilingKey(K key) : 해당 맵에서 전달된 키와 같거나, 전달된 키보다 '큰 키' 중에서 가장 작은 키 반환, 해당 키 없으면 null 반환
 
-      - void clear() : 
 
-      - boolean containsKey(Object key) : 
+      - void clear() : 해당 맵의 모든 매핑 제거
 
-      - boolean containsValue(Object Value) : 
 
-      - NavigableMap<K, V> descendingMap() : 
+      - boolean containsKey(Object key) : 해당 맵이 전달된 키 포함하고 있는지 확인
 
-      - Set<Map.Entry<K, V>> entrySet() : 
+      - boolean containsValue(Object Value) : 해당 맵이 전달된 값에 해당하는 하나 이상의 키를 포함하고 있는지 확인
 
-      - Map.Entry<K, V> firstEntry() : 
 
-      - K firstKey() : 
+      - NavigableMap<K, V> descendingMap() : 해당 맵에 포함된 모든 매핑을 역순으로 반환
 
-      - Map.Entry<K, V> floorEntry(K key) : 
 
-      - K floorKey(K key) : 
+      - Set<Map.Entry<K, V>> entrySet() : 해당 맵에 포함된 모든 매핑을 Set 객체로 반환
 
-      - V get(Object key) : 
 
-      - SortedMap<K, V> headMap(K toKey) : 
+      - Map.Entry<K, V> firstEntry() : 해당 맵에서 현재 가장 작은(첫 번째) 키와 그에 대응하는 값의 엔트리 반환
 
-      - Map.Entry<K, V> higherEntry(K key) :
-        
-      - K higherKey(K key) : 
+      - K firstKey() : 해당 맵에서 현재 가장 작은(첫 번째) 키 반환
 
-      - Set<K> keySet() : 
 
-      - Map.Entry<K, V> lasyEntry() : 
+      - Map.Entry<K, V> floorEntry(K key) : 해당 맵에서 전달된 키와 같거나, 전달된 키보다 '작은' 키 중에서 가장 큰 키와 그에 대응하는 값의 엔트리를 반환. 해당 키 없으면 null 반환
 
-      - K lastKey() : 
+      - K floorKey(K key) : 해당 맵에서 전달된 키와 같거나, 전달된 키보다 작은 키 중에서 가장 큰 키 반환, 해당 키 없으면 null 반환
 
-      - Map.Entry<K, V> lowerEntry(K key) : 
 
-      - K lowerKey(K key) : 
+      - V get(Object key) : 해당 맵에서 전달된 키에 대응하는 값 반환, 매핑 없으면 null 반환
 
-      - Map.Entry<K, V> pollFirstEntry() : 
 
-      - Map.Entry<K, V> pollLastEntry() : 
+      - SortedMap<K, V> headMap(K toKey) : 해당 맵에서 전달된 키보다 작은 키로 구성된 부분만 반환
 
-      - V put(K key, V value) : 
 
-      - V remove(Object key) : 
+      - Map.Entry<K, V> higherEntry(K key) : 해당 맵에서 전달된 키보다 작은 키 중에서 가장 큰 키와 그에 대응하는 값의 엔트리 반환, 해당 키 없으면 null 반환
 
-      - boolean remove(K key, V value) : 
+      - K higherKey(K key) : 해당 맵에서 전달된 키보다 작은 키 중에서 가장 큰 키 반환, 해당 키 없으면 null 반환
 
-      - V replace(K key, V value) : 
+      - Map.Entry<K, V> lowerEntry(K key) : 해당 맵에서 전달된 키보다 큰 키 중에서 가장 작은 키와 그에 대응하는 값의 엔트리 반환, 해당 키 없으면 null 반환
 
-      - boolean replace(K key, V oldValue, V newValue) : 
+      - K lowerKey(K key) : 해당 맵에서 전달된 키보다 큰 키 중에서 가장 작은 키 반환, 해당 키 없으면 null 반환
 
-      - int size() : 
 
-      - SortedMap<K, V> subMap(K fromKey, K toKey) : 
+      - Set<K> keySet() : 해당 맵에 포함되어 있는 모든 키로 만들어진 Set 객체 반환
 
-      - SortedMap<K, V> tailMap(K fromKey)
+
+      - Map.Entry<K, V> lastEntry() : 해당 맵에서 현재 가장 큰(마지막) 키와 그에 대응하는 값의 엔트리 반환
+
+      - K lastKey() : 해당 맵에서 현재 가장 큰(마지막) 키 반환
+
+
+      - Map.Entry<K, V> pollFirstEntry() : 해당 맵에서 현재 가장 작은(첫 번째) 키와 그에 대응하는 값의 엔트리 반환 후 제거
+
+      - Map.Entry<K, V> pollLastEntry() : 해당 맵에서 현재 가장 큰(마지막) 키와 그에 대응하는 값의 엔트리 반환 후 제거
+
+
+      - V put(K key, V value) : 해당 맵에 전달된 키에 대응하는 값으로 특정 값 매핑
+
+
+      - V remove(Object key) : 해당 맵에서 전달된 키에 대응하는 매핑 제거
+
+      - boolean remove(K key, V value) : 해당 맵에서 특정 값에 대응하는 특정 키의 매핑 제거
+
+
+      - V replace(K key, V value) : 해당 맵에서 전달된 키에 대응하는 값을 특정 값으로 대체
+
+      - boolean replace(K key, V oldValue, V newValue) : 해당 맵에서 특정 값에 대응하는 전달된 키의 값을 새로운 값으로 대체
+
+      
+      - int size() : 해당 맵의 매핑 총 개수 반환
+
+
+      - SortedMap<K, V> subMap(K fromKey, K toKey) : 해당 맵에서 fromKey부터 toKey까지로 구성된 부분만 반환 (fromKey는 포함, toKey는 미포함)
+
+      - SortedMap<K, V> tailMap(K fromKey) : 해당 맵에서 fromKey와 같거나, fromKey보다 큰 키로 구성된 부분만 반환
+
+
 
       cf) Map.Entry 인터페이스는 Map 인터페이스의 내부 인터페이스. 맵에 저장되는 엔트리의 조작을 위한 메소드가 정의되어 있음
       cf) 자바 공식 문서에서 키와 값으로 구성되는 데이터를 매핑(mapping) 또는 엔트리(entry)라고 기술함
 --> 
+
+<!-- 
+Iterator<E> 인터페이스
+  - 자바의 컬렉션 프레임워크는 컬렉션에 저장된 요소를 읽어오는 방법을 Iterator 인터페이스로 표준화하고 있음
+  - Collection 인터페이스에서는 Iterator 인터페이스를 구현한 클래스의 인스턴스를 반환하는 iterator() 메소드를 정의하여 각 요소에 접근하도록 하고 있음
+  
+    LinkedList<Integer> lnkList = new LinkedList<Integer>();
+
+    lnkList.add(4);
+    lnkList.add(2);
+    lnkList.add(3);
+    lnkList.add(1);
+
+    Iterator<Integer> iter = lnkList.iterator();
+
+    while(iter.hasNext()) {
+      sout(iter.next());        // 4 2 3 1
+    }
+
+  메소드
+    - boolean hasNext() : 해당 이터레이션이 다음 요소를 가지고 있으면 true, 없으면 false
+    - E next() : 이터레이션의 다음 요소 반환
+    - default void remove() : 해당 반복자로 반환되는 마지막 요소를 현재 컬렉션에서 제거
+
+  cf) 자바에서는 Enhhanced for 문 사용 권장, but 요소의 선택적 제거나 대체 등을 수행하기 위한 경우 반복자(iterator) 사용해야 함
+
+
+
+Enumeration<E> 인터페이스
+  - iterator 인터페이스와 같은 동작 하는 인터페이스
+  - 기존 코드와의 호환성을 위해서만 남아있음
+
+
+
+ListIterator<E> 인터페이스
+  - Iterator 인터페이스를 상속받아 여러 기능 추가한 인터페이스
+  - Iterator 인터페이스는 컬렉션 요소에 접근할 때 한 방향으로만 이동 가능
+  - ListIterator 인터페이스는 컬렉션 요소의 대체, 추가, 인덱스 검색 등을 위한 작업에서 양방향 이동 지원
+  - List 인터페이스를 구현한 List 컬렉션 클래스에서만 사용 가능
+
+  ...
+  ListIterator<Integer> iter = lnkList.listIterator();
+
+  while(iter.hasPrevious()) {
+    sout(iter.previous());
+  }
+
+  메소드
+    - void add(E e) : 해당 리스트에 전달된 요소 추가
+    
+    - boolean hasNext() : 이 리스트 반복자가 해당 리스트를 '순방향'으로 순회할 때 다음 요소를 가지고 있으면 true, 아니면 false
+    - boolean hasPrevious() : 이 리스트 반복자가 해당 리스트를 '역방향'으로 순회할 때 다음 요소를 가지고 있으면 true, 아니면 false
+    
+    - E next() : 리스트의 다음 요소 반환, 커서의 위치를 순방향으로 이동 시킴
+    - E previous() : 리스트의 이전 요소 반환, 커서의 위치를 역방향으로 이동 시킴
+    
+    - int nextIndex() : 다음 next() 메소드를 호출하면 반환될 요소의 인덱스를 반환함.
+    - int previousIndex() : 다음 previous() 메소드를 호출하면 반한될 요소의 인덱스를 반환함.
+    
+    - void remove() : next()나 previous() 메소드에 의해 반환된 가장 마지막 요소를 리스트에서 제거
+    
+    - void set(E e) : next()나 previous() 메소드에 의해 반환된 가장 마지막 요소를 전달된 객체로 대체
+
+-->
+
+<!-- 
+Comparable<T> 인터페이스
+  - 객체를 정렬하는 데 사용되는 메소드인 compareTo() 메소드 정의
+  - 자바에서 같은 타입의 인스턴스를 서로 비교해야 하는 클래스들은 모두 Comparable 인터페이스를 구현하고 있음
+  - Boolean 제외 래퍼 클래스, String, Time, Date 와 같은 클래스의 인스턴스는 모두 정렬 가능
+  - 기본 정렬 순서는 오름차순(작은값 -> 큰값)
+
+  메소드 (객체 정렬)                                                <- 인터페이스니까 얘를 구체적으로 구현하는 것인듯
+    - int compareTo(T o) : 해당 객체와 전달된 객체의 순서를 비교함
+  
+  class Car implements Comparable<Car> {
+      private String modelName;
+      private int modelYear;
+      private String color;
+
+      Car(String mn, int my, String c) {
+        this.modelName = mn;
+        this.modelYear = my;
+        this.color = c;
+      }
+
+      public String getModel() {
+        return this.modelYear + this.modelName + this.color;
+      }
+
+      public int compareTo(Car obj) {
+        if (this.modelYear == obj.modelYear) {
+          return 0;
+        } else if(this.modelYear < obj.modelYear) {
+          return -1;
+        } else {
+          return 1                                        <- 이거
+        }
+      }
+
+      public class Comparable01 {
+        public static void main(String[] args) {
+          Car car01 = new Car("아반떼", 2016, "노란색");
+          Car car02 = new Car("소나타", 2011, "검정색");
+
+          sout(car01.compareTo(car02));
+        }
+      }
+
+    }
+
+
+Comparator<T> 인터페이스
+  - Comparable 인터페이스와 같이 객체를 정렬하는 데 사용되는 인터페이스
+  - Comparable 인터페이스를 구현한 클래스는 기본적으로 오름차순 정렬
+  
+  but
+  
+  - Comparator 인터페이스는 내림차순이나 아니면 다른 기준으로 정렬하고 싶을 때 사용할 수 있음
+  - Comparator 인터페이스를 구현하면 오름차순 이외의 기준으로도 정렬할 수 있게 되는 것
+  - Comparator 인터페이스를 구현한 클래스에서 compare() 메소드를 재정의하여 사용하게 됨
+
+    import java.util.*;
+
+    class DescendingOrder implements Comparator<Integer> {
+      public int compare(Integer o1, Integer 02) {
+        if(o1 instanceof Comparable && o2 instanceof Comparable) {
+          Integer c1 = (Integer) o1;
+          Integer c2 = (Integer) o2;
+
+          return c2.compareTo(c1);
+        }
+          return -1;
+      }
+    }
+
+    public class Comparable02 {
+      public static void main(String[] args) {
+        TreeSet<Integer> ts = new TreeSet<Integer>(new DescendingOrder());
+
+        ts.add(30);
+        ts.add(40);
+        ts.add(20);
+        ts.add(10);
+
+        Iterator<Integer> iter = ts.iterator();
+
+        while(iter.hasNext()) {
+          sout(iter.next());            // 40 30 20 10
+        }
+      }
+    }
+
+    - 메소드
+      - int compare(T o1, T o2) : 전달된 두 객체의 순서를 비교함
+
+      - boolean equals(Object obj) : 해당 comparator와 전달된 객체가 같은지 확인
+
+      - default Comparator<T> reversed() : 해당 comparator의 역순인 comparator를 반환
+
+
+-->
