@@ -672,6 +672,96 @@ Comparator<T> 인터페이스
       - boolean equals(Object obj) : 해당 comparator와 전달된 객체가 같은지 확인
 
       - default Comparator<T> reversed() : 해당 comparator의 역순인 comparator를 반환
+-->
 
+<!-- 
+Collections
+  - 컬렉션 프레임워크에서 사용되는 여러 유틸리티 메소드를 제공하는 유틸리티 클래스
+  - java.util 패키지에 포함
+  - List, Set, Map 등의 컬렉션을 조작하는 데 사용되는 정적 메소드 제공
 
+  메소드
+
+    정렬 및 검색 
+
+      - sort(List<T> list) : 지정된 리스트를 기본 정렬 순서로 정렬
+
+      - sort(List<T> list, Comparator<? super T> c) : 지정된 비교자를 사용해 리스트를 정렬
+
+      - binarySearch(List<? extends T> list, T key) : 정렬된 리스트에서 지정된 키의 인덱스를 이진 검색을 사용해 찾음
+
+      - reverse(List<?> list) : 지정된 리스트의 모든 요소 순서를 역순으로 바꿈
+
+    최대값, 최소값, 빈도
+
+      - max(Collection<? extends T> coll) : 컬렉션에서 가장 큰 요소 반환
+
+      - min(Collection<? extends T> coll) : 컬렉션에서 가장 작은 요소 반환
+    
+      - frequency(Collection<?> c, Object o) : 컬렉션에서 지정된 객체의 발생 빈도 반환
+
+      - disjoint(Collection<?> c1, Collection<?> c2) : 두 컬렉션이 공통 요소를 가지고 있는지 여부 반환
+
+    리스트 조작
+
+      - shuffle(List<?> list) : 리스트의 요소를 무작위로 섞음
+
+      - rotate(List<?> list, int distance) : 리스트의 요소를 지정된 거리만큼 회전
+
+      - swap(List<?> list, int i, int j) : 리스트의 두 요소를 서로 교환
+
+      - fill(List<? super T> list, T obj) : 리스트의 모든 요소를 지정된 객체로 채움
+
+      - copy(List<? super T> dest, List<? extends T> src) : 원본 리스트의 모든 요소를 대상 리스트로 복사
+
+    싱글톤 컬렉션
+
+      - singleton(T o) : 지정된 요소를 포함하는 불변 싱글톤 세트 반환
+
+      - singletonList(T o) : 지정된 요소를 포함하는 불변 싱글톤 리스트 반환
+
+      - singletonMap(K key, V value) : 지정된 키와 값을 포함하는 불변의 싱글톤 맵 반환
+
+    동기화된 컬렉션
+
+      - synchronizedList(List<T> list) : 동기화된(쓰레드 안전한) 리스트 반환
+
+      - synchronizedSet(Set<T> set)
+
+      - synchronizedMap(Map<K, V> map)
+
+    불변 컬렉션
+
+      - unmodifiableList(List<? extends T> list) : 수정할 수 없는 리스트 반환
+
+      - unmodifiableSet(Set<? extends T> set)
+
+      - unmodifiableMap(Map<? extends T> map)
+
+    ex)
+      List<String> list = Arrays.asList("banana", "apple", "cherry");
+      
+      Collections.sort(list);
+      
+    ex)
+      List<Integer> list = Arrays.asList(3, 5, 7, 2, 5, 3);
+
+      int max = Collections.max(list);                          // 7
+      int min = Collections.min(list);                          // 2
+      int freq = Collections.frequency(list, 3)                 // 3의 빈도수 2
+
+    ex)
+      Collections.rotate(list, 2)                               // 리스트를 오른쪽으로 2칸 회전
+      Collections.shuffle(list)                                 // 리스트 요소 무작위 섞기
+
+      Set<String> singletonSet = Collections.singleton("onlyOne");
+      List<String> singletonList = Collections.singletonList("onlyOne");
+
+      List<String. syncList = Collections.synchronizedList(new ArrayList<>());
+      
+      synchronized(syncList) {
+        syncList.add("threadSafe");
+      }
+
+      List<String> unmodifiableList = Collections.unmodifiableList(list);
 -->
