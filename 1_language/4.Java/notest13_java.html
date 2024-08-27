@@ -103,6 +103,60 @@
     - 그러나 임의의 지점에 접근하여 작업을 수행하고 싶을 경우 RandomAccessFile 클래스 사용
     - 파일만을 대상으로 함
     - 임의의 지점에서 입출력 동시에 가능
+    - 생성자에는 인수로 파일의 이름 뿐만 아니라 파일 모드까지 함께 전달해야 함
+    - 파일 모드 : 파일의 사용 용도를 나타내는 문자열
+      - "r" : 파일을 오로지 읽는 것만 가능한 모드로 개방
+      - "rw" : 파일을 읽고 쓰는 것이 모두 가능한 모드로 개방. 만약 파일이 없으면 새로운 파일을 생성함
+    - getFilePointer() : 파일 포인터의 현재 위치 확인 가능
+    - seek() : 파일 포인터 위치 변경
+
+      public static void main(String[] args) {
+        RandomAccessFile file = new RandomAccessFile("data.txt", "rw");           // "rw" 모드로 data.txt 파일 개방
+
+        sout(file.getFilePointer());                                              // 0, 파일 포인터 현재 위치 반환
+
+        file.writeInt(10);                                                        // 정수 10 저장
+
+        sout(file.getFilePointer());                                              // 4      <- ?
+
+        file.seek(20);                                                            // 파일 포인터 위치 20으로 이동
+
+        sout(file.getFilePointer());                                              // 20
+      }
+
+  - File 클래스
+    - 입출력 스트림을 사용하면 파일을 통한 입출력 작업 수행 가능
+    - 파일과 디렉토리에 관한 작업은 File 클래스를 통해 처리
+
+    - boolean canRead() : 해당 파일이 읽을 수 있는 파일인지 검사
+
+    - boolean canWriter() : 해당 파일이 쓸 수 있는 파일인지 검사
+
+    - boolean delete() : 해당 파일 또는 디렉토리 제거
+
+    - boolean exists() : 해당 파일이 존재하는지 검사
+
+    - String getPath() : 해당 파일의 경로명을 문자열로 반환
+
+    - boolean isAbsolute() : 해당 파일의 경로명이 절대 경로인지 검사
+
+    - boolean isDirectory() : 해당 파일이 디렉토리인지 검사
+
+    - boolean isFile() : 해당 파일이 파일인지 검사
+
+    - long length() : 해당 파일의 크기 반환
+
+    - boolean mkdir() : 지정된 경로에 디렉토리 생성
+
+    - boolean mkdirs() : 지정된 경로에 디렉토리 생성, 필요한 모든 상위 디렉토리도 생성함
+
+    - boolean renameTo(File dest) : 해당 파일의 이름을 전달된 파일 이름으로 변경함
+
+    - boolean setExecutable(boolean executable) : 해당 파일의 속성을 변경
+    - boolean setReadable(boolean readable) :   ㅣㅣ
+    - boolean setWritable(boolean writable) :    ㅣㅣ
+    - boolean setReadOnly() : 
+
 
 
 -->
