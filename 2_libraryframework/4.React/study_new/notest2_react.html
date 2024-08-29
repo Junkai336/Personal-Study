@@ -576,7 +576,135 @@
       let data4 = new Date(timestamp1);                       // Tue Jan 16 2024 22:20:41 ...
 
 
-    3. 
+    3. 시간 요소들을 추출하는 방법
+
+    let year = date1.getFullYear();
+    let month = date1.getMonth();                             // 0월부터 시작
+    let date = date1.getDate();
+
+    let hour = date1.getHours();
+    let minute = date1.getMinutes();
+    let seconds = date1.getSeconds();
+
+
+    4. 시간 수정하기
+
+    date1.setFullYear(2023);
+    date1.setMonth(2);                                        // 3월
+    date1.setDate(30);
+    date1.setHours(23);
+    date1.setMinutes(59);
+    date1.setSeconds(59);
+
+
+    5. 시간을 여러 포멧으로 출력하기
+
+    date1.toDateString();                                     // Thu Mar 30 2023
+    date1.toLocaleString();                                   // 2023. 3. 30. 오후 11:59:59
+
+
+
+
+
+    동기
+      - 여러 개의 작업이 있을 때 작업들을 순서대로 하나씩만 처리하는 방식
+      - TaskA - 종료 - TaskB - 종료 - TaskC (순서대로 완료)
+      - 스레드 : 작업을 직접 실행하고 처리해주는 역할
+      - 자바스크립트는 비동기적으로 설정한게 아니라면 기본적으로 모든 코드가 동기적으로 실행됨
+      - 어떠한 Task가 매우 오래 걸리는 작업이라면 Task를 다 처리하기 전까지 다음 Task를 진행할 수 없기 때문에 전체 프로그램의 성능이 악화되는 문제점 존재
+      -> 자바의 경우 멀티스레드 활용
+      - 자바스크립트는 스레드가 1개밖에 없기 때문에 비동기로 해결
+
+    비동기
+      - 여러 개의 작업을 순서대로 처리하지 않는 방식
+      - 앞선 작업을 기다리지 않고 다음 작업을 동시에 진행
+
+      - 자바스크립트는 스레드가 하나밖에 없기 때문에 비동기 작업들은 자바스크립트 엔진이 아닌 Web APIs라는 브라우저가 직접 관리하는 별도의 공간에서 따로 실행됨
+        (Web APIs에게 비동기 작업들을 대신 실행시켜달라고 위탁하고 동시에 callback 함수까지 같이 전달, 비동기 작업을 기다리지 않고 다음 라인으로 넘어감)
+        (Web APIs에서 비동기 작업이 완료되었다면 JS로 콜백 함수를 돌려주게 되어서 JS는 받고 콜백함수를 실행시킴)
+
+      - Web APIs : 웹 브라우저가 직접 관리하는 별도의 영역, 실제로 JS의 비동기 작업들이 실행되는 영역
+      
+      - setTimeout() : 원하는 코드를 특정 시간이 지난 이후에 비동기적으로 실행시켜주는 기능
+
+      setTimeout(() => {
+        ...                   // 3초 이후 콜백 함수를 실행, (타이머만 실행 시켜놓고 다음 라인으로 넘어감)
+      }, 3000)
+
+    - 비동기 작업을 하는 함수의 결과값을 함수 외부에서 이용하고 싶은 경우 
+    - 콜백 함수를 사용해서 비동기 함수 안에서 콜백 함수를 호출하도록 설정하면 됨
+    
+      function add(a, b, callback) {
+        setTimeout(() => {
+          const sum = a + b;
+          callback(sum);
+        }, 3000)
+      }
+
+      add(1, 2, (value) => {
+        console.log(value);
+      })
+
+    - 비동기 작업의 결과를 또 다른 비동기 작업의 인수로 전달
+
+    function orderFood(callback) {
+      setTimeout(() => {
+        const food = "떡볶이"
+        callback(food);
+      }, 3000);
+    }
+
+    function cooldownFood(food, callback) {
+      setTimeout(() => {
+        const cooldownedFood = `식은 ${food}`;
+        callback(cooldownedFood);
+      }, 2000)
+    }
+
+    functionm freezeFood(food, callback) {
+      setTimeout(() => {
+        const freezedFood = `냉동된 ${food}`
+
+        cooldownFood(freezedFood)
+      }, 1000)
+    }
+
+    orderFood((food) => {
+      console.log(food);
+
+      cooldownFood(food, (cooldownedFood) => {
+        console.log(cooldownedFood);
+
+        freezeFood(cooldownedFood, (freezedFood) => {
+          console.log(freezedFood);
+        });
+      });
+    }); 
+
+    - 콜백 지옥 : 위 상태로 여러 개의 작업을 더 추가해야되면 코드가 굉장히 깊어져서 가독성이 안좋아짐
+
+
+
+    Promise
+      - 비동기 작업을 효율적으로 처리할 수 있도록 도와주는 자바스크립트 내장 객체
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 -->

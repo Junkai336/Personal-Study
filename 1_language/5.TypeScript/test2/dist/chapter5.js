@@ -34,3 +34,7 @@ console.log(user1);
 console.log(user2);
 console.log(user3);
 export {};
+// 콘솔로그 출력 결과
+// { name: 'ㅎㅇ1', role: 0, language: 'ko' }
+// { name: 'ㅎㅇ2', role: 1, language: 'en' }
+// { name: 'ㅎㅇ3', role: 2, lanuage: 'ko' }
