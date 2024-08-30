@@ -64,10 +64,36 @@
 <!-- 
 메소드 참조(method reference)
   - 람다 표현식이 단 하나의 메소드만을 호출하는 경우, 해당 람다 표현식에서 불필요한 매개변수를 제거하고 사용할 수 있도록 해줌
+  - 메소드 참조를 사용하면 불필요한 매개변수를 제거하고 '::' 기호를 사용하여 표현할 수 있음
 
+  - 클래스이름::메소드이름
+  - 참조변수이름::메소드이름
 
+  (base, exponent) -> Math.pow(base, exponent);
 
+  Math::pow;
 
+  - 특정 인스턴스의 메소드를 참조할 때도 참조 변수의 이름을 통해 메소드 참조 사용 가능
+
+  MyClass obj = new MyClass;
+  Function<String, Boolean> func = (a) -> obj.equals(a);    // 람다 표현식
+  Function<String, Boolean> func = obj::equals(a);          // 메소드 참조
+
+  DoubleUnaryOperator oper;
+
+  oper = (n) -> Math.abs(n);                                // 람다 표현식
+  sout(oper.applyAsDouble(-5));
+
+  oper = Math::abs;                                         // 메소드 참조
+  sout(oper.applyAsDouble(-5));
+
+  둘다 결과 5.0
+
+  - DoubleUnaryOperator 인터페이스 : 1개의 double형 매개변수를 전달받아 1개의 double형 값을 반환하는 
+                                    java.util.function 패키지에서 제공하는 함수형 인터페이스
+  
+  생성자 참조
+    - 생성자를 호출하는 람다 표현식도 메소드 참조를 이용할 수 있음
 
 
 
