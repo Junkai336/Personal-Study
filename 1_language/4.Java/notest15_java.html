@@ -94,7 +94,13 @@
   
   생성자 참조
     - 생성자를 호출하는 람다 표현식도 메소드 참조를 이용할 수 있음
+    - 단순히 객체를 생성하고 반환하는 람다 표현식은 생성자 참조로 변환 가능
 
+    - (a) -> { return new Object(a); }
+    - Object::new;
+
+    - function<Integer, double[]> func1 = a -> new double[a];
+    - function<Integer, double[]> func2 = double[]::new;
 
 
 
