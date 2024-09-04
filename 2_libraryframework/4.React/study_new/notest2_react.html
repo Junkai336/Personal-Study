@@ -687,8 +687,44 @@
 
     Promise
       - 비동기 작업을 효율적으로 처리할 수 있도록 도와주는 자바스크립트 내장 객체
+      - SetTimeout 함수와 같은 비동기 작업들을 감싸는 객체
+      - Promise의 효능
+        - 비동기 작업 실행
+        - 비동기 작업 상태 관리
+        - 비동기 작업 결과 저장
+        - 비동기 작업 병렬 실행
+        - 비동기 작업 다시 실행
+        - ...
 
+      Promise의 3가지 상태
+        - 대기(Pending) : 아직 작업이 완료되지 않은 상태
+          - 해결(resolve) : 비동기 작업이 대기 상태였다가 작업이 성공적으로 완료되어서 성공 상태로 바뀌는 것 (Resolve 되었다)
+          - 거부(reject) : 실패 상태로 바뀌는 것
 
+        - 성공(Fulfilled) : 비동기 작업이 성공적으로 마무리된 상태
+        
+        - 실패(Rejected) : 비동기 작업이 실패한 상태
+
+      - const promise = new Promise(비동기작업을진행할콜백함수)
+      - promise 객체가 생성됨과 동시에 자동으로 콜백함수를 호출해서 안에 있는 비동기 작업들을 실행함
+      - 이 콜백 함수를 비동기 작업을 실행하는 함수, executor 함수라고도 부름
+
+      const promise = new Promise((resolve, reject) => {                          // executor 함수에는 resolve, reject 매개변수가 각각 전달됨
+                                                                                  // resolve : 비동기 작업을 성공 상태로 바꾸는 함수가 들어있음
+                                                                                  // reject : 비동기 작업을 실패 상태로 바꾸는 함수가 들어있음
+      setTimeout(() => {                                                          //  promise 객체 생성과 동시에 자동 실행
+        console.log("hello")
+        resolve("hello");                                                                // 성공했다고 알림
+        }, 2000)                            
+      });
+
+      setTimeout(() => {
+        console.log(promise);                                                       // promise 객체의 상태, 결과를 볼 수 있음
+      }, 3000);
+
+      [[Prototype]] : promise
+      [[PromiseState]] : "fulfilled"
+      [[PromiseResult]] : "hello"                                                   // resolve()에서 인수로 전달한 값
 
 
 

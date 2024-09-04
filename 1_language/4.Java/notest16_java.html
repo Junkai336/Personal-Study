@@ -120,7 +120,7 @@ java.time 패키지
           ampm = "오후";
         }
 
-        sout("지금은 " + ampm + " " + present.get(ChroonoField.HOUR_OF_AMPM) + "시입니다.");          // 직므은 오전 9시입니다.
+        sout("지금은 " + ampm + " " + present.get(ChronoField.HOUR_OF_AMPM) + "시입니다.");          // 직므은 오전 9시입니다.
 
         LocalDate date = LocalDate.of(2024, 8, 31);
         
@@ -177,9 +177,9 @@ java.time 패키지
 
         - isEqual() : 두 날짜 또는 시간이 같은지 비교하여, 동일하면 true 다르면 false
 
-        - isBefore() : 
+        - isBefore() : 현재 객체가 비교 대상 객체보다 이전이면 true, 아니면 false
 
-        - isAfter() : 
+        - isAfter() : //                                       fasle,       true
 
 
 -->
