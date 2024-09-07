@@ -172,7 +172,7 @@ DB 쿼리와 같이 정형화된 처리 패턴을 가지지 못해서 데이터�
                         IntStream stream = IntStream.of(7, 5, 5, 2, 1, 2, 3, 5, 4, 6);
 
                         stream.peek(s -> sout("원본 스트림 : " + s"))                               
-                            .skip(2)
+                            .skip(2)                                                    // 위 peek 보다 먼저 실행됨 (지연 연산)
                             .peek(s -> sout("skip(2) 실행 후 : " + s))
                             .limit(5)
                             .peek(s -> sout ...)
@@ -180,10 +180,172 @@ DB 쿼리와 같이 정형화된 처리 패턴을 가지지 못해서 데이터�
                             .peek(s -> sout ...)
                             .forEach(n -> sout(n));
 
+            - 메소드 정리
+                - Stream<T> filter(Predicate<? super T> predicate) : 해당 스트림에서 주어진 조건(predicate)에 맞는 요소만으로 구성된 새로운 스트림 반환
+                
+                - <R> Stream<R> map(Function<? super T, ? extends R> mapper) : 해당 스트림의 요소들을 주어진 함수에 인수로 전달하여, 그 반환값으로 이루어진 새로운 
+                                                                                스트림 반환
+                
+                - <R> Stream<R> flatMap(Functoin<? super T, ? extends Stream<? extends R>> mapper) : 해당 스트림의 요소가 배열일 경우, 배열의 각 요소를 주어진 함수에
+                                                                                                    인수로 전달하여 그 반환값으로 이루어진 새로운 스트림 반환
+                
+                - Stream<T> distinct() : 해당 스트림에서 중복된 요소가 제거된 새로운 스트림 반환. 내부적으로 Object 클래스의 equals() 메소드 사용
+                
+                - Stream<T> limit(long maxSize) : 해당 스트림에서 전달된 개수만큼의 요소만으로 이루어진 새로운 스트림 반환
+                
+                - Stream<T> skip(long n) : 해당 스트림에서 첫번쨰 요소부터 전달된 개수만큼의 요소를 제외한 나머지 요소만으로 이루어진 새로운 스트림 반환
+                
+                - Stream<T> peek(Consumer<? super T> action) : 결과 스트림으로부터 각 요소를 소모하여 추가로 명시된 동작(action)을 수행하여 새로운 스트림 생성 후 반환
+                
+                - Stream<T> sorted() : 비교자를 전달하지 않으면 영문사전순으로 정렬
+                - Stream<T> sorted(Comparator<? super T> comparator) : 해당 스트림을 비교자를 이용하여 처리
+
 
 
         3. 스트림 최종 연산 (스트림 사용)
+            - Termial Operation
+            - 스트림 API에서 중개 연산을 통해 변환된 스트림은 마지막으로 최종 연산을 통해 각 요소를 소모하여 결과를 표시
+            - 지연되었던 모든 중개 연산들이 최종 연산 시에 모두 수행됨
+            - 최종 연산 시에 모든 요소를 소모한 해당 스트림은 더는 사용할 수 없게 됨
 
+            최종연산 메소드
+                - 요소의 출력
+                    - forEach() : 스트림의 각 요소를 소모하여 명시된 동작 수행. 반환 타입은 void이므로 출력하는 용도로 많이 사용
+
+                        Stream<String> stream = Stream.of("넷", "둘", "셋", "하나");
+                        stream.forEach(System.out::println);                                    // 넷 둘 셋 하나
+
+                - 요소의 소모
+                    - reduce() : 첫번째와 두번재 요소를 가지고 연산을 수행한 뒤, 그 결과와 세번째 요소를 가지고 또다시 연산을 수행.
+                                    이런식으로 해당 스트림의 모든 요소를 소모하여 연산 수행 후 결과 반환
+                                    인수로 초기값을 전달하면, 초기값과 해당 스트림의 첫번째 요소와 연산 시작 후 그 결과와 두번째 요소 가지고 계속 연산 수행
+
+                        Stream<String> stream1 = Stream.of("넷", "둘", "셋", "하나");
+                        Stream<String> stream2 = Stream.of("넷", "둘", "셋", "하나");
+
+                        Optional<String> result1 = stream1.reduce((s1, s2) -> s1 + "++" + s2);
+                        result1.ifPresent(System.out::println);                                 // 넷++둘++셋++하나
+
+                        String result2 = stream2.reduce("시작", (s1, s2) -> s1 + "++" + s2);    // 리턴 타입 String : 비어있는 스트림에서는 초기값만 반환해야 하기 때문
+                        System.out.println(result2);                                            // 시작++넷++둘++셋++하나
+
+                - 요소의 검색
+                    - findFirst() : 해당 스트림에서 첫번째 요소를 참조하는 Optional 객체 반환, 비어있는 스트림에서 비어있는 Optional 객체 반환
+                    
+                    - findAny() : 해당 스트림에서 첫번째 요소를 참조하는 Optional 객체 반환, 비어있는 스트림에서 비어있는 Optional 객체 반환
+
+                        IntStream stream1 = IntStream.of(4, 2, 7, 3, 5, 1, 6);
+                        IntStream stream2 = IntStream.of(4, 2, 7, 3, 5, 1, 6);
+
+                        OptionalInt result1 = stream1.sorted().findFirst();
+                        sout(result1.getAsInt());                                               // 1
+
+                        OptionalInt result2 = stream2.sorted().findAny();
+                        sout(result2.getAsInt());                                               // 1
+
+                        => 병렬 스트림의 경우 findAny() 메소드를 사용해야만 정확한 연산 결과 반환 가능
+
+                - 요소의 검사
+                    - 특정 조건을 만족하는 요소가 있는지 확인
+                    - 세 메소드 모두 인수로 Predicate 객체를 전달받고, 요소 검사 결과는 boolean 값 반환
+
+                    - anyMatch() : 해당 스트림의 일부 요소가 특정 조건을 만족할 경우 true 반환
+
+                    - allMatch() : 해당 스트림의 모든 요소가 특정 조건을 만족할 경우 true 반환
+
+                    - noneMatch() : 해당 스트림의 모든 요소가 특정 조건을 만족하지 않을 경우 true 반환
+
+                        IntStream stream1 = IntStream.of(30, 90, 70, 10);
+                        IntStream stream2 = IntStream.of(30, 90, 70, 10);
+
+                        System.out.println(stream1.anyMatch(n -> n > 80));                      // true
+                        System.out.println(stream2.allMatch(n -> n > 80));                      // false
+
+                - 요소의 통계
+                    - count() : 해당 스트림의 총 개수를 long 타입 값으로 반환
+
+                    - min() : 해당 스트림 요소 중 가장 작은 값을 가지는 요소를 참조하는 Optional 객체 반환
+
+                    - max() : //                        큰
+
+                        InteStream stream1 = IntStream.of(30, 90, 70, 10);
+                        InteStream stream2 = IntStream.of(30, 90, 70, 10);
+
+                        sout(stream1.count());                                                  // 4
+                        sout(stream2.max().getAsInt());                                         // 90
+
+                - 요소의 연산
+                    - IntStream이나 DoubleStream과 같은 기본 타입 스트림에는 해당 스트림의 모든 요소에 대해 합과 평균을 구할 수 있음
+
+                    - sum() : 합
+
+                    - average() : 평균, 기본 타입으로 래핑된 Optional 객체 반환
+                    
+                        IntStream stream1 = IntStream.of(30, 90, 70, 10);
+                        DoubleStream stream2 = DoubleStream.of(30.3, 90.9, 70.7, 10.1);
+
+                        sout(stream1.sum());                                                    // 200
+                        sout(stream2.average().getAsDouble());                                  // 50.5
+
+                - 요소의 수집
+                    - collect() : 인수로 전달되는 Collectors 객체에 구현된 방법대로 스트림의 요소 수집
+                                    Collectors 클래스에는 미리 정의된 다양한 방법이 클래스 메소드로 정의되어 있음
+                                    이 외에도 사용자가 직접 Collector 인터페이스를 구현하여 자신만의 수집 방법을 정의할 수도 있음
+
+                        - 스트림 요소의 수집 용도별 사용할 수 있는 Collectors 메소드
+                            - 스트림을 배열이나 컬렉션으로 변환 : toArray(), toCollection(), toList(), toSet(), toMap()
+
+                            - 요소의 통계와 연산 메소드와 같은 동작 수행 : counting(), minBy(), maxBy(), summingInt(), averagingInt() 등
+
+                            - 요소의 소모와 같은 동작 수행 : reducing(), joining()
+
+                            - 요소의 그룹화와 분할 : groupingBy(), partitioningBy()
+
+                        Stream<String> stream = Stream.of("넷", "둘", "하나", "셋");
+
+                        List<String> list = stream.collect(Collectors.toList());
+                        Iterator<String> iter = list.iterator();
+                        while(iter.hasNext()) {
+                            sout(iter.next() + " ");                                        // 넷 둘 하나 셋
+                        }
+
+                        Stream<String> stream = Stream.of("HTML", "CSS", "JAVA", "PHP");
+
+                        Map<Boolean, List<String> patition = stream.collect(Collectors.partitioningBy(s -> (s.length() % 2) == 0));
+
+                        List<String> oddLengthList = patition.get(false);
+
+                        List<String> evenLengthList = patition.get(true);
+
+                        sout(oddLengthList);                                                // [CSS,PHP]
+                        sout(evenLengthList);                                               // [HTML,JAVA]
+
+            메소드 정리
+                - void forEach(Consumer<? super T> action) : 
+
+                - Optional<T> reduce(BinaryOperator<T> accumulator) :
+                - T reduce(T identity, BinaryOpeartor<T> accumulator) : 
+
+                - Optional<T> findFirst() : 
+                - Optional<T> findAny() : 
+
+                - boolean anyMatch(Predicate<? super T> predicate) : 
+
+                - boolean allMatch(Predicate<? super T> predicate) : 
+
+                - boolean noneMatch(Predicate<? super T> predicate) : 
+
+                - long count() : 
+
+                - Optional<T> max(Comparator<? super T> comparator) : 
+
+                - Optional<T> min(Comparator<? super T> comparator) : 
+
+                - T sum() : 
+
+                - Optional<T> average() : 
+
+                - <R, A> R collect(Collector<? super T,A,R> collector) : 
 
 
 
