@@ -321,27 +321,28 @@ DB 쿼리와 같이 정형화된 처리 패턴을 가지지 못해서 데이터�
                         sout(evenLengthList);                                               // [HTML,JAVA]
 
             메소드 정리
-                - void forEach(Consumer<? super T> action) : 
+                - void forEach(Consumer<? super T> action) : 스트림의 각 요소에 대해 해당 요소를 소모하여 명시된 동작 수행
 
-                - Optional<T> reduce(BinaryOperator<T> accumulator) :
-                - T reduce(T identity, BinaryOpeartor<T> accumulator) : 
+                - Optional<T> reduce(BinaryOperator<T> accumulator) : 처음 두 요소를 가지고 연산을 수행한 뒤, 그 결과와 다음 요소를 가지고 또다시 연산 수행
+                                                                        해당 스트림의 모든 요소를 소모하여 연산을 수행하고, 그 결과를 반환
+                - T reduce(T identity, BinaryOpeartor<T> accumulator) : //
 
-                - Optional<T> findFirst() : 
-                - Optional<T> findAny() : 
+                - Optional<T> findFirst() : 해당 스트림에서 첫번째 요소를 참조하는 Optional 객체 반환
+                - Optional<T> findAny() : // , 병렬 스트림일 때 사용
 
-                - boolean anyMatch(Predicate<? super T> predicate) : 
+                - boolean anyMatch(Predicate<? super T> predicate) : 해당 스트림의 일부 요소가 특정 조건을 만족할 경우 true 반환
 
-                - boolean allMatch(Predicate<? super T> predicate) : 
+                - boolean allMatch(Predicate<? super T> predicate) :                모든 요소가 모든 조건을
 
-                - boolean noneMatch(Predicate<? super T> predicate) : 
+                - boolean noneMatch(Predicate<? super T> predicate) :               모든 요소가 특정 조건을 만족하지 않을 경우 true 반환
 
-                - long count() : 
+                - long count() : 해당 스트림의 요소 개수 반환
 
-                - Optional<T> max(Comparator<? super T> comparator) : 
+                - Optional<T> max(Comparator<? super T> comparator) : 해당 스트림의 요소 중 가장 큰 값을 가지는 요소를 참조하는 Optional 객체 반환
 
-                - Optional<T> min(Comparator<? super T> comparator) : 
+                - Optional<T> min(Comparator<? super T> comparator) :                       가장 작은 값
 
-                - T sum() : 
+                - T sum() : 해당 스트림의 모든 요소에 대해 합을 구하여 반환
 
                 - Optional<T> average() : 
 

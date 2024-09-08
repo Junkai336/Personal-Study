@@ -6,6 +6,9 @@
     - 재귀가 시작되는 기본 쿼리와 재귀적으로 호출되는 쿼리로 나뉨
     - 이전 단계의 결과를 사용하여 새 결과를 생성
 
+  OPENJSON
+    - 
+
   프로시저
     - 
 
@@ -59,16 +62,48 @@
         - 구분자 생략시 기본값 ,
         - ALICE, BOB, CHARILE, DAVID 이런식임
 
-  OPENJSON
-    - 
-
   스칼라 서브쿼리
-    - 
+    - 하나의 행과 하나의 열을 반환하는 서브쿼리
+    - 단일 값을 반환하며 이를 사용해 계산식이나 조건식 내에서 사용
+    EX)
+      SELECT 
+        NAME, 
+        (SELECT AVG(SALARY) FROM EMPLOYEES) AS AVG_SALARY
+      FROM
+        EMPLOYEES
 
   인라인 뷰
-    - 
+    - 서브쿼리가 FROM 절에 사용되는 경우
+    - 마치 테이블처럼 서브쿼리의 결과를 사용하여, 이 결과를 기반으로 상위 쿼리가 실행됨
+    - 주로 복잡한 쿼리 구조를 단순하게 만들기 위해 사용됨
+    EX)
+      SELECT
+        DEPARTMENT,
+        AVG(SALARY)
+      FROM
+        (
+        SELECT
+          DEPARTMENT,
+          SALARY
+        FROM
+          EMPLOYEES
+        WHERE
+          SALARY > 50000
+        ) AS HIGH_SALARY_EMPLOYEES
+      GROUP BY
+        DEPARTMENT
 
-  중첩쿼리
-    - 
+  중첩 쿼리
+    - 하나의 쿼리 내에서 다른 쿼리를 포함하는 형태
+    - 보통 서브쿼리가 사용됨
+    - 외부 쿼리와 내부 쿼리로 구분됨
+    - 내부 쿼리가 외부 쿼리에 의해 사용되거나 조건을 제공하는 방식
+    EX)
+      SELECT
+        NAME
+      FROM
+        EMPLOYEES
+      WHERE
+        SALARY > (SELECT AVG(SALARY) FROM EMPLOYEES)
 
 -->
