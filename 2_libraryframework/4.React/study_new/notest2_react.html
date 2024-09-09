@@ -710,29 +710,164 @@
       - 이 콜백 함수를 비동기 작업을 실행하는 함수, executor 함수라고도 부름
 
       const promise = new Promise((resolve, reject) => {                          // executor 함수에는 resolve, reject 매개변수가 각각 전달됨
+                                                                                  // executor 함수 : 비동기 작업을 실행하는 함수, promise 객체 생성과 동시에 자동 실행
                                                                                   // resolve : 비동기 작업을 성공 상태로 바꾸는 함수가 들어있음
                                                                                   // reject : 비동기 작업을 실패 상태로 바꾸는 함수가 들어있음
-      setTimeout(() => {                                                          //  promise 객체 생성과 동시에 자동 실행
+
+      setTimeout(() => {
+        const num = 10;
+
+        if(typeof num === 'number') {
+          resolve(num + 10);
+        } else {
+          reject("num이 숫자가 아닙니다.")
+        }
+      }, 2000)
+
+
+
+
+      setTimeout(() => {                                                          
         console.log("hello")
-        resolve("hello");                                                                // 성공했다고 알림
-        }, 2000)                            
+        resolve();                                                              // 성공했다고 알림 PromiseState : fulfilled
+        resolve("hello");                                                       // 성공했다고 알림 PromiseResult : "hello"
+        reject("promiseResult에 표출됨")                                        // PromiseState : rejected
+        }, 2000)                             
       });
 
       setTimeout(() => {
-        console.log(promise);                                                       // promise 객체의 상태, 결과를 볼 수 있음
+        console.log(promise);                                                   // promise 객체의 상태, 결과를 볼 수 있음
       }, 3000);
 
       [[Prototype]] : promise
       [[PromiseState]] : "fulfilled"
-      [[PromiseResult]] : "hello"                                                   // resolve()에서 인수로 전달한 값
+      [[PromiseResult]] : "hello"                                               // resolve()에서 인수로 전달한 값
+
+      // then 메소드를 이용하면, 프로미스로 관리하는 비동기 작업의 결과 값을 언제든지 자유롭게 불러다가 이용할 수 있음
+      // reject가 호출될 경우 then 메소드는 실행되지 않음
+
+      promise.then((value) => {                                                 // promise의 Execute 함수에서 resolve를 호출하게 되면 그 후에 then 메소드에 전달한
+                                                                                // 콜백함수 실행시켜줌
+                                                                                // 동시에 resolve()에 인수로 전달한 결과값을 매개변수로까지 제공해 줌
+        console.log(value);
+      })
+
+      // promise가 실패했을 때 콜백함수 실행
+      // then의 실패버전
+
+      promise.catch((error) => {
+        console.log(error)
+      });
+
+
+      // 프로미스 체이닝 : then과 catch는 promise 객체를 그대로 반환하기 때문에 연결해서 쓸 수 있음
+
+      promise
+        .then(() => {
+          ...
+        })
+        .catch(() => {
+          ...
+        })
+
+        최종
+
+        function add10(num) {
+          const promise = new Promise((resolve, reject) => {
+
+            setTimeout(() => {
+              if (typeof num === 'number') {
+                resolve(num + 10);
+              } else {
+                reject("num이 숫자가 아닙니다.");
+              }
+            }, 2000)
+          });
+
+          return promise;
+        }
+
+        const p = add10(0);
+
+        p.then((result) => {
+          console.log(result);                          // 10
+
+          const newP = add10(result);
+
+          return newP;                                  // 새로운 프로미스 객체를 반환하면, then 메소드 호출의 결과값이 됨
+
+        }).then(result) => {
+          console.log(result);                          // 20
+        }
+
+        -----
+
+        add10(0)
+          .then((result) => {
+            console.log(result);
+            return add10(result);
+          })
+          .then((result) => {
+            console.log(result);
+            return add10(result);
+          })
+          .then((result) => {
+            console.log(result);
+          })
+          .catch((error) => {
+            console.log(error);                       // 어디에서 오류가 발생하든 catch가 실행됨
+          });
 
 
 
+    Async & Await
+      - Async
+        - 어떤 함수를 비동기 함수로 만들어주는 키워드
+        - 함수가 프로미스를 반환하도록 변환해주는 키워드
+        - 함수의 선언문 앞에 async 키워드를 붙이면 해당 함수는 해당 객체를 그대로 반환하는 함수가 아니라 해당 객체를 결과값으로 갖는 
+          새로운 프로미스를 반환하는 함수로 변환됨
+        - 동기적으로 작동하는 함수를 비동기 작업을 하는 프로미스를 반환하는 함수로 변환
+        - 프로미스를 반환하지 않는 함수에 붙여서 자동으로 해당 함수를 비동기로 작동하도록 변환하는 기능을 함
 
+        async function getData() {
+          return {
+            name: "이",
+            id: "winter",
+          };
+        }
 
+        console.log(getData());                     // Promise 객체가 반환이 됨. PromiseState: "fulfilled", PromiseResult: Object
 
+        ---
 
+        async function getData() {
+          return new Promise((resolve, reject) => {
+            setTimeout(() => {
+              resolve({
+                name: "이",
+                id: "winter",
+              })
+            }, 2000);
+          })
+        }
 
+        console.log(getData());                   // 애초에 프로미스를 반환하는 함수였다면, 별다른 기능 없이 그대로 프로미스 객체가 반환되도록 내버려 둠
+
+      - Await
+        - Async 함수 내부에서만 사용 가능한 키워드
+        - 비동기 함수가 다 처리되기를 기다리는 역할
+        - 비동기 작업을 동기 작업을 수행하듯이 할 수 있다.
+        - async 함수가 없으면 오류가 남
+
+        function printData() {
+          getData().then((result) => { console.log(result); })
+        }
+
+        async function printData() {
+          const data = await getData();          // 함수 호출 앞에 await 키워드를 붙여주면 알아서 getData 함수가 반환하는 프로미스의 비동기 작업이 종료되기를 기다렸다가
+                                                 // 종료가 되면 결과 값을 넣어줌
+          console.log(data);                     // {name: ~, id: ~}
+        }
 
 
 
