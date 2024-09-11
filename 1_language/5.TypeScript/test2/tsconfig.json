@@ -7,6 +7,8 @@
     "moduleDetection": "force", // 자동으로 모든 타입스크립트 파일들을 개별 모듈로 취급
     "skipLibCheck": true,       // 라이브러리 타입 정의 파일에서 타입 오류 방지
     // "strictNullChecks": false
+    "allowJs": true,            // 자바스크립트 파일 허용
+    // "noImplicitAny": false   // 암시적 any를 허용할 것이냐 말 것이냐
   },
   "ts-node": {
     "esm": true                 // tsNode로도 esmodule 시스템 실행하기 위해 설정

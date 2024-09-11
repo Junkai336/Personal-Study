@@ -1,9 +1,35 @@
 <!-- 
 StringBuilder
+    - 문자열을 동적으로 수정할 때 사용됨
+    - 문자열을 자주 변경해야 할 때 효율적
+    - 내부적으로 가변적인 문자열 버퍼를 가지고 있어서, 문자열을 추가하거나 변경할 때 새로운 문자열 객체를 생성하지 않고 기존의 버퍼를 수정함
+    - 동기화를 지원하지 않기 때문에 여러 스레드에서 동시 접근시 문제 발생 여지 있음 but 동기화를 안해서 단일 스레드 환경에서는 StringBuffer보다 빠름
+
+        StringBuilder sb = new StringBuilder("hi");
+        sb.append(" world");
+        sout(sb.toString());                            // hi world
 
 StringTokenizer
+    - 문자열을 구분자로 나누기 위해 사용
+    - 공백이나 쉼표와 같은 구분자를 기준으로 문자열을 나눌 때 유용
+    - 주어진 구분자를 기준으로 문자열을 토큰화(나누기) 함
+
+        StringTokenize st = new StringTokenizer("Hello world welcome, " ");
+        while (st.hasMoreTokens()) {
+            sout(st.nextToken());                   // Hello \n world \n welcome
+        }
 
 StringBuffer
+    - 문자열을 수정하는 데 사용됨
+    - 동기화를 지원함
+    - 가변적인 문자열 버퍼를 사용하여 문자열을 효율적으로 수정
+    - 모든 메소드가 동기화되어 있어, 여러 스레드에서 안전하게 사용 가능
+    - 단일 스레드 환경에서는 StringBuilder 보다 느림
+
+        StringBuffer sb = new StringBuffer("Hello");
+        sb.append(" world");
+        sout(sb.toString());                            // Hello world
+
 -->
 
 <!--

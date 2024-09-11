@@ -48,3 +48,12 @@ const dog : Dog2 = {
   age: 0,
   isBark: true
 }
+
+// 다중 확장 인터페이스
+
+interface DogCat extends Dog, Cat {
+  name : "a",
+  age : 0,
+  isBark : true,
+  isScaratch : true,
+}
