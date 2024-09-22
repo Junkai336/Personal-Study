@@ -23,12 +23,34 @@ function swap<T, U>(a: T, b: U) {
 
 const [a, b] = swap(1, "2");
 
+
+
 // 두번째 사례
 
-function returnFirstValue<T>(data: T[]) {                 // 호출 전에는 unknown 타입으로 추론
+function returnFirstValue<T>(data: [T, ...unknown[]]) {
   return data[0];
 }
 
 let num2 = returnFirstValue([0, 1, 2]);
 
-let str2 = returnFirstValue(["hello", "myname"]);
+let str2 = returnFirstValue([0, "hello", "myname"]);
+
+
+
+// 세번째 사례
+
+interface interfaceA {
+  length: number;
+}
+
+interface interfaceB extends interfaceA {}                        // interfaceB에 포함되는 객체들은 interfaceA의 length 프로퍼티를 무조건 가지고 있어야 한다.
+
+function getLength<T extends { length : number }>(data: T) {      // T는 확장하는 타입인데, length 프로퍼티를 가지고 있는 객체를 확장하는 타입으로 T를 제한하는 것
+  return data.length;
+}
+
+let var1 = getLength([1, 2, 3]);
+
+let var2 = getLength("abcde");
+
+let var3 = getLength({ length: 10 });
