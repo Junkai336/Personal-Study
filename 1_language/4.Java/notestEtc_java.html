@@ -55,6 +55,68 @@ Arrays.sort
         });
 -->
 
+<!-- 
+함수형 인터페이스+a
+    - 람다 표현식, 메소드 참조를 사용하여 인스턴스를 생성할 수 있는 단일 추상 메소드를 가지는 인터페이스
+    - 단 하나의 추상 메소드만 가짐
+    - @FunctionalInterface 어노테잇녀 : 선택사항, 함수형 인터페이스임을 명시, 컴파일시 검사를 수행하기 위해 사용하는 것이 좋음
+    - 단일 추상 메소드 외 디폴트 메소드, 정적 메소드 가질 수 있음
+
+    내장 함수형 인터페이스
+        - Predicate<T> : T 타입의 객체를 입력받아 boolean 값 반환
+            - 주요 메소드
+                - boolean test(T t)
+                - Predicate<T> and(Predicate<? super T> other)
+                - Predicate<T> or(Predicate<? super T> other)
+                - Predicate<T> negate()
+
+                    Predicate<String> isLong = str -> str.length() > 5;
+
+                    sout(isLong.test("Hello"));                                         // false
+
+        - Function<T, R> : T 타입의 객체를 입력받아 R 타입 결과 반환
+            - 주요 메소드
+                - R apply(T t)
+                - Function<T, R> andThen(Function<? super R, ? extends V> after)
+                - Function<T, R> compose(Function<? super V, ? extends T> before)
+
+                    Function<String, Integer> stringLength = str -> str.legnth();
+
+                    int len = stringLength.apply("Hello, Lambda!");
+                    sout(len)                                                           // 14
+        
+        - Consumer<T> : T 타입의 객체를 입력받아 어떤 작업을 수행하고 결과를 반환하지 않음
+            - 주요 메소드
+                - void accpet(T t)
+                - Consumer<T> andThen(Consumer<? super T> after)
+
+                    Consumer<String> printer = System.out::printLn;
+
+                    printer.accept("Hello, Consumer!");                                 // Hello, Consumer!
+        
+        - Supplier<T> : 입력은 없고 T 타입의 객체 반환
+            - 주요 메소드
+                - T get()
+
+                    Supplier<Double> randomSupplier = () -> new Random().nextDouble();
+                    
+                    sout(randomSupplier.get());                                         // 출력: 랜덤한 Double 값
+        
+        - BinaryOperator<T> : 두 개의 동일한 타입의 입력을 받아 동일한 타입의 출력 반환
+            - 주요 메소드
+                - T apply(T t1, T t2)
+                - 상속받은 BiFunction<T, T, T>의 메소드도 사용 가능
+
+                    BinaryOperator<Integer> add = (a, b) -> a + b;
+                    BinaryOperator<Integer> multiply = (a, b) -> a * b;
+
+                    sout(add.apply(5, 3));                                              // 8
+                    sout(multiply.apply(5, 3));                                         // 15
+        
+        - UnaryOperator<T> : Function<T, T>의 특수화로 동일한 타입의 입력과 출력을 가짐
+
+-->
+
 <!--
 디자인 패턴
 
