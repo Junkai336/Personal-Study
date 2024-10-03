@@ -19,8 +19,13 @@ java.time 패키지
   - LocalTime 클래스 : 시간을 표현할 때 사용
   - LocalDateTime 클래스 : 날짜와 시간 한번에 표현
 
-  - ZonedDateTime 클래스 : 특정 타임 존(time-zone)에 해당하는 날짜와 시간을 다루는 데 사용
-  - Instant 클래스 : 특정 시점의 날짜와 시간을 나노초 단위로 표현하는 타임스탬프를 다루는 데 사용
+  - ZonedDateTime 클래스 : 특정 타임 존(time-zone)에 해당하는 날짜와 시간을 다루는 데 사용, 
+    - ZonedDateTime zonedDateTime = ZonedDateTime.now() : 현재 시스템의 시간대와 날짜를 포함한 시간
+    - ZonedDateTime seoulTime = ZonedDateTime.now(ZoneId.of("Asia/Seoul")) : 서울 시간대의 현재 시간 2024-10-03T12:34:56+09:00[Asia/Seoul]
+
+  - Instant 클래스 : 특정 시점의 날짜와 시간을 나노초 단위로 표현하는 타임스탬프를 다루는 데 사용, 항상 UTC 시간으로 간주됨
+    - Instant instant = Instant.now() : 현재 시간, UTC 기준
+    - Instant specificInstant = Instant.ofEpochSecond(1609459200);: 에포크 시간(1970-01-01T00:00:00Z) 기준으로 인스턴스 생성
 
   - Period 클래스 : 두 날짜 사이의 차이를 표현하는 데 사용
   - Duration 클래스 : 두 시각 사이의 차이를 표현하는 데 사용

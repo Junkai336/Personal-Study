@@ -1,6 +1,41 @@
 <!-- 
 타입스크립트와 리액트
 
-  - npx create-react-app . : 리액트 앱 설치, .은 새폴터 생성하지 말고 이 폴더에다가 생성해라
+  - test3 폴더
+  - npx create-react-app . : 리액트 앱 설치, .은 새폴터 생성하지 말고 이 폴더에다가 생성해라 
+
+  - 타입스크립트 사용하기 위해 타입 선언 패키지 4개 추가
+    - npm i @types/node @types/react @types/react-dom @types/jest
+    - package.json , node-module에 @types 패키지로 확인
+
+  - tsconfig.json 만들고 js 파일을 jsx로 변경, 개별 파일을 하나씩 tsx 형식으로 변환 후 타입 오류들을 해결
+
+  - 자바스크립트 파일을 타입스크립트 파일로 마이그레이션하는 과정은 주로 하나의 파일을 타입스크립트 파일로 바꾸고 
+    그 파일 내에 존재하는 타입 오류들을 순서대로 천천히 해결하는 방식으로 진행
+
+useState와 props 타입스크립트에서 사용하기
+
+  - useState는 초기값으로 전달한 인수의 타입에 따라서 state 변수와 state 변화 함수의 타입을 자동으로 추론함
+  - 초기값을 전달하지 않으면 undefined 타입으로 추론되나 이렇게 쓰면 안됨.
+  - 초기값이 마땅하지 않은 경우 타입 변수를 직접 설정해줘야 함
+
+타입스크립트에서는 npm에서 외부 라이브러리를 다운 받을 때 npm i 만으로 바로 사용할 수는 없음.
+타입스크립트는 기본적으로 코드를 실행하기 전 타입 검사 기능을 수행하기 때문에 라이브러리들의 코드도 타입 검사를 수행함
+라이브러리 코드들에 대한 타입 정보가 제공되지 않은 상황에서는 오류 발생
+타입스크립트로 제작된 라이브러리는 npm에서 TS 마크가 있음
+제작되지 않은 라이브러리는 DT마크 이용. 들어가보면 예시로 @types/lodash 가 있음
+@types라는 이름이 붙어있는 type 정보를 definitely types 라고 부름
+=> 라이브러리에 타입 정보만 제공하는 별도의 패키지가 있는지 확인 해야함
+https://www.npmjs.com/search?q=lodash
+
+타입스크립트 탬플릿
+CRA 툴로 생성하는 React 앱에 자동으로 타입스크립트 탬플릿으로 시작하도록 만들 수 있음
+https://create-react-app.dev/docs/adding-typescript
+
+
+
+
+
+
 
 -->

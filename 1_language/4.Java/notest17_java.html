@@ -203,7 +203,7 @@ DB 쿼리와 같이 정형화된 처리 패턴을 가지지 못해서 데이터�
 
 
         3. 스트림 최종 연산 (스트림 사용)
-            - Termial Operation
+            - Terminal Operation
             - 스트림 API에서 중개 연산을 통해 변환된 스트림은 마지막으로 최종 연산을 통해 각 요소를 소모하여 결과를 표시
             - 지연되었던 모든 중개 연산들이 최종 연산 시에 모두 수행됨
             - 최종 연산 시에 모든 요소를 소모한 해당 스트림은 더는 사용할 수 없게 됨
@@ -311,7 +311,7 @@ DB 쿼리와 같이 정형화된 처리 패턴을 가지지 못해서 데이터�
 
                         Stream<String> stream = Stream.of("HTML", "CSS", "JAVA", "PHP");
 
-                        Map<Boolean, List<String> patition = stream.collect(Collectors.partitioningBy(s -> (s.length() % 2) == 0));
+                        Map<Boolean, List<String>> patition = stream.collect(Collectors.partitioningBy(s -> (s.length() % 2) == 0));
 
                         List<String> oddLengthList = patition.get(false);
 
