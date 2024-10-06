@@ -1,0 +1,107 @@
+<!-- 
+배열 조건 만족 확인
+  - some
+    - 배열 내의 하나 이상의 요소가 주어진 조건을 만족하는지 검사
+    - 하나라도 만족하는 요소가 있으면 true 반환
+
+      const numbers = [1, 2, 3, 4, 5];
+
+      const hasEvenNumber = numbers.some((number) => number % 2 === 0);
+
+  - every
+    - 배열 내의 모든 요소가 주어진 조건을 만족하는지 검사
+    - 모든 요소가 조건을 만족하면 true 반환
+
+      const allArePositive = numbers.every((number) => number > 0);
+
+  - includes
+    - 배열에 특정 값이 포함되어 있는지 여부를 확인
+    - 어떤 값이 배열에 존재하면 true 반환
+
+      const fruits = ['apple', 'banana', 'orange'];
+
+      const hasBanana = fruits.includes('banana');
+
+
+
+typeof 연산자
+  - 피연산자의 타입 반환
+    typeof 10; // number
+
+
+
+null
+  - object 타입
+  - 아직 값이 정해지지 않은 것
+
+
+
+undefined
+  - 초기화되지 않은 변수나 존재하지 않는 값에 접근할 때 반환
+  - 타입이 정해지지 않은 것
+
+    null == undefined    // true
+    null === undefined    // false
+
+
+
+명시적 타입변환
+  - Number(), String(), Boolean(), Object()
+
+
+
+  문자열을 숫자로 변환하는 함수
+    - parseInt()
+      - parseInt(string, radix)
+        - string : 변환할 문자열
+        - radix : 변환할 진법 (2진수, 8진수, 10진수, 16진수, ...) 기본값 10진수
+        - 문자열의 처음부터 숫자가 아닌 문자를 만나기 전까지의 부분을 해석하여 정수로 변환하고 나머지는 무시
+
+          parseInt("123abc");   // 123
+
+    - parseFloat(string)
+      - 문자열을 부동 소수점(실수)값으로 변환
+      - 문자열의 처음부터 숫자가 아닌 문자를 만나기 전까지의 부분을 해석하여 실수로 변환
+
+        parseFloat("3.14abc");  // 3.14
+        parseFloat("abc3.14")   // NaN
+
+
+
+숫자를 문자열로 변환
+  - String()
+  
+  - toString() : null과 undefined제외
+  
+  - toExponential() : 숫자를 지수 표기법으로 변환
+
+      let num = 12345.6789;
+      num.toExponential(2);   // 1.23e+4
+
+  - toFixed(digits) : 고정된 소수 자릿수로 변환, digits = 소수점 이하 자릿수, 기본값 0
+
+      num.toFixed();          // 12346    (반올림됨)
+      num.toFixed(2);         // 12345.68 (반올림됨)
+    
+  
+  - toPrecision(precision) : 전체 자릿수를 지정한 형식으로 변환, 필요에 따라 지수 표기법을 사용할 수 있고 지정된 자릿수내에서 정확도를 유지함
+
+      num.toPrecision();      // 12345.6789
+      num.toPrecision(2);     // 1.2e+4;
+      num.toPrecision(5);     // 12346
+      num.toPrecision(8);     // 12345.679
+
+
+
+날짜를 문자열이나 숫자로 변환
+  - getDate() : 날짜 중 일자를 숫자로 반환                      (1~31)
+  - getDay() : 날짜 중 요일을 숫자로 반환                       (일:0 ~ 토:6)
+  - getFullYear() : 날짜 중 연도를 4자리 숫자로 반환            (yyyy년)
+  - getMonth() : 날짜 중 월을 숫자로 반환                       (1월 : 0 ~ 12월 : 11)
+  - getTime() : 1970년 1월 1일부터 현재까지의 시간을 밀리초 단위의 숫자로 반환
+  - getHours() : 시간 중 시를 숫자로 반환                       (0~23)
+  - getMinutes() : 시간 중 분을 숫자로 반환                     (0~59)
+  - getSeconds() : 시간중 초를 숫자로 반환                      (0~59)
+  - getMilliseconds() : 시간 중 초를 밀리초 단위의 숫자로 반환  (0~999)
+
+-->

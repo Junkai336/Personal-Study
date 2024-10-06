@@ -12,11 +12,13 @@ type Dog = {
   breed: string;
 }
 
+// 슈퍼타입 : 일반적인 타입
 let animal : Animal = {
   name: "기린",
   color: "yellow",
 };
 
+// 서브타입 : 더 구체적인 타입
 let dog : Dog = {
   name: "돌돌이",
   color: "brown",
@@ -71,3 +73,7 @@ func({
 })
 
 func(programmingBook);
+
+// 객체 타입은 슈퍼타입이 더 적은 프로퍼티, 서브타입이 더 많은 프로퍼티
+// string 타입은 슈퍼타입이 더 일반적, string literal type이 더 구체적 
+// 둘이 반대인듯
