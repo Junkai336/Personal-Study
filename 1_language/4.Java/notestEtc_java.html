@@ -191,3 +191,44 @@ Collector (인터페이스)
         );
 
 -->
+
+<!-- 
+String.format
+    - 숫자나 문자열을 특정 길이로 맞출 때 유용함
+
+        - 주요 포맷 지정자
+            - %s : 문자열(String)
+
+                String str = "5";
+                String paddedStr = String.format("%3s", str).replace(' ', '0');     // 005
+
+            - %d : 10진수 정수(int, long)
+
+                int num = 5;
+                String.format("%03d", num);     // 005
+
+                String.format("'%5d'", num);    // '     5'
+
+                String.format("'-%5d'", num);   // '5     '
+
+            - %f : 부동 소수점(float, double)
+
+                double pi = 3.14159;
+                String result = String.format("Pi: %.2f", pi);  // 3.14 (소수점 2자리까지만.)
+
+            - %x : 16진수
+
+                int number = 255;
+                String result = String.format("%x", number)     // ff
+
+            - %n : 줄바꿈
+
+                String result = String.format("L1%nL2")
+
+            - %% : %자체를 출력
+
+                String result = String.format("Discount: 50%%");    // Disount: 50%
+
+
+
+-->
