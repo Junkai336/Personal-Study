@@ -6,6 +6,8 @@ padStart(targetLength, padStarting);
     let str = 5;
     str.padStart(3, "0");   // 005
 
+
+
 배열 조건 만족 확인
   - some
     - 배열 내의 하나 이상의 요소가 주어진 조건을 만족하는지 검사
@@ -110,5 +112,340 @@ undefined
   - getMinutes() : 시간 중 분을 숫자로 반환                     (0~59)
   - getSeconds() : 시간중 초를 숫자로 반환                      (0~59)
   - getMilliseconds() : 시간 중 초를 밀리초 단위의 숫자로 반환  (0~999)
+
+
+
+  연산자
+    - == (equal) : 같은 값이면 참
+    - === (strict equal) : 같은 값, 같은 타입이면 참
+    - != : 다른 값이면 참
+    - !== : 다른 값이거나 다른 타입이면 참
+
+
+
+  void 연산자
+    - 피연산자로 어떤 타입의 값이 오든지 상관없이 언제나 undefined 값 반환
+    - 정의되지 않은 원시 타입의 값을 얻기 위해 void(0)과 같은 형태로 종종 사용
+
+    <a href="javascript:void(0)"></a>                                               // 링크 동작 x
+    <a href="javascript:void(document.body.style.backgroundColor='yellow')"></a>    // 링크 동작 x , HTML 문서 배경색을 바꿔줌
+
+
+
+  for in
+    - 해당 객체의 모든 열거할 수 있는 프로퍼티를 순회할 수 있도록 해줌
+    - for (변수 in 객체) {...}
+
+
+  for of
+    - 반복할 수 있는 객체(Array, Map, Set, arguments)를 순회할 수 있도록 해주는 반복문
+    - for (변수 of 객체) {...}
+
+    var arr = new Set([1, 1, 2, 2, 3, 3]);
+
+    for(var value of arr) { ... }
+
+
+
+  label문
+    - 프로그램 내 특정 영역을 식별할 수 있도록 해주는 식별자
+    - continue 문과 break 문의 동작이 프로그램의 흐름을 특정 영역으로 이동시킬 수 있음
+
+    gugudan:
+      for (var i = 2; i <= 9; i++) {
+        dan:
+          for (var j = 1; j <= 9; j++) {
+            if ((i*j) % 2 == 0) {
+              continue dan;
+            }
+          }
+      }
+
+
+
+  배열
+    - var arr = [1, 2];
+    - var arr = Array(1, 2);
+    - var arr = new Array(1, 2);
+    - 모두 같은 결과
+
+    배열 추가
+      - arr.push(추가 요소);
+      - arr[특정인덱스] = 추가 요소
+
+
+  
+  지역 변수 : 변수가 선언된 함수 내에서만 유효, 함수가 종료되면 메모리에서 사라짐, 함수 매개변수도 마찬가지
+  전역 변수 : 함수 외부에서 선언된 변수, 어느 영역에서나 접근 가능, 웹페이지가 닫혀야 메모리에서 사라짐
+  
+  호이스팅
+    - 자바스크립트 함수 안에 있는 모든 변수의 선언은 함수의 맨 처음으로 이동된 것 처럼 동작
+    - 변수와 함수의 선언이 해당 범위(스코프) 최상단으로 끌어올려지는 것처럼 동작하는 특성
+    - 코드에서 변수나 함수를 선언하기 전에 사용할 수 있는 것처럼 보이는 현상
+
+    - 변수 호이스팅
+      - var 변수 : var 키워드로 선언된 변수는 선언만 호이스팅되고 값의 할당은 호이스팅 되지 않음.
+
+          console.log(name);    // undefined
+          var name = "J";
+
+      - let, const 변수 : 초기화가 호이스팅되지 않아 선언 전 접근하면 ReferenceError
+
+          console.log(name);    // ReferenceError: Cannot access 'name' before initialization
+          let name = "J";
+
+    - 함수 호이스팅
+      - 함수 선언문 호이스팅 (선언적 함수) (Function Declaration)
+        - 함수 선언문은 전체가 호이스팅함. 함수 선언 전에 호출해도 정상 동작
+
+          greet();              // h
+
+          function greet() {
+            console.log("h");
+          }
+
+          => 이런 식으로 동작 ↓
+
+          function greet() {}
+          greet()
+
+      - 함수 표현식 호이스팅 (익명 함수) (Function Expression)
+        - 함수 표현식은 변수에 할당된 함수를 의미
+        - 변수만 호이스팅되고, 함수 자체는 호이스팅 되지 않음
+        - 선언 전에 호출하면 TypeError
+
+          greet();              // TypeError: greet is not a function
+
+          var greet = function() {
+            console.log(h);
+          }
+
+          => 이런식으로 동작 ↓
+
+          var greet;
+          greet();
+          greet = function() {...}
+
+
+
+  디폴트 매개변수
+    - 함수에 전달된 인자가 없는 경우 기본값을 설정할 수 있도록 함
+    - 주로 매개변수가 생략되었을 때 기본 동작을 지정할 때 사용
+    - 인자가 전달된 경우, 전달된 값이 사용됨
+
+      function greet(name = "익명") {
+        console.log("name");
+      }
+
+      greet();      // 익명
+      greet("a");   // a
+
+  나머지 매개변수
+    - 정해지지 않은 개수의 인자들을 배열로 수집할 수 있게 함
+    - 매개 변수 앞에 ... 붙여 사용
+    - 함수가 몇 개의 인자를 받는지 알 수 없을 때 유용
+    - 나머지 매개변수는 항상 마지막에 위치해야 함
+
+      function sum(...numbers) {
+        return numbers.reduce((total, num) => total + num, 0);
+      }
+
+      console.log(sum(1, 2, 3));      // 6
+
+
+
+  미리 정의된 전역 함수
+    - 사용자 편의를 위해 제공
+    - 자바스크립트의 어떤 타입의 객체에서도 바로 사용 가능
+
+      - eval()
+        - 문자열 형태의 자바스크립트 코드 실행
+        - 보안에 취약, 남용 금지
+
+          const code = "console.log(2 + 2)";
+          eval(code);                         // 4
+
+
+      - decodeURL()
+        - 인코딩된 전체 URL 주소 디코딩
+        - 공백, 특수문자를 원래 형태로 복원
+
+        const encodedURI = "https%3A%2F%2Fexample.com%2F%3Fq%3Dtest%20string";
+        console.log(decodeURI(encodedURI)); // 출력: https://example.com/?q=test string
+
+
+      - decodeURLComponent()
+        - encodeURLComponent()로 인코딩된 URL의 일부를 디코딩
+        - URL의 일부를 디코딩할 때 사용
+
+
+        const encodedComponent = "%3Fq%3Dtest%20string";
+        console.log(decodeURIComponent(encodedComponent)); // 출력: ?q=test string
+
+      - encodeURL()
+        - 전체 URL을 인코딩
+        - 특수문자(공백 등)을 인코딩하지만, / : ? & 등의 URL구분자는 인코딩하지 않음
+
+        const uri = "https://example.com/?q=test string";
+        console.log(encodeURI(uri)); // 출력: https://example.com/?q=test%20string
+
+
+      - encodeURLComponent()
+        - URL의 일부를 인코딩
+        - 모든 특수문자를 인코딩, 구분자 : / ? 등도 인코딩
+
+        const component = "?q=test string";
+        console.log(encodeURIComponent(component)); // 출력: %3Fq%3Dtest%20string
+
+
+      - escape()
+        - 문자열을 16진수로 인코딩
+        - 현대 브라우저 사용 권장 x
+
+        const str = "Hello World!";
+        console.log(escape(str)); // 출력: Hello%20World%21
+
+
+      - unescape()
+        - escape()로 인코딩된 문자열 디코딩
+        - 현대 브라우저 사용 권장 x
+
+
+      - isFinite()
+        - 전달된 값이 유한한 수인지 검사하여 결과 반환
+        - 전달된 값이 숫자가 아니면 숫자로 변환하여 검사
+        - Number.isNaN() 사용 권장
+
+          isFinite(123e100);    // true
+      
+
+      - isNaN()
+        - 전달된 값이 NaN인지 검사하여 결과 반환
+        - 전달된 값이 숫자가 아니면 숫자로 강제변환하여 검사
+
+          isNaN(true);          // false
+          isNaN(null);          // false
+          isNaN("문자");        // true
+          isNaN(undefined)      // true
+
+
+
+  - Object.keys()
+    - 열거 가능한(enumerable) 속성 이름(key)을 배열로 반환
+    - Symbol로 정의된 속성은 반환 X
+    
+      const obj = { name: "a", age: 1, job: "b"};
+      const keys = Object.keys(obj);
+
+      console.log(keys);            // ["name", "age", "job"]
+
+
+  - Object.getOwnPropertyNames()
+    - 객체의 모든 속성(열거 가능 여부 상관 X) 이름을 배열로 반환
+
+      const obj = { name: "a", age: 1, job: "b"};
+
+      Object.defineProperty(obj, "secret", {
+        value: "비밀 정보",
+        enumerable: false,
+      });
+
+      const props = Object.getOwnPropertyNames(obj);
+      console.log(props);   // ["name", "age", "job", "secret"];
+
+
+  - Object.defineProperty()
+    - 객체의 속성을 정의하거나 수정할 때 사용
+    - value, enumerable(열거 가능 여부), writable(수정 가능 여부), configurable(삭제 가능 여부) 등 설정 가능
+
+      const obj = {};
+
+      Object.defineProperty(obj, "name", {
+        value: "홍길동",
+        writable: false,
+        enumerable: true,
+        configurable: false
+      });
+
+      console.log(obj.name);    // 홍길동
+
+      obj.name = "김철수";
+      console.log(obj.name);    // 홍길동
+
+
+  - 객체 래퍼런스
+    - var herDog = hisDog;
+    - herDog는 hisDog 객체를 가리키게 됨. hisDog === herDog -> true
+    - 객체 자체를 저장하는 것이 아니라 객체가 위치한 주소를 저장
+
+      const obj1 = { name : "홍길동" };
+      const obj2 = obj1;
+
+      obj2.name = "김철수";
+      console.log(obj1.name);   // 김철수
+
+
+  - hasOwnProperty()
+    - 객체가 특정 속성을 직접 소유하고 있는지 여부 확인
+    - 상속된 속성은 반환하지 않음
+
+    const obj = { name: "홍길동", age: 30 };
+
+    console.log(obj.hasOwnProperty("name"));      // true
+    console.log(obj.hasOwnProperty("toString"));  // false (상속된 속성)
+
+
+  - propertyIsEnumerable()
+    - 해당 속성이 열거가능한지 여부 반환
+    - 상속된 속성은 무시됨
+
+    const obj = { name: "홍길동" };
+    Object.defineProperty(obj, "age", {
+      value: 30,
+      enumerable: false,
+    });
+
+    console.log(obj.propertyIsEnumerable("name"));    // true
+    console.log(obj.propertyIsEnumerable("age"));     // false
+
+
+  - isPrototypeOf()
+    - 객체가 다른 객체의 프로토타입 체인에 포함되는지 여부 확인
+
+      function Person() {}
+      const person = new Person();
+
+      console.log(Person.prototype.isPrototypeOf(person))   // true
+
+
+  - isExtensible()
+    - 객체가 확장 가능한지 여부(새로운 속성을 추가할 수 있는지)를 반환
+    - Object.preventExtensions()로 비확장 상태로 만들 수 있음
+
+      const obj = { name : "홍길동"};
+
+      console.log(Object.isExtensible(obj));    // true;
+
+      Object.preventExtensions(obj);            // 객체 확장 금지
+
+      console.log(Object.isExtensible(obj));    // false;
+
+
+  - toString()
+
+
+  - valueOf()
+    - 객체의 기본 값(원시 값)을 반환
+    - 수학 연산이나 문자열 변환시 암묵적으로 호출됨
+
+      const obj = {
+        value: 42,
+        valueOf() {
+          return this.value;
+        }
+      }
+
+      console.log(obj + 10);      // 52
+      console.log(obj.valueOf()); // 42
 
 -->

@@ -33,7 +33,7 @@ interface Map<V> {
 }
 
 let stringMap: Map<string> = {
-  key: "value"
+  key3: "value"
 }
 
 let booleanMap: Map<boolean> = {
