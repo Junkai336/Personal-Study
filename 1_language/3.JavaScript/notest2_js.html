@@ -1,6 +1,171 @@
 <!-- 
 
+Number.isInteger()
+  - 전달된 값이 정수인지 아닌지 검사
+  - 전달된 값이 정수면 true, 정수가 아니거나 NaN, Infinity와 같은 값은 모두 false 반환
 
+    Number.isInteger(-100);         // true
+    Number.isInteger(0.1);          // false
+    Number.isInteger(Infinity);     // false
+
+Number.isSafeInteger()
+  - 전달된 값이 안전한 정수인지 아닌지 검사
+  - 안전한 정수 : 64비트 부동 소수점 수로 정확히 표현되는 정수 : -(2^53 -1) ~ (2^53 -1)
+
+    Number.isSafeInteger(Math.pow(2, 53) -1);   // true
+    Number.isSafeInteger(Math.pow(2, 53));      // false
+
+날짜 표현 양식
+
+1. ISO 날짜 양식
+  - YYYY-MM-DDTHH:MM:SS
+  - YYYY-MM-DD
+  - YYYY-MM
+  - YYYY
+
+    new Date("1977-12-14T13:30:30");
+    new Date("1977-12-14");
+    new Date("1977-12");
+
+2. Long 날짜 양식
+  - MMM DD YYY
+  - DD MMM YYYY
+
+    new Date("Feb 19 1982");
+    new Date("19 Feb 1982");
+    new Date("February 19 1982");
+    new Date("FEBRUARY, 19, 1982");
+
+3. Short 날짜 양식
+  - MM/DD/YYYY
+  - YYYY/MM/DD
+
+    new Date("02/19/1982");
+    new Date("1982/02/19");
+
+4. Full 날짜 양식
+  - Wed May 25 2016 17:00:31 GMT+0900
+
+    new Date("Wed May 25 2016 17:00:00 GMT+0900 (Seoul Time)");
+
+
+
+Date.now()
+  - 1970년 1월 1일 0시 0분 0초부터 현재까지의 시간을 밀리초 단위의 정수로 반환
+  
+    var nowMiliSec = Date.now();
+    new Date(nowMiliSec);         // new Date()와 같은 결과 반환
+
+setDate,setMonth,setFullYear,setHours,setMilliseconds,setMinutes,setSeconds,setTime
+
+\x : 16진수 이스케이프 시퀀스
+\u : 유니코드 이스케이프 시퀀스
+String.fromCodePoint(); : 유니코드 코드 포인트 이스케이프 방식
+
+
+
+String.fromCharCode()
+  - 쉼표로 구분되는 일련의 유니코드에 해당하는 문자들로 구성된 문자열 반환
+
+    String.fromCharCode(65, 66, 67);    // "ABC"
+
+String.fromCodePoint()
+  - 지정된 유니코드 코드 포인트로부터 문자열 생성
+
+    String.fromCodePoint(0x1F600);      // 유니코드 이모지
+
+String.raw()
+  - 템플릿 리터럴 내에서 이스케이프된 문자열 그대로 반환
+
+    String.raw(`Hello\nWorld`);         // Hello\nWorld
+
+indexOf()
+  - 문자열에서 특정 문자열이 처음 나타나는 위치 반환, 찾지 못하면 -1
+  
+    "Hello, World".indexOf("World");    // 7
+
+lastIndexOf()
+  - 문자열에서 특정 문자열이 마지막으로 나타나는 위치 반환, 찻지 못하면 -1
+
+    "Hello, World. World!".lastIndexOf("World");    // 13
+
+charAt()
+  - 주어진 인덱스에 있는 문자 반환
+
+    "Hello".charAt(1);    // "e"
+
+charCodeAt()
+  - 문자열에서 주어진 인덱스에 해당하는 문자의 UTF-16 코드 유닛 반환
+
+    "ABC".charCodeAt(0);    // 65
+
+charPointAt()
+  - 문자열에서 주어진 인덱스에 해당하는 전체 유니코드 코드 포인트 반환
+
+slice()
+  - 문자열의 일부분을 추출하여 새로운 문자열 반환
+
+    "Hello, World".slice(0, 5);   // "Hello"
+
+subString()
+  - 문자열에서 시작 인덱스와 끝 인덱스 사이의 문자 반환
+
+    "Hello, World".subString(0, 5)  // "Hello"
+
+substr()
+  - 지정된 위치부터 주어진 길이만큼의 문자열 반환
+
+    "Hello, World".substr(0, 5)     // "Hello"
+
+split()
+  - 문자열을 지정된 구분자를 기준으로 배열로 나눔
+
+    "a,b,c".split(",");             // ["a", "b", "c"]
+
+concat()
+  - 두 개 이상의 문자열 합침
+
+    "Hello".concat(" ", "World");   // "Hello World"
+
+trim()
+  - 문자열의 앞뒤 공백 제거
+
+    "    Hello    ".trim();         // "Hello"
+
+search()
+  - 정규 표현식을 사용하여 문자열에서 패턴 검색 후 매칭되는 첫번째 위치의 인덱스 반환
+
+    "Hello, World".search("World"); // 7
+
+match()
+  - 문자열에서 정규 표현식과 일치하는 부분 찾고 일치하는 부분 배열로 반환
+
+    "Hello, World".match(/World/);  // ["World"]
+
+replace()
+  - 정규 표현식이나 문자열을 사용해 문자열의 일부분을 다른 문자열로 대체
+
+    "Hello, World".replace("World", "js");    // Hello, js
+
+replaceAll()
+  - 문자열 내의 모든 일치하는 부분을 찾아서 다른 문자열로 모두 대체
+
+    "apple banana apple grape".replaceAll("apple", "orange");   // orange banana orange grape
+
+startsWith()
+  - 
+
+endsWith()
+  - 
+
+localeCompare()
+  - 
+
+normalize()
+  - 
+
+repeat()
+  - 
 
 
 

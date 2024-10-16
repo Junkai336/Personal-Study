@@ -437,6 +437,7 @@ undefined
   - valueOf()
     - 객체의 기본 값(원시 값)을 반환
     - 수학 연산이나 문자열 변환시 암묵적으로 호출됨
+    - 인스턴스가 가지고 있는 값 반환
 
       const obj = {
         value: 42,
@@ -447,5 +448,12 @@ undefined
 
       console.log(obj + 10);      // 52
       console.log(obj.valueOf()); // 42
+
+
+      var numObj = new Number(123);
+      typeof numObj;    // object
+      var num = numObj.valueOf();
+      num;              // 123
+      typeof num        // number
 
 -->
