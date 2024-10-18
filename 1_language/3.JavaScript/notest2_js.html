@@ -69,104 +69,337 @@ String.fromCharCode()
 
     String.fromCharCode(65, 66, 67);    // "ABC"
 
+
 String.fromCodePoint()
   - 지정된 유니코드 코드 포인트로부터 문자열 생성
 
     String.fromCodePoint(0x1F600);      // 유니코드 이모지
+
 
 String.raw()
   - 템플릿 리터럴 내에서 이스케이프된 문자열 그대로 반환
 
     String.raw(`Hello\nWorld`);         // Hello\nWorld
 
+
 indexOf()
   - 문자열에서 특정 문자열이 처음 나타나는 위치 반환, 찾지 못하면 -1
   
     "Hello, World".indexOf("World");    // 7
+
 
 lastIndexOf()
   - 문자열에서 특정 문자열이 마지막으로 나타나는 위치 반환, 찻지 못하면 -1
 
     "Hello, World. World!".lastIndexOf("World");    // 13
 
+
 charAt()
   - 주어진 인덱스에 있는 문자 반환
 
     "Hello".charAt(1);    // "e"
+
 
 charCodeAt()
   - 문자열에서 주어진 인덱스에 해당하는 문자의 UTF-16 코드 유닛 반환
 
     "ABC".charCodeAt(0);    // 65
 
+
 charPointAt()
   - 문자열에서 주어진 인덱스에 해당하는 전체 유니코드 코드 포인트 반환
+
 
 slice()
   - 문자열의 일부분을 추출하여 새로운 문자열 반환
 
     "Hello, World".slice(0, 5);   // "Hello"
 
+
 subString()
   - 문자열에서 시작 인덱스와 끝 인덱스 사이의 문자 반환
 
     "Hello, World".subString(0, 5)  // "Hello"
+
 
 substr()
   - 지정된 위치부터 주어진 길이만큼의 문자열 반환
 
     "Hello, World".substr(0, 5)     // "Hello"
 
+
 split()
   - 문자열을 지정된 구분자를 기준으로 배열로 나눔
 
     "a,b,c".split(",");             // ["a", "b", "c"]
+
 
 concat()
   - 두 개 이상의 문자열 합침
 
     "Hello".concat(" ", "World");   // "Hello World"
 
+
 trim()
   - 문자열의 앞뒤 공백 제거
 
     "    Hello    ".trim();         // "Hello"
+
 
 search()
   - 정규 표현식을 사용하여 문자열에서 패턴 검색 후 매칭되는 첫번째 위치의 인덱스 반환
 
     "Hello, World".search("World"); // 7
 
+
 match()
   - 문자열에서 정규 표현식과 일치하는 부분 찾고 일치하는 부분 배열로 반환
 
     "Hello, World".match(/World/);  // ["World"]
+
 
 replace()
   - 정규 표현식이나 문자열을 사용해 문자열의 일부분을 다른 문자열로 대체
 
     "Hello, World".replace("World", "js");    // Hello, js
 
+
 replaceAll()
   - 문자열 내의 모든 일치하는 부분을 찾아서 다른 문자열로 모두 대체
 
     "apple banana apple grape".replaceAll("apple", "orange");   // orange banana orange grape
 
+
 startsWith()
-  - 
+  - 문자열이 특정 문자 또는 문자열로 시작하는지 확인 맞으면 true
+  
+    "Hello, World".startsWith("Hello");     // true
+
 
 endsWith()
-  - 
+  - 문자열이 특정 문자 또는 문자열로 끝나는지 확인 맞으면 true
+
+    "Hello, World".endsWith("World");       // true
+
 
 localeCompare()
-  - 
+  - 두 문자열을 현재 로케일의 알파벳 순서에 따라 비교.
+  - 비교 결과 -1 , 0 , 1
+
+    "apple".localeCompare("banana");        // -1
+
 
 normalize()
-  - 
+  - 유니코드 정규화 형식을 사용하여 문자열을 정규화
+  - 유니코드에서는 같은 문자가 여러 방식으로 표현될 수 있기 때문에 이를 일관된 형식으로 정규화하는 데 사용
+
+    const str = "e\u0301"       // 'é'를 두 글자로 표현한 경우 (e + 악센트)
+    str.normalize() === "é"     // true
+
 
 repeat()
-  - 
+  - 문자열을 지정한 횟수만큼 반복하여 새로운 문자열 반환
+
+    "a".repeat(3);      // "aaa"
 
 
+
+Array.isArray()
+  - 전달받은 값이 Array 객체인지 아닌지 검사
+
+    Array.isArray([]);              // true
+    Array.isArray(new Array());     // true
+
+
+Array.from()
+  - 유사 배열 객체나 이터러블 객체를 실제 배열로 변환하는 매소드
+  - 2번째 매개변수로 콜백 함수를 사용해 각 요소를 변환할 수도 있음
+
+    const arr1 = Array.from('hello');         // [h, e, l, l, o]
+
+    const set = new Set([1, 2, 3]);
+    const arr2 = Array.from(set);             // [1, 2, 3]
+
+    const arr3 = Array.from([1, 2, 3], x => x * 2);
+
+    const arrayLike = {
+      0: 'a',
+      1: 'b',
+      2: 'c',
+      length: 3
+    };
+
+    const arr = Array.from(arrayLike);                  // ['a', 'b', 'c']
+    const arr = Array.prototype.slice.call(arrayLike);  // ['a', 'b', 'c']
+
+    function example() {
+      const argsArray = [...arguments];
+    }
+    example(1, 2, 3)
+
+
+Array.of()
+  - 전달된 인자를 배열로 만듬
+  
+    const arr1 = Array.of(1, 2, 3);           // [1, 2, 3]
+
+array.push() , pop() , shift() , unshift() , reverse() , sort()
+
+
+Array.splice()
+  - 배열의 요소를 추가 제거 또는 교체하는 데 사용
+  - 원본 배열을 수정하며 제거된 요소를 배열로 반환
+  - array.splice(start, deleteCount, item1, item2, ...)
+
+    const arr = ['a', 'b', 'c', 'd', 'e'];
+    const removed = arr.splice(2, 2);
+
+    console.log(arr);      // ['a', 'b', 'e'];
+    console.log(removed);  // ['c', 'd'];
+
+
+    const arr = ['a', 'b', 'c'];
+    arr.splice(1, 0, 'x', 'y');
+
+    console.log(arr);      // ['a', 'x', 'y', 'b', 'c'];
+
+
+    const arr = ['a', 'b', 'c'];
+    arr.splice(1, 2, 'x', 'y');
+    
+    console.log(arr);     // ['a', 'x', 'y'];
+
+
+Array.copyWithin()
+  - 배열 내의 요소들을 다른 위치로 복사하여 기존 배열을 수정하는 메소드
+  - 배열의 길이는 변경되지 않고, 복사된 요소가 덮어씌임
+  - array.copyWithin(target, start, end);
+  - target : 복사한 요소를 붙여 넣을 위치의 인덱스
+  - start : 복사를 시작할 인덱스
+  - end : 복사를 멈출 인덱스, 이 인덱스 제외, 기본값: 배열 길이
+
+    const arr = [1, 2, 3, 4, 5];
+    arr.copyWithin(0, 3);         // [4, 5, 3, 4, 5]
+
+    const arr = [1, 2, 3, 4, 5];
+    arr.copyWithin(1, 3, 5);      // [1, 4, 5, 4, 5]
+
+
+Array.join()
+  - 배열의 모든 요소를 하나의 문자열로 결합
+  - 결합할 때 사용하는 구분자 지정 가능, 기본값 ','
+  - array.join(separator);
+
+    const arr = ['a', 'b', 'c'];
+    const str = arr.join('-');      // "a-b-c"
+
+
+Array.slice()
+  - 배열의 일부를 잘라내어 새로운 배열 반환
+  - 원본 배열은 수정되지 않음
+  - 반환 배열은 선택한 부분만 포함
+
+    const arr = ['a', 'b', 'c', 'd', 'e'];
+    const slicedArr1 = arr.slice(1, 3);     // ['b', 'c']
+    const slicedArr2 = arr.slice(2);        // ['c', 'd', 'e']
+
+
+Array.concat()
+  - 배열을 합쳐서 새로운 배열을 생성
+  - 원본 배열 수정 x
+  - 여러 배열이나 값을 추가하여 하나의 새로운 배열 반환
+  - array.concat(value1, vlaue2, ...);
+
+    const arr1 = ['a', 'b'];
+    const arr2 = ['c', 'd'];
+    const arr3 = arr1.concat(arr2);        // ['a', 'b', 'c', 'd'];
+    const arr4 = arr1.concat(arr2, 'g')    // ['a', 'b', 'c', 'd', 'g'];
+
+
+Array.reduce()
+  - 배열의 각 요소를 차례로 누적하여 하나의 값으로 줄이는 메소드
+  - 콜백함수를 사용하여 배열의 모든 요소를 처리하며, 콜백 함수는 2개의 인수를 받음 (누적값, 현재값)
+  - array.reduce(callback(accumulator, currentValue, index, array), initialValue);
+    - callback : 각 요소에 대해 실행할 함수 accumulator는 누적값, currentValue는 현재 처리중인 배열 요소
+    - initialValue : 누적의 초기값, 생략가능, 생략하면 첫번째 배열 요소가 초기값으로 사용됨
+
+      const arr = [1, 2, 3, 4];
+
+      const sum = arr.reduce((acc, cur) => acc + cur, 0);                 // 10
+
+      const max = arr.reduce((acc, cur) => (acc > cur ? acc : cur));      // 4
+
+
+Array.reduceRight()
+  - reduce()와 동일하게 배열의 요소를 누적하지만, 오른쪽에서 왼쪽으로 배열을 처리 (배열 끝 -> 배열 첫번째)
+  - array.reduceRight(callback(accumulator, currentValue, index, array), initialValue);
+
+    const arr = ['a', 'b', 'c', 'd'];
+    const result = arr.reduceRight((acc, cur) => acc + cur);        // dcba
+
+
+Array.entries()
+  - 배열의 각 요소에 대한 키/값 쌍을 반환하는 새로운 이터레이터 객체 반환
+  - 배열의 인덱스와 해당 요소를 [index, element] 형태로 제공
+  - array.entries();
+  - 이터레이터 객체는 for of 구문이나 next() 메소드를 통해 순회할 수 있음
+
+    const arr = ['a', 'b', 'c'];
+    const iterator = arr.entries();
+
+    for(let [index, element] of iterator) {
+      console.log(index, element);          // 0 'a' \n 1 'b' \n 2 'c'
+    }
+
+
+Array.keys()
+  - 배열의 인덱스들을 반환하는 새로운 이터레이터 객체 반환
+  - 배열의 각 인덱스 번호만 순회 가능
+  - array.keys();
+
+    const arr = ['a', 'b', 'c'];
+    const iterator = arr.keys();
+
+    for (let key of iterator) {
+      console.log(keys);                // 0 \n 1 \n 2
+    }
+
+
+Array.values()
+  - 배열의 각 요소에 대한 값들을 반환하는 새로운 이터레이터 객체 반환
+  - 배열의 요소만을 순회할 수 있음
+  - array.values();
+
+    const arr = ['a', 'b', 'c'];
+    const iterator = arr.values();
+
+    for (let value of iterator) {
+      console.log(value);               // 'a' \n 'b' \n 'c'
+    }
+
+Array.find()
+  - 배열에서 제공된 조건을 만족하는 첫 번째 요소를 반환
+  - 조건을 만족하는 요소가 없으면 undefined 반환
+  - array.find(callback(element, index, array), thisArg);
+    - callback : 각 배열 요소에 대해 실행할 함수, element는 현재 요소, index는 해당 요소의 인덱스, array는 탐색 중인 배열
+    - thisArg : 선택적 인수, 콜백 함수 내부에서 this로 사용할 값
+
+      const arr = [5, 12, 8, 130, 44];
+
+      const found = arr.find(element => element > 10);
+      console.log(found);       // 12
+
+
+Array.findIndex()
+  - 배열에서 제공된 조건을 만족하는 첫번째 요소의 인덱스 반환
+  - 조건을 만족하는 요소가 없으면 -1 반환
+  - array.findIndex(callback(element, index, array), thisArg);
+    - callback : 각 배열 요소에 대해 실행할 함수. element는 현재 요소, index는 해당 요소의 인덱스, array는 탐색 중인 배열
+    - thisArg: 선택적 인수, 콜백 함수 내부에서 this로 사용할 값
+
+      const arr = [5, 12, 8, 130, 44];
+
+      const foundIndex = arr.findIndex(element => element > 10);
+      console.log(foundIndex);    // 1
 
 -->

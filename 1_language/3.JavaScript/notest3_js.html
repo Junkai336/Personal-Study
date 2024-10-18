@@ -1,0 +1,181 @@
+<!-- 
+DOM(문서 객체 모델)
+  - XML이나 HTML 문서에 접근하기 위한 일종의 인터페이스
+  - 이 객체 모델은 문서 내 모든 요소를 정의하고, 각각 요소에 접근하는 방법 제공
+  - W3C 표준 객체 모델, 계층 구조로 표현
+
+Document 객체
+  - 웹페이지 그 자체
+  - 웹 페이지에 존재하는 HTML 요소에 접근하고자 할 때는 반드시 Document 객체부터 시작해야 함
+
+Document 메소드
+  - document.getElementsByTagName(태그이름) : 해당 태그 이름의 요소 모두 선택
+  - document.getElementById(아이디) : 해당 아이디 요소 선택
+  - document.getElementsByClassName(클래스이름) : 해당 클래스에 속한 요소 모두 선택
+  - document.getElementsByName(name속성값) : 해당 name 속성값을 가지는 요소 모두 선택
+  - document.querySelectorAll(선택자) : 해당 선택자로 선택되는 요소 모두 선택
+
+  - document.createElement(HTML요소) : 지정된 HTML 요소 생성
+  - document.write(텍스트) : HTML 출력 스트림을 통해 텍스트 출력
+
+  - document.getElementById(아이디).onclick = function() {} : 클릭 이벤트 연결 이벤트 핸들러 코드 추가
+
+  - document.anchors : name 속성을 가지는 <a> 요소 모두 반환
+  - document.body : <body> 요소 반환
+  - document.cookie : HTML 문서의 쿠키 반환
+  - document.domain : HTML 문서가 위치한 서버의 도메인 네임을 반환
+  - document.form : <form> 요소 모두 반환
+  - document.images : <img> 요소 모두 반환
+  - document.links : href 속성을 가지는 <area> 요소와 <a> 요소 모두 반환
+  - document.referrer : 링크되어 있는 문서의 uri 반환
+  - document.title : <title> 요소 반환
+  - document.URL : HTML 문서의 완전한 URL 주소 반환
+  - document.baseURI : HTML 문서의 절대 URI 반환
+  - document.doctype : HTML 문서의 문서 타입(doctype) 반환
+  - document.documentElement : <html> 요소 반환
+  - document.documentMode : 웹 브라우저가 사용하고 있는 모드 반환
+  - document.documentURI : HTML 문서 URI 반환
+  - document.domConfig : HTML DOM 설정 반환
+  - document.embeds : <embed> 요소 모두 반환
+  - document.head : <head> 요소 반환
+  - document.implementation : HTML DOM 구현 반환
+  - document.inputEncoding : HTML 문서 문자 인코딩 형식 반환
+  - document.lasModified : HTML 문서 마지막 갱신 날짜 및 시간 반환
+  - document.readyState : HTML 문서 로딩 상태 반환
+  - document.scripts : <script> 요소 모두 반환
+  - document.strictErrorChecking : 오류 강제 검사 여부 반환
+
+노드
+    - HTML DOM은 노드라고 불리는 계층적 단위에 정보를 저장하고 있음
+    - HTML DOM은 이러한 노드들을 정의하고 그들 사이에 관계를 설명해주는 역할
+    - HTML 문서 정보는 노드 트리라고 불리는 계층적 구조에 저장
+    - 노드 트리 : 노드들의 집합, 노드들의 관계.
+                  최상위 레벨인 루트 노드(root node)부터 시작하여 가장 낮은 레벨인 텍스트 노드까지 뻗어 내려감.
+                  JS에서는 HTML DOM을 이용하여 노드 트리에 포함된 모든 노드에 접근 가능
+
+노드 종류
+  - 문서 노드(document node) : HTML 문서 전체를 나타내는 노드
+  - 요소 노드(element node) : 모든 HTML 요소는 요소 노드, 속성 노드를 가질 수 있는 유일한 노드
+  - 속성 노드(attribute node) : 모든 HTML 요소의 속성은 속성 노드, 요소 노드에 관한 정보를 가지고 있음 but 해당 요소 노드의 자식 노드에는 포함되지 않음
+  - 텍스트 노드(text node) : HTML 문서의 모든 텍스트는 텍스트 노드
+  - 주석 노드(comment node) : HTML 문서의 모든 주석은 주석 노드
+
+노드 접근
+  - parentNode : 부모 노드
+  - childNodes : 자식 노드 리스트
+  - firstChild : 첫번째 자식 노드
+  - lastChild : 마지막 자식 노드
+  - nextSibling : 다음 형제 노드
+  - previousSibling : 이전 형제 노드
+
+  - nodeName : 노드의 이름 반환 (요소 노드: 태그 이름(div), 텍스트 노드(#text), 주석 노드(#comment))
+  - nodeValue : 노드의 값 반환 (요소 노드: null, 텍스트 노드, 주석 노드 : 해당 노드의 값 반환)
+  - nodeType : 노드의 유형을 숫자로 반환 (1: 요소 노드, 2: 속성 노드, 3: 텍스트 노드, 8: 주석 노드)
+
+    document.getElementById("document").innerHTML = document.childNodes[1].nodeName;          // HTML
+    document.getElementById("html").innerHTML = docuemnt.childNodes[1].childNode[0].nodeName; // HEAD
+
+    var listItems = document.getElementById("list").childNodes;
+    listItems[1].firstChild.nodeValue = "HTML 요소의 내용 변경"
+
+노드 추가
+    - appendChild()
+      - 지정된 노드를 부모 노드의 마지막 자식으로 추가
+      - 이미 DOM에 있는 노드를 추가하면 그 노드는 현재 위치에서 새로운 위치로 이동함
+
+        let parentElement = document.getElementById('parent');
+        let newElement = document.createElement('div');
+        newElement.textContent = '새로운 자식';
+
+        parentElement.appendChild(newElement);
+
+    - insertBefore()
+      - 특정 자식 노드 앞에 새로운 노드 삽입
+      - 삽입할 위치를 지정할 수 있음
+
+        let parentElement = document.getElementById('parent');
+        let newElement = document.createElement('div');
+        newElement.textContent = '새로운 자식';
+
+        let referenceNode = parentElement.firstChild;
+        parentElement.insertBefore(newElement, referenceNode);      // 첫번재 자식 앞에 새로운 노드 삽입
+
+    - insertData()
+      - 텍스트 노드에 사용되는 메소드
+      - 텍스트 노드 내 특정 위치에 새로운 문자열 삽입
+      - HTML 요소 노드가 아니라 텍스트 내용을 직접 조작하는 경우에만 유용
+
+        let textNode = document.createTextNode('Hello World');
+        textNode.insertData(6, 'ㅋㅋ');     // Hello ㅋㅋ World
+
+노드 생성
+    - createElement()
+      - 새로운 HTML 요소 생성
+      - HTML 문서에 사용할 새로운 DOM 요소를 만듬
+      - 생성된 요소는 아직 DOM 트리에 추가되지 않았으므로 추가하기 위해 appendChild()나 insertBefore() 메소드를 사용해야 함
+
+        let newDiv = document.createElement('div');
+        newDiv.textContent = '새로운 div 요소';
+        document.body.appendChild(newDiv); // body에 새로운 div 요소 추가
+
+    - createAttribute()
+      - 새로운 속성 노드 생성
+      - 일반적으로 잘 사용되진 않음. setAttribute() 메소드로 속성 추가 더 간편
+      - createAttribute() 생성 후 setAttributeNode()로 요소에 추가해야 함
+
+        let newAttr = document.createAttribute('class');
+        newAttr.value = 'new-class';
+        let element = document.getElementById('myElement');
+        element.setAttributeNode(newAttr); // 새로운 속성을 요소에 추가
+
+    - createTextNode()
+      - 새로운 텍스트 노드 생성
+      
+        let newTextNode = document.createTextNode('Hello World');
+        document.body.appendChild(newTextNode); // body에 텍스트 노드 추가
+
+노드 제거
+    - removeChild()
+      - 부모 노드에서 특정 자식 노드를 제거
+      - 제거된 노드는 반환되므로 필요하다면 나중에 다시 추가 가능
+
+        let parentElement = document.getElementById('parent');
+        let childNode = document.getElementById('child');
+        parentElement.removeChild(childNode); // 부모 요소에서 자식 요소 제거
+
+    - removeAttribute()
+      - 요소에서 지정된 속성 제거
+      - 속성 이름을 인수로 전달하면 해당 속성이 요소에서 삭제됨
+
+        let element = document.getElementById('myElement');
+        element.removeAttribute('class'); // 'class' 속성을 제거
+
+노드 복제
+    - cloneNode()
+      - 노드를 복제. true를 인수로 전달하면 해당 노드의 자식 노드들까지 모두 복제
+      - 기본적으로 해당 노드만 복제
+
+        let originalNode = document.getElementById('myElement');
+        let clonedNode = originalNode.cloneNode(true); // 자식 노드까지 복제
+        document.body.appendChild(clonedNode); // 복제된 노드 추가
+
+노드 값 변경
+    - nodeValue
+      - 노드의 값을 가져오거나 변경
+      - 주로 텍스트 노드나 주석 노드 값 변경에 사용되며 요소 노드에는 적용 안됨
+      - 요소 노드 변경하려면 속성 사용해야 함
+
+        let textNode = document.createTextNode('Old Text');
+        textNode.nodeValue = 'New Text'; // 텍스트 노드 값 변경
+
+    - setAttribute
+      - 
+
+요소 노드 교체
+    - replaceChild()
+
+텍스트 노드 데이터 교체
+    - replaceData()
+
+  
+-->
