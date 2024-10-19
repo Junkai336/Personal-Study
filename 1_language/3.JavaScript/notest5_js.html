@@ -1,0 +1,170 @@
+<!-- 
+이벤트 리스너 호출
+  - 이벤트 리스너가 등록되고 해당 객체나 요소에 지정된 타입의 이벤트가 발생하면, 브라우저는 자동으로 등록된 이벤트 리스너 호출
+  - 이벤트 리스너는 인수로 이벤트 객체(event object)를 전달받으며, 식별자를 통해 전달받은 이벤트 객체를 참조
+
+이벤트 객체
+  - 특정 타입의 이벤트와 관련이 있는 객체
+  - 이벤트 객체는 해당 타입의 이벤트에 대한 상세 정보를 저장하고 있음
+  - 모든 이벤트 객체는 이벤트의 타입을 나타내는 type 프로퍼티와 이벤트의 대상을 나타내는 target 프로퍼티를 가짐
+  - 이러한 이벤트 객체는 이벤트 리스너가 호출될 때 인수로 저장됨
+
+이벤트 호출 순서
+  - 하나의 이벤트 타입에 여러 개의 이벤트 리스너를 등록할 수 있음
+  - 이때 특정 타입의 이벤트가 발생하면, 브라우저는 다음과 같은 순서를 이벤트 호출
+    1. 이벤트 대상이 되는 객체나 요소에 프로퍼티로 등록한 이벤트 리스너를 가장 먼저 호출
+    2. 그 후 addEventListener() 메소드를 사용하여 등록한 이벤트 리스너를 등록한 순서대로 호출
+
+이벤트 전파
+  - event propagation
+  - 이벤트가 발생했을 때, 브라우저가 이벤트 리스너를 실행시킬 대상 요소를 결정하는 과정
+  - 이벤트 대상이 Window 객체와 같은 단일 객체면 이벤트 전파는 일어나지 않음
+  - Document 객체나 HTML 문서의 요소에서 이벤트가 일어나면 대상 요소를 결정하기 위해 이벤트 전파가 일어남
+
+  버블링(bubbling) 전파 방식
+    - 이벤트가 발생한 요소부터 시작해서, DOM 트리를 따라 위쪽으로 올라가며 전파되는 방식
+    - 해당 요소의 리스너가 실행된 후, 그 부모 요소에 등록된 리스너가 실행되고, 또다시 그 부모 요소에 등록된 리스너가 실행됨
+    - Document 객체 뿐만 아니라 마지막에는 Window 객체까지 계속 이어짐
+    - 다수의 요소에 공통으로 적용되는 이벤트 리스너를 각각 요소마다 따로 등록할 필요 없이 공통된 조상 요소에 한 번만 등록하면 처리할 수 있다는 장점을 가짐
+    - 기본 동작은 버블링(하위 요소 -> 상위 요소 전파)
+
+      document.getElementById("divBox").addEventListener("click", clickDiv, false);
+      document.getElementById("paraBox").addEventListener("click", clickPara, false);
+      document.getElementById("spanBox").addEventListener("click", clickSpan, false);
+
+      function clickDiv(event)  { document.getElementById("text").innerHTML += "div 요소를 click 하셨네요!<br>"; }
+      function clickPara(event) { document.getElementById("text").innerHTML += "p 요소를 click 하셨네요!<br>"; }
+      function clickSpan(event) { document.getElementById("text").innerHTML += "span 요소를 click 하셨네요!<br>"; }
+
+      <div id="divBox">
+		    <p id="paraBox">박스 안의 여러 곳을 <span id="spanBox">클릭</span>해 보세요!</p>
+	    </div>
+
+        => spanBox 누르면 divBox 이벤트까지 , paraBox 누르면 divBox 이벤트까지 , divBox 누르면 divBox 이벤트만 실행 
+
+  캡쳐링(capturing) 전파 방식
+    - 이벤트가 발생한 요소까지 DOM 트리의 최상위부터 아래쪽으로 내려가면서 전파되는 방식
+    - 이 전파 방식은 맨 먼저 Window 객체의 리스너가 실행된 후, Document 객체에 등록된 리스너가 실행되고, 또다시 그 자식 요소에 등록된 리스너가 실행됨
+    - 이벤트가 발생한 요소까지 전파됨
+    - 캡쳐링 전파 방식은 실제 이벤트의 대상이 되는 요소에 이벤트가 전달되기 전에 상위 요소에 등록된 이벤트 리스너가 이를 가로채거나 잡아낼 수 있음
+      이렇게 이벤트를 걸러내어 해당 이벤트 리스너가 호출되지 않도록 하는 기법을 이벤트 취소 기법이라고 함
+
+      document.getElementById("divBox").addEventListener("click", clickDiv, true);
+      document.getElementById("paraBox").addEventListener("click", clickPara, true);
+      document.getElementById("spanBox").addEventListener("click", clickSpan, true);
+
+  기타
+    - event.type : 이벤트 종류를 나타냄 (click, keyup, focus)
+    - event.target : 이벤트가 실제로 발생한 DOM 요소 참조
+    - this : 이벤트 리스너가 바인딩된 요소를 참조
+
+    - event.stopPropagation() : 해당 이벤트가 더이상 부모 요소로 전파되지 않도록 차단
+
+    - event.stopImmediatePropagation() : 이벤트의 전파를 멈추는 동시에, 같은 요소에 등록된 다른 이벤트 리스너도 실행되지 않도록 막음
+
+    - event.cancelBubble : true : 이벤트 전파 중단, 이벤트 버블링을 중단하는 속성
+
+    - preventDefault() : 이벤트가 발생했을 때 브라우저의 기본 동작을 취소 (form, a 등)
+
+이벤트 종류
+
+마우스 이벤트
+    - click : 마우스 클릭
+    - dblclick : 더블 클릭
+    - mousedown : 마우스 버튼을 눌렀을 때
+    - mouseup : 마우스 버튼을 놓았을 때
+    - mousemove : 마우스를 움직일 때
+    - mouseover : 마우스를 특정 요소 위로 올렸을 때
+    - mouseout : 마우스를 특정 요소에서 벗어났을 때
+    - mouseenter : 마우스가 요소 위로 들어올 때 (버블링 되지 않음)
+    - mouseleave : 마우스가 요소 밖으로 나갈 때 (버블링 되지 않음)
+    - contextmenu : 사용자가 마우스 오른쪽 버튼을 클릭할 때
+
+키보드 이벤트
+    - keydown : 키를 눌렀을 때
+    - keyup : 키를 놓았을 때
+    - keypress : 키를 누르는 동안 발생
+
+포커스 이벤트
+    - focus : 요소가 포커스를 받을 때 (버블링 되지 않음)
+    - blur : 요소가 포커스를 잃을 때 (버블링 되지 않음)
+    - focusin : 요소가 포커스를 받을 때
+    - focusout : 요소가 포커스를 잃을 때
+
+폼 이벤트
+    - submit : 폼을 제출할 때
+    - focus : 요소에 포커스가 갔을 때
+    - blur : 포커스가 요소에서 벗어났을 때
+    - change : 입력 요소의 값이 변경되었을 때 (체크박스, 라디오버튼, 셀렉트요소 등에도 사용)
+    - reset : 폼이 리셋될 때
+    - input : 사용자가 입력 요소의 값을 입력할 때 발생 (실시간으로 값이 변경될 때 발생) [change와 달리 값이 변경되는 즉시 반응]
+    - invalid : 사용자가 폼을 제출할 때, 입력 값이 폼의 유효성 검사 규칙을 통과하지 못하면 발생
+
+문서/윈도우 이벤트
+    - load : 페이지가 완전히 로드되었을 때
+    - resize : 윈도우 크기가 변경되었을 때
+    - scroll : 사용자가 페이지를 스크롤할 때
+    - unload : 페이지가 닫히거나 새로고침 될 때
+    - beforeunload : 사용자가 페이지를 떠나기 전에 발생 (페이지 새로고침 또는 닫기)
+
+드래그 앤 드롭
+    - drag : 요소가 드래그될 때
+    - dragstart : 드래그가 시작될 때
+    - dragend : 드래그가 끝날 때
+    - dragenter : 드래그된 요소가 드롭 대상 위로 들어올 때
+    - dragover : 드래그된 요소가 드롭 대상 위에 있을 때
+    - dragleave : 드래그된 요소가 드롭 대상에서 벗어날 때
+    - drop : 드래그된 요소가 드롭될 때
+
+클릭보드 이벤트
+    - copy : 사용자가 복사할 때
+    - cut : 사용자가 잘라낼 때
+    - paste : 사용자가 붙여넣기할 때
+
+미디어 이벤트
+    - play : 미디어 재생이 시작될 때
+    - pause : 미디어 재생이 일시 중지될 때
+    - ended : 미디어 재생이 완료되었을 때
+    - volumechange : 볼륨이 변경될 때
+    - timeupdate : 미디어의 재생 위치가 변경될 때
+
+터치 이벤트
+    - touchstart : 터치가 시작될 때
+    - touchmove : 터치가 이동할 때
+    - touchend : 터치가 끝날 때
+    - touchcancel : 시스템이 터치를 중단할 때
+
+트랜지션/애니메이션 이벤트
+    - transitionstart : CSS 트랜지션이 시작될 때
+    - transitionend : CSS 트랜지션이 완료되었을 때
+    - animationstart : CSS 애니메이션이 시작될 때
+    - animationend : CSS 애니메이션이 완료되었을 때
+
+온라인/오프라인 이벤트
+    - online : 브라우저가 네트워크에 연결되었을 때
+    - offline : 브라우저가 네트워크 연결을 잃었을 때
+
+프로그래스 이벤트
+    - 파일 업로드나 다운로드 등의 작업에서 진행 상태 추적할 때 사용됨
+    - 주로 XMLHttpRequest 또는 fetch API 와 함께 사용됨
+    - progress : 파일이 업로드되거나 다운로드될 때, 그 진행 상태가 업데이트될 때 발생
+    - loadstart : 데이터 로드가 시작될 때
+    - loadend : 데이터 로드가 완료되었을 때
+    - abort : 요청이 중단되었을 때
+    - error : 요청이 실패했을 때
+
+커스텀 이벤트
+    - 사용자가 직접 정의한 이벤트를 생성하고 트리거 가능
+    - CustomEvent 객체를 사용하여 이벤트를 생성할 수 있음
+
+      const event = new CustomEvent('myCustomEvent', { detail: { name : 'Test'} });
+
+      document.addEventListener('myCustomEvent', function(event) {
+        console.log('Custom event triggered:', event.detail.name);
+      });
+
+      document.dispatchEvent(event);  // 커스텀 이벤트를 트리거
+
+
+
+-->

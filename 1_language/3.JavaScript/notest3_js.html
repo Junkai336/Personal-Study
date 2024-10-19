@@ -169,13 +169,118 @@ Document 메소드
         textNode.nodeValue = 'New Text'; // 텍스트 노드 값 변경
 
     - setAttribute
-      - 
+      - 지정된 속성을 추가하거나, 해당 속성이 이미 있으면 값을 변경
+
+        let element = document.getElementById('myElement');
+        element.setAttribute('class', 'new-class'); // class 속성 추가 또는 변경
 
 요소 노드 교체
     - replaceChild()
+      - 부모 노드의 기존 자식 노드를 새로운 노드로 교체
+      - 제거된 자식 노드는 반환되므로 필요하다면 재사용 가능
+
+        let parentElement = document.getElementById('parent');
+        let newElement = document.createElement('div');
+        newElement.textContent = '새로운 자식';
+
+        let oldElement = document.getElementById('oldChild');
+        parentElement.replaceChild(newElement, oldElement); // 자식 노드를 새로운 노드로 교체
 
 텍스트 노드 데이터 교체
     - replaceData()
+      - 텍스트 노드 내 지정된 위치에 있는 데이터 교체
+      - 텍스트 노드에만 사용됨
 
+        let textNode = document.createTextNode('Hello World');
+        textNode.replaceData(6, 5, 'Everyone'); // "Hello Everyone"
+
+기타
+    - hasChildNodes()
+      - 노드가 자식 노드를 가지고 있는지 여부 검사. 있으면 true
+
+        let element = document.getElementById('parent');
+        if (element.hasChildNodes()) {
+          console.log("자식 노드가 있습니다.");
+        } else {
+          console.log("자식 노드가 없습니다.");
+        }
+
+    - isEqualNode()
+      - 두 노드가 동일한지 여부 비교
+      - DOM 구조와 속성 값이 동일하면 true, 아니면 false
+
+        let node1 = document.getElementById('node1');
+        let node2 = document.getElementById('node2');
+        if (node1.isEqualNode(node2)) {
+          console.log("두 노드는 동일합니다.");
+        } else {
+          console.log("두 노드는 다릅니다.");
+        }
+
+    - contains()
+      - 특정 노드가 지정된 노드를 포함하고 있는지 여부 확인
+      - 주어진 노드가 해당 노드의 자손인지 확인할 때 유용
+
+        let parentElement = document.getElementById('parent');
+        let childElement = document.getElementById('child');
+        if (parentElement.contains(childElement)) {
+          console.log("부모 요소가 자식 요소를 포함하고 있습니다.");
+        }
+
+    - replaceWith()
+      - 선택된 노드를 지정된 새 노드 또는 텍스트로 교체
+      - replaceChild()와 유사하나 호출된 노드를 기준으로 새로운 요소로 대체한다는 점에서 차이가 있음
+
+        let oldNode = document.getElementById('oldNode');
+        let newElement = document.createElement('div');
+        newElement.textContent = '새로운 요소';
+        oldNode.replaceWith(newElement); // oldNode가 새로운 요소로 교체
+
+    - remove()
+      - DOM에서 노드를 제거함
+      - removeChild()와 달리 부모 노드를 직접 참조할 필요 없이 해당 노드에서 바로 제거 가능
+
+        let element = document.getElementById('myElement');
+        element.remove(); // 해당 요소를 DOM에서 제거
+
+    - setAttribute()
+      - 요소에 새로운 속성을 추가하거나, 기존 속성 값 설정, 속성 값이 존재하지 않으면 새로운 속성 추가
+      - element.setAttribute('data-id', '123');
+
+    - getAttribute()
+      - 요소의 특정 속성 값 반환
+      - 속성이 없으면 null 반환
+      - let value = element.getAttribute('data-id');
+
+    - removeAttribute()
+      - 지정된 속성 제거
+      - element.removeAttribute('data-id');
+
+    - removeEventListener()
+      - 특정 이벤트에 대한 리스너 제거
+      
+        function handleClick() { ... }
+
+        button.removeEventListener('click', handleClick);
+
+    - dispatchEvent()
+      - 지정된 이벤트를 강제로 발생시킴
+      - 이벤트 리스너가 등록되어 있다면 해당 이벤트가 발생한 것처럼 동작
+
+        let event = new Event('click');
+        button.dispatchEvent(event);
+
+    - style
+      - 요소의 인라인 스타일을 설정하거나 가져옴
+      - CSS 스타일을 동적으로 적용할 수 있음
+      
+        element.style.color = 'blue';
+
+    - getComputedStyle()
+      - 요소의 모든 스타일 값을 계산된 스타일 객체로 반환
+      - 요소에 적용된 모든 CSS 규칙을 확인하는 데 유용
+
+        let computedStyle = window.getComputedStyle(element);
+        console.log(computedStyle.margin);    // 요소의 마진 값을 가져옴
   
 -->
