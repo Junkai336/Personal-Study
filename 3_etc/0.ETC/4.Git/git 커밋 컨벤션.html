@@ -1,0 +1,103 @@
+<!-- 
+Gitmoji : https://treasurebear.tistory.com/70
+-->
+
+<!-- 
+Conventional Commits & 유다시티(Udacity) 커밋 컨벤션 스타일
+  - Commit 메시지 구조
+    - 3파트 : 제목, 본문, 꼬리말
+
+    type : subject
+
+    body
+
+    footer
+
+  - Commit Type
+    - 태그, 제목으로 구성되고, 태그는 영어로 쓰되 첫 문자 대문자
+    - 태그: 제목
+
+    - Feat: 새로운 기능 추가 , 코드베이스에 기능적 추가 사항 , 주로 사용자 기능에 대한 변경 사항
+
+    - Fix: 버그 수정 , 오류나 예상치 못한 동작 수정
+
+    - Docs: 문서 수정 , Readme || 프로젝트 설정 파일 || API 문서 등을 업데이트 , 코드 영향 x
+
+    - Style: 코드 포맷팅, 세미콜론 누락, 코드 변경이 없는 경우 , 들여쓰기 공백 세미콜론 추가 등 , 코드 스타일과 관련된 변경만 포함
+
+    - Refactor: 코드 리팩토링 , 기존 기능에는 영향을 주지 않으면서 코드 구조 개선하는 경우
+
+    - Test: 테스트 코드, 리팩토링 테스트 코드 추가 , 테스트 코드 추가 또는 기존 테스트 코드 수정 시
+
+    - Chore: 빌드 업무 수정, 패키지 매니저 수정 , 기타 개발 환경이나 설정에 관련된 변경 사항 , 로직 영향 X
+
+    - Perf: 성능을 개선하는 변경 사항 , 코드 실행 성능에 긍정적인 영향을 주는 변경 , 최적화
+
+    - Build: 빌드 시스템 || 외부 의존성 관련 설정 변경 , 예: 빌드 파일 변경, 패키지 의존성 추가 삭제, 빌드 설정 변경 등
+
+    - Ci: CI 설정 파일이나 배포 스크립트 관련 변경, CI/CD 파이프라인 조정, 스크립트를 수정하는 경우 , 배포 과정에 영향을 주는 변경
+
+    - Revert: 이전 커밋을 되돌릴 때 사용
+
+  - Subject
+    - 제목은 최대 50글자가 넘지 않도록 하고 마침표 및 특수기호는 사용하지 않는다.
+    - 영문으로 표기하는 경우 동사원형을 가장 앞에 두고 첫 글자는 대문자로 표기한다.
+    - 제목은 개조식 구문으로 작성한다. (완전한 서술형 문장x , 간결하고 요점적인 서술)
+
+  - Body
+    - 본문은 한 줄당 72자 내로 작성한다.
+    - 본문 내용은 양에 구애받지 않고 최대한 상세히 작성한다.
+    - 본문 내용은 어떻게 변경했는지 보다 무엇을 변경했는지 또는 왜 변경했는지를 설명한다.
+
+  - Footer
+    - optional, 이슈 트래커 ID 작성
+    - "유형: #이슈 번호" 형식
+    - 여러 개의 이슈 번호는 , 로 구분
+    - 이슈 트래커 유형
+      - 다음 중 하나
+      - Fixes: 이슈 수정중 (아직 해결되지 않은 경우)
+      - Resolves: 이슈를 해결했을 때 사용
+      - Ref: 참고할 이슈가 있을 때 사용
+      - Related to: 해당 커밋에 관련된 이슈번호 (아직 해결되지 않은 경우)
+      
+      - ex) Fixes: #45 Related to: #34, #23
+
+  ex)
+    Feat: "회원 가입 기능 구현"
+
+    SMS, 이메일 중복확인 API 개발
+
+    Resolves: #123
+    Ref: #456
+    Related to: #48, #45
+
+    ---
+
+    feat: Summarize changes in around 50 characters or less
+
+    More detailed explanatory text, if necessary. Wrap it to about 72
+    characters or so. In some contexts, the first line is treated as the
+    subject of the commit and the rest of the text as the body. The
+    blank line separating the summary from the body is critical (unless
+    you omit the body entirely); various tools like `log`, `shortlog`
+    and `rebase` can get confused if you run the two together.
+
+    Explain the problem that this commit is solving. Focus on why you
+    are making this change as opposed to how (the code explains that).
+    Are there side effects or other unintuitive consequences of this
+    change? Here's the place to explain them.
+
+    Further paragraphs come after blank lines.
+
+      - Bullet points are okay, too
+
+      - Typically a hyphen or asterisk is used for the bullet, preceded
+        by a single space, with blank lines in between, but conventions
+        vary here
+
+    If you use an issue tracker, put references to them at the bottom,
+    like this:
+
+    Resolves: #123
+    See also: #456, #789
+-->
