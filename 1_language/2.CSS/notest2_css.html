@@ -120,8 +120,8 @@ float
   - 동적 의사 클래스
     - :link : 사용자가 아직 한 번도 해당 링크를 통해 연결된 페이지를 방문하지 않은 상태 모두 선택
     - :visited : 사용자가 한 번이라도 해당 링크를 통해 연결된 페이지를 방문한 상태 모두 선택
-    - :hover : 사용자의 마우스 커서가 링크 위에 올라가 있는 상태 모두 선택
-    - :active : 사용자가 마우스로 링크를 클릭하고 있는 상태 모두 선택
+    - :hover : 사용자의 마우스 커서가 링크 위에 올라가 있는 상태 모두 선택 , :link와 :visited가 먼저 정의된 후 정의되어야 정상 동작
+    - :active : 사용자가 마우스로 링크를 클릭하고 있는 상태 모두 선택 , :hover가 먼저 정의된 후에 정의되어야 정상 동작
     - :focus : 초점이 맞춰진 input 요소 모두 선택
 
   - 상태 의사 클래스
@@ -159,5 +159,31 @@ float
     - :not(선택자) : 
     - :lang(언어) : 특정 요소를 언어 설정에 따라 다르게 표현할 때 사용
 
+의사 요소
+  - 선택자::의사요소이름 { 속성: 속성값; }
+  - 의사 클래스는 하나의 콜론(:), 의사 요소는 두 개의 콜론(::)
+  - 하나의 HTML 요소에 여러개 의사요소 동시 적용 가능
+  
+  - ::first-letter : 텍스트의 첫글자만 선택 , 블록 타입 요소에만 사용 가능
+    - font, color, background, margin, padding, border, text-decoration, text-transform, line-height, float, clear, vertical-align
+
+  - ::first-line : 텍스트의 첫 라인만 선택 , 블록 타입 요소에만 사용 가능
+    - font, color, background, word-spacing, letter-spacing, text-decoration, text-transform, line-height, clear, vertical-align
+
+  - ::before : 특정 요소의 내용 부분 바로 앞에 다른 요소를 삽입할 때 사용
+    - p::before { content : url("~"); }
+
+  - ::after : 특정 요소의 내용 부분 바로 뒤에 다른 요소 삽입할 때 사용
+
+  - ::selection : 해당 요소에서 사용자가 선택한 부분만 선택할 때 사용
+    - p::selection { color: #FF4; }
+    - 좌클릭 드래그 쭉하면 컬러가 바뀜
+
+속성 선택자
+  - 특정 속성이나 특정 속성값을 가지고 있는 HTML 요소 선택 가능
+  
+  기본 속성 선택자
+    - [속성이름] 선택자
+    - [속성이름="속성값"] 선택자
 
 -->
