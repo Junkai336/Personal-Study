@@ -254,6 +254,12 @@ float
     - 사용자 정의 글꼴을 정의
     - 웹 페이지에서 사용할 수 있도록 설정하는 규칙
     - 사용자가 자신의 시스템에 설치하지 않은 글꼴도 웹 페이지에서 사용할 수 있음
+    - font-family : 필수, 글꼴 이름 설정
+    - src : 필수, 글꼴 파일 주소 설정
+    - font-weight : 선택, 글꼴의 굵기 설정, 기본값 normal
+    - font-stretch : 선택, 글꼴의 크기가 늘어나는 방법 설정, 기본값 normal
+    - font-style : 선택, 글꼴의 스타일 설정, 기본값 normal
+    - unicode-range : 선택, 글꼴이 지원하는 유니코드 문자 범위 설정, 기본값 U+0_10FFFF
 
     @font-face {
       font-family: "MyFont";
@@ -267,6 +273,17 @@ float
     p {
       font-family: 'MyFont', Arial, sans-serif;
     }
+
+웹 글꼴 형식
+  - 트루 타입 글꼴(TrueType Fonts, TTF) : 맥과 윈도우 운영체제에서 가장 오랫동안 사용되어 온 대표적인 글꼴, 해당 글꼴이 다양한 글꼴 크기에서 어떻게
+                                          표현될지에 대한 수준 높은 제어 가능
+  - 오픈 타입 글꼴(OpenType Fonts, OTF) : 사용자가 자신의 컴퓨터에서 크기를 조절할 수 있는 글꼴, 유니코드 기반 다양한 스크립트 지원, 한 번에 여러
+                                          스크립트를 함께 지원할 수 있다는 장점 있음
+  - 웹 오픈 글꼴(The Web Open Font Format, WOFF) : W3C에서 사용 권장하고 있는 글꼴 표준, 추가 메타데이터를 넣어 압축한 트루 타입 또는 오픈 타입 글꼴
+  - 웹 오픈 글꼴 2.0(The Web Open Font Format 2.0, WOFF 2.0) : 1.0버전보다 더 나은 압축률 제공
+  - SVG 글꼴(SVG Fonts/Shapes) : SVG 요소로 텍스트를 그릴 때 그 표본으로 사용되는 글꼴 표준, SVG 문서에 CSS 적용 + @font-face 규칙 적용 가능
+  - 임베디드 오픈 타입 글꼴(Embedded OpenType Fonts, EOT) : Microsoft가 웹 페이지에서 사용하기 위해 개발한 내장형 글꼴, 오픈 타입 글꼴
+
   
   - @media
     - 특정 조건에서만 스타일 적용

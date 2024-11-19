@@ -57,6 +57,28 @@ CSS
   - background-attachment : 위치가 설정된 배경 이미지를 해당 위치에 고정시킬 수 있음
     - body { background-attachment: fiexed; } => 스크롤과 무관하게 화면 위치에서 이동하지 않음
 
+  - background-size : 배경 이미지의 크기 설정
+    - background-size: 너비 높이 contain|cover;
+    - contain : 이미지의 비율은 유지하면서, 크기를 가능한 크게 조절 (해당 요소의 content를 넘지는 않음) (배경 이미지 크기가 요소 크기보다 항상 작거나 같음)
+    - cover : 이미지의 비율은 유지하면서, 요소의 모든 영역을 가리게 조절                                (//)
+
+  - background-origin : 배경 이미지의 위치를 결정할 기준 설정
+    - border-box : 배경 이미지를 테두리(border) 영역의 왼쪽 위에 맞춤
+    - padding-box
+    - content-box
+
+  - background-clip : 해당 요소의 배경을 어느 영역가지 설정할지 결정
+    - border-box : 기본값
+    - padding-box
+    - content-box
+
+  - 기타
+    - 백그라운드 이미지 여러개 설정
+        background-image: url(/examples/images/img_man.png), url(/examples/images/img_background_good.png);
+        background-position: right top, left;
+        background-repeat: no-repeat, repeat;
+        background-size: 100px 233px, auto;
+
 텍스트
   - color
 
@@ -71,6 +93,7 @@ CSS
   - text-indent : 단락 첫 줄에 들여쓰기할 지 안할 지 결정, 기본적으로는 안되어 있음
 
   - text-align : 텍스트의 수평 방향 정렬
+    - left, right, center, justify(양쪽정렬), start, end
 
   - text-decoration : 텍스트에 여러가지 효과를 설정하거나 제거하는 데 사용
     - h2 { text-decoration: overline; }.. line-through, underline, none(a태그 밑줄 지우기), ...
@@ -82,6 +105,37 @@ CSS
 
   - text-shadow : 텍스트에 그림자 효과 설정
     - h2 { text-shadow: 2px 1px #3399CC; }
+
+  - text-overflow : content 영역을 벗어난 텍스트를 어떻게 표현할 지 설정, 영역을 벗어난 텍스트 부분을 자를 수도 있고 생략 부호 가능
+    - 일반적으로 overflow: hidden; 및 white-space: nowrap; 과 함께 사용됨
+    - clip : 텍스트가 초과된 부분을 자르고 표시하지 않음
+    - ellipsis : 초과된 텍스트 대신 ... 을 표시함
+
+  - word-wrap : 단어나 텍스트가 너무 길어서 컨테이너를 초과할 때 줄바꿈 설정
+    - break-word : 긴 단어가 컨테이너를 초과하면 강제로 줄바꿈
+    - normal : 기본값, 줄바꿈이 필요하지 않으면 하지 않음
+    - 현재 overflow-wrap으로 대체됨
+
+  - word-break : 단어가 줄바꿈될 때 동작 방식
+    - normal : 기본 동작, 단어가 적절한 곳에서만 줄바꿈됨
+    - break-all : 긴 단어도 중간에서 강제로 줄바꿈됨
+    - keep-all : 단어를 중간에서 줄바꿈하지 않으며, 주로 한글과 같은 언어에 사용됨
+
+  - text-emphasis : 텍스트에 강조 표시(마크) 추가, 텍스트 위나 아래에 마크(점, 기호)를 표시
+    - none : 강조 표시 없음
+    - circle, dot, sesame : 강조 기호 모양 지정
+    
+  - text-emphasis-color : 강조 표시 색상
+
+  - text-align-last : 블록의 마지막 줄에서 텍스트 정렬 방식 지정
+    - auto : 기본값, 부모 요소의 text-align 값에 따름
+    - start, end, left, right, center, justify(양쪽 정렬)
+
+  - text-justify : 텍스트를 양쪽 정렬할 때 간격 조정 방식
+    - auto : 브라우저 기본 동작 사용
+    - none : 간격 조정 안함
+    - inter-word : 단어 사이의 간격만 조정
+    - inter-character : 개별 글자 간격 조정
 
 폰트
   - font-family : 여러 개의 글꼴로 설정되어 있으면, 위에서부터 순서대로 글꼴을 읽어들임. 첫번째가 없으면 다음 글꼴 확인
@@ -185,6 +239,16 @@ CSS
     - hidden : 테두리가 존재하기는 하지만 표현되지 않음
 
   - border-width, border-color, border-top-style~bottom-style (개별적 스타일 적용 width, style, color, border)
+
+  - border-radius
+  - border-top-left-radius, border-top-right-radius, border-bottom-right-radius, border-bottom-left-radius
+  
+  - border-image : 모든 border-image 속성을 이용한 스타일 설정 한 줄에 가능
+  - border-image-source : 테두리로 사용할 이미지 설정
+  - border-image-slice : 테두리로 사용할 이미지를 자르는 방법 설정
+  - border-image-width : 테두리로 사용할 이미지의 너비 설정
+  - border-image-outset : 테두리 영역 너머로 테두리로 사용할 이미지가 얼마만큼 넘어갈 지 설정
+  - border-image-repeat : 테두리로 사용할 이미지의 중간 부분 처리를 반복으로 할 지 늘릴 지 설저 
 
 마진
   - 배경색 영향 x

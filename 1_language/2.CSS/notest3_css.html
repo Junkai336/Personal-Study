@@ -1,0 +1,129 @@
+<!-- 
+그래디언트
+  - 둘 이상의 색 사이의 색상 표현을 부드럽게 전환해주는 효과
+
+  - 선형 그래디언트
+    - 적용된 HTML 요소에 선형으로 그래디언트 효과 적용시켜 줌
+    - 최소 2개 이상의 색상 지정점 필요
+    - background: linear-gradient(진행방향, 색상지정점1, 색상지정점2, ...);
+      - 진행방향 : top, right, bottom, left, top right, to top right, 225deg, ...
+      - 색상지정점 : rgba, rgb 등
+
+    - repeating-linear-gradient()
+      - 선형 그래디언트 효과가 계속 반복되도록 설정
+      - background: repeating-linear-gradient(150deg, red, white 10%, blue 20%);
+
+  - 원형 그래디언트
+    - 적용된 HTML 요소에 원형으로 그래디언트 효과 ㅈ거용
+    - 최소한 2개 이상의 색상 지정점 필요
+    - background: radial-gradient(모양 크기 at 중심점, 색상지정점1, 색상지정점2, ...);
+      - 모양 : ellipse(기본값, 타원), circle(원형)
+      - 크기 : farthest-corner(기본값, 원형 그래디언트의 크기가 가장 먼 모서리에 닿을 만큼의 크기로 설정)
+                farthest-side(원형 그래디언트 크기가 가장 먼 면에 닿을 만큼의 크기로 설정)
+                closest-side(원형 그래디언트 크기가 가장 가까운 면에 닿을 만큼의 크기로 설정)
+                closest-corner(원형 그래디언트 크기가 가장 가까운 모서리에 닿을 만큼의 크기로 설정)
+      - 중심좌표 : center(기본값)
+
+      - repeating-radial-gradient()
+
+    - 색상지정점 n%로 간격 조절 가능
+
+그림자 효과
+  - text-shadow
+    - text-shadow: 그림자x축값 그림자y축값 blur값 색상값, ...;
+
+  - box-shadow
+    - box-shadow: 그림자x축값 그림자y축값 blur값 색상값, ...;
+
+TransForm
+  - 동작
+    - 해당 요소를 움직이고 회전시키고 크기 변경하고 기울임
+    - y축은 아래가 양의 방향
+    - transform : 요소에 2D 또는 3D 변형을 적용
+    - transform-origin : 요소에 변형을 적용하는 변환 중심 설정
+
+  - 2D 변형
+    - translate() : 주어진 x축과 y축 거리만큼 이동시킴
+    
+    - rotate() : 해당 요소를 주어진 각도만큼 시계 방향이나 반시계 방향으로 회전 시킴
+    
+    - scale() : 해당 요소를 주어진 배율만큼 늘리거나 줄임, 1보다 크면 크기를 늘리고, 0보다 크고 1보다 작으면 크기를 줄임
+    
+    - skew() : 해당 요소를 주어진 각도만큼 x축과 y축 방향으로 기울임
+                skew(20deg, 30deg);
+    
+                - matrix() : 모든 2D transform 메소드를 한 줄에 설정할 수 있도록 해줌
+                matrix(scaleX(), skewY(), skewX(), scaleY(), translateX(), translateY());
+
+  - 3D 변형
+    - rotateZ(), translate3d(x,y,z), scale(), matrix() : z축 가능
+    
+    - transform-style : 요소에 변형을 적용할 대 그 변환이 자식 요소들에게도 적용될지 안될지 설정
+    
+    - perspective : 3D 요소에 원근감을 표현할 때 사용할 픽셀 수 설정
+    
+    - perspective-origin : 3D 요소에 원근감을 표현할 때 사용할 기준 축 설정
+    
+    - backface-visibility : 요소의 앞면만을 표현하고, 뒷면을 표현할지 안할지 설정
+
+Transition
+  - transition : 해당 요소에 추가할 전환 효과 설정 + 지속 시간 설정
+    - transition: width 1s, height 3s, transform 2s;
+
+  - transition-delay : 전환 효과가 나타나기 전까지의 지연 시간 설정, 이 메소드로 설정된 시간이 흐른 뒤에야 전환 시작
+    - transition-delay: 1s;
+  
+  - transition-duration : 전환 효과의 지속 시간 설정
+  
+  - transition-property : 요소에 추가할 전환 효과 설정
+  
+  - transition-timing-function : 전환 효과의 시간당 속도 설정
+    - linear : 전환효과가 처음부터 끝까지 일정한 속도로 진행
+    - ease : 기본값, 전환 효과가 천천히 시작되어, 그 다음에는 빨라지고 마지막에는 다시 느려짐
+    - ease-in : 전환 효과가 천천히 시작됨
+    - ease-out : 전환 효과가 천천히 끝남
+    - ease-in-out : 전환 효과가 천천히 시작되어 천천히 끝남
+    - cubic-bezier(n,n,n,n) : 전환 효과가 사용자가 정의한 cubic-bezier 함수에 따라 진행됨
+
+애니메이션
+  - @keyframes 규칙
+    - CSS3에서 애니메이션 효과를 사용하기 위해서 우선 애니메이션에 대한 키 프레임을 정의해야 함
+    - 특정한 시간에 해당 요소가 가져야 할 CSS 스타일 명시
+    - 해당 요소 스타일은 특정 시간까지 현재 스타일에서 설정해 놓은 새로운 스타일로 천천히 변화할 것
+    - 애니메이션 효과가 동작하기 위해서 animation-name 속성을 이용하여 요소와 키 프레임을 연결해야 함
+
+    p {
+      animation-name: movingPara;
+      animation-duration: 3s;
+    }
+
+    @keyframes movingPara {
+      from { margin-left: 100%; }
+      to { margin-left: 0%;}
+    }
+
+    @keyframes movingPara {
+      0% { border-color: red; }
+      33% { border-color: blue; }
+      100% { border-color: green; }
+    }
+
+  - animation-duration : 애니메이션 재생할 시간 설정, 기본값 0초
+  
+  - animation-delay : 애니메이션 효과가 나타나기까지의 지연 시간 설정
+
+  - animation-iteration-count : 애니메이션 효과의 반복 횟수 설정, infinite : 무한 반복
+
+  - animation-direction : 애니메이션의 진행 방향 설정, reverse, alternate
+
+  - animation-timing-function : 애니메이션 효과의 시간당 속도 설정 (transition-timing-function이랑 메소드 같음)
+
+  - animation : 모든 animation 속성을 이용한 스타일을 한 줄 설정 가능
+
+  - animation-name : 애니메이션 효과의 이름 설정
+
+  - animation-fill-mode : 애니메이션 효과가 재생 중이 아닐 때 요소의 스타일 설정
+
+  - animation-play-state : 애니메이션 효과의 재생 상태 설정
+
+-->
