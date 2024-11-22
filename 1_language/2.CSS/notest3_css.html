@@ -126,4 +126,57 @@ Transition
 
   - animation-play-state : 애니메이션 효과의 재생 상태 설정
 
+사용자 인터페이스(user interface, UI)
+  - resize
+    - horizontal, vertical, both
+    - 설정된 요소는 오른쪽 하단에 크기 조절 핸들이 생김
+    - 익스플로러 지원 X
+
+  - outline-offset
+    - 해당 요소의 border와 outline 사이에 공간(offset) 추가
+    - (아웃라인 : html요소 크기 포함 x, 사각형 아닐수도)
+    - 익스플로러 지원 X
+
+  - box-sizing
+    - 해당요소의 width, height, padding, border의 크기까지 포함시킴
+    - border-box면 너비를 예로 들어서 width, padding, border, margin 중 border 까지만 요소의 너비 높이가 됨
+    - border-box, content-box, ...
+
+  - nav-index
+    - 키보드 방향키로 탐색할 때의 순서를 정의하는 데 사용
+    - 작은 숫자부터 탐색이 시작됨
+    - auto : HTML 구조를 기반으로 자동 설정
+
+  - nav-left, nav-right, nav-up, nav-down
+    - 각 방향으로 키보드 탐색을 할 때 초점을 이동할 요소를 명시적으로 지정
+    - 키보드의 화살표 키를 사용할 때 초점 이동 경로 지정하는 데 사용
+    - #button2 { nav-left: button1 }
+      - 왼쪽 방향키 누르면 #button1로 이동
+
+다중 칼럼 레이아웃
+  - 여러 개의 칼럼으로 구성되는 구조를 만들 수 있음
+
+  - columns : 여러 열의 레이아웃을 한번에 설정하는 단축 속성 (columns-width, columns-count)
+    - .container {columns: 200px, 3}
+
+  - columns-count : 열의 개수를 지정 (기본값: auto)
+
+  - columns-gap : 열 사이 간격 설정 (기본값: normal[브라우저가 자동 설정], 10px, 1em)
+
+  - columns-width : 각 열의 너비 설정 (기본값: auto, 100px)
+
+  - columns-span : 특정 요소가 열 전체를 차지할지 설정 (기본값: none, all[요소가 열 전체를 차지])
+
+  - columns-fill : 열에 컨텐츠를 채우는 방식 설정 (기본값: auto[열이 균등하게 채워지지 않아도 됨], balance[열을 가능한 균등하게 채움])
+
+  - columns-rule : 열 사이에 구분선 추가, (column-rule-style, column-rule-width, column-rule-color 한번에 설정)
+    - .container {column-rule: 2px solid black;}
+
+  - columns-rule-style : 열 구분선 스타일 설정
+
+  - columns-rule-width : 열 구분선 두께 설정
+
+  - columns-rule-color : 열 구분선 색상 설정
+
+
 -->

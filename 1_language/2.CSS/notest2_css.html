@@ -95,6 +95,65 @@ float
   - position absolute + transform: translate(-50%, -50%);
   - display flex, grid 등..
 
+display: flex
+  - 플렉서블 레이아웃, 플렉스 박스
+  - 서로 다른 크기의 화면과 기기에서도 HTML 요소들이 자동으로 재정렬되어, 웹 페이지 레이아웃을 언제나 똑같이 유지할 수 있게 함
+
+  - flex-direction : 플렉스 아이템들이 정렬되는 주 축의 방향 설정
+    - row : 기본값, 가로 방향 정렬 왼 - 오
+    - row-reverse : 오 - 왼
+    - column : 위 - 아래
+    - column-reverse : 아래 - 위
+
+  - justify-content : 주 축에서 플렉스 아이템의 정렬 방식
+    - flex-start : 기본값, 시작 부분에 정렬
+    - flex-end : 끝 부분에 정렬
+    - center : 가운데 정렬
+    - space-between : 아이템 사이에 동일한 간격
+    - space-around : 아이템 주변에 동일한 간격
+    - space-evenly : 아이템 사이와 양 끝에 균등한 간격
+
+  - align-items : 교차 축에서 플렉스 아이템 정렬 방식
+    - stretch : 기본값, 아이템을 교차 축으로 늘림
+    - flex-start
+    - flex-end
+    - center
+    - baseline : 아이템의 텍스트 기준선에 정렬
+
+  - flex-wrap : 플렉스 아이템을 여러 줄로 나눌지 여부 설정
+    - nowrap : 기본값, 모든 아이템이 한 줄에 배치
+    - wrap : 여러 줄로 나누며, 줄 방향은 위 - 아래 (아이템이 한 줄에 다 들어가지 않으면 다음 줄로 이동)
+    - wrap-reverse : 여러 줄로 나누며, 줄 방향은 아래 - 위
+
+  - flex-flow : flex-direction과 flex-wrap 결합한 단축 속성
+
+  - align-content : 여러 줄의 플렉스 레이아웃에서 교차 축의 정렬 방식 설정, 아이템이 여러 줄(wrap)로 구성된 경우에만 적용됨
+    - stretch, flex-start, flex-end, center, space-between, space-around, space-evenly
+
+  - order : 플렉스 아이템의 순서 설정, 기본값은 0, 음수나 양수를 사용하여 순서를 조정
+
+  - align-self : 개별 플렉스 아이템의 교차축 정렬 설정, 다른 아이템들과 다르게 개별적으로 정렬이 가능
+    - auto(기본값) : 부모의 align-items 값을 따름
+    - align-items와 나머지 값 동일
+
+  - flex : 플렉스 아이템의 크기를 설정하는 단축 속성
+
+  - flex-grow : 플렉스 아이템이 부모 컨테이너의 남는 공간을 얼마나 차지할지 결정
+    - 기본값 0 : 남는 공간을 차지하지 않음
+    - 0보다 큰 값 : 다른 아이템과 비율에 따라 남는 공간 분배
+    - 동일한 flex-grow 값을 가진 아이템은 남는 공간을 균등하게 나눔
+    - 값이 클수록 해당 아이템이 더 많은 공간 차지 (1과 2는 2배 크기 차이)
+
+  - flex-shrink : 플렉스 아이템이 부모 컨테이너의 부족한 공간에서 얼마나 줄어들 수 있는지 결정
+    - 기본값 1 : 공간이 부족하면 다른 아이템과 비율에 따라 크기를 줄임
+    - 0 : 아이템 크기를 줄이지 않음
+    - 값이 클수록 해당 아이템이 더 많이 줄어듬
+
+  - flex-basis : 플렉스 아이템의 기본 크기 설정, 가용 공간이 분배되기 전에 각 아이템 크기 결정
+    - auto(기본값) : 컨텐츠 크기나 width/height 속성에 따라 기본 크기 결정
+    - 길이값 : 플렉스 아이템의 기본 크기를 명시적으로 설정
+    - 0 : 모든 아이템이 추가 공간 없이 flex-grow로 크기를 나눔
+
 선택자
   - 전체 선택자 : * {color: red;}
 
