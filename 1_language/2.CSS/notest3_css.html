@@ -178,5 +178,37 @@ Transition
 
   - columns-rule-color : 열 구분선 색상 설정
 
+미디어쿼리
+  - @Media 규칙을 통해 서로 다른 매체 유형을 위한 맞춤식 스타일 시트 지원
+  - HTML 문서가 스크린에 표현될 때와 프린트할 때 서로 다른 스타일 적용 가능
+  - 매체 유형과 하나 이상의 표현식으로 구성된 미디어 쿼리 사용 가능
+  - 컨텐츠를 별도로 변경하지 않아도 웹페이지에 접속하고 있는 기기에 알맞은 형태로 스타일 조정
+
+  - @media only|not 매체유형 and (표현식) { CSS스타일코드 }
+  - <link rel="stylesheet" media="매체유형 and|only|not (표현식)" href="CSS파일URL"/>
+
+  - 매체 유형
+    - all : 모든 매체에 사용
+    - print : 프린터 기기에 사용
+    - screen : 컴퓨터나 태블릿, 스마트폰 등 스크린이 있는 매체에 사용
+    - speech : 웹 페이지를 읽어주는 스크린 리더에 사용
+
+  - 미디어 쿼리 속성
+    - width : 화면 너비
+    - height : 화면 높이
+    - device-width : 매체 화면 너비
+    - device-hegiht : 매체 화면 높이
+    - device-aspect-ratio : 매체 화면 비율
+    - orientation : 매체 화면 방향
+    - color : 매체 색상 비트 수
+    - color-index : 매체에서 표현 가능한 색상 개수
+    - monochrome : 흑백 매체에서 픽셀당 비트 수
+    - resolution : 매체의 해상도
+    - 모든 속성 앞에는 min 또는 max 접두사를 사용할 수 있음
+
+    // 뷰포트 너비가 480px 초과일 경우
+      @media screen and (min-width: 480px) {
+        body {background-color: lightblue; }
+      }
 
 -->
