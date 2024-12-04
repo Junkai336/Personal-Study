@@ -32,8 +32,8 @@ const List = ({ todos, onUpdate, onDelete }) => {
       <div className="todos_wrapper">
         {filteredTodos.map((todo) => {
           return (
-            <div>
-              <TodoItem key={todo.id} {...todo} onUpdate={onUpdate} onDelete={onDelete} />
+            <div key={todo.id}>
+              <TodoItem {...todo} onUpdate={onUpdate} onDelete={onDelete} />
             </div>
           )
         })}
