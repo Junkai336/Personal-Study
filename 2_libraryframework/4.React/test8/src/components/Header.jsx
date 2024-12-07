@@ -10,9 +10,4 @@ const Header = () => {
   )
 }
 
-// 자신이 바뀐 porps가 바뀌지 않으면 다시는 리렌더링이 발생되지 않음
-// const memoizedHeader = memo(Header);
-
-// export default memoizedHeader;
-
 export default memo(Header);
