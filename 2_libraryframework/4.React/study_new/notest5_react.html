@@ -136,6 +136,7 @@ Context
       - <Routes>안에 여러 <Route>를 정의하고 현재 URL 경로에 맞는 <Route>를 렌더링
       - 가장 구체적으로 일치하는 경로를 렌더링함 (switch case문과 비슷)
       - <Routes>안에 div 같은거 넣으면 오류 발생, <Route>만 들어갈 수 있다.
+      - <Routes> 외부에 있는 요소들은 라우팅과 관련없이 모든 페이지에 동일하게 렌더링됨
 
     - <Route>
       - 경로(path), 렌더링할 컴포넌트(element) 매핑 컴포넌트
@@ -144,6 +145,77 @@ Context
       - <Routes> 내부에서 사용되고 path와 현재 브라우저 경로가 일치하면 해당 element를 렌더링함
       - * : 와일드카드, 정의한 다른 모든 경로와 매칭되지 않는 경우 이 라우트를 선택하게 됨 (404 페이지 역할)
 
+    - <Link>
+      - a태그를 대체하는 기능을 하는 컴포넌트
+      - 클라이언트 사이드 렌더링 방식으로 페이지를 이동시킴 (필요한 컴포넌트만 교체)
+
+    - useNavigate
+      - 페이지를 실제로 이동시키는 navigate 함수를 반환
+      - 클라이언트 사이드 렌더링 방식으로 페이지를 이동시킴
+      - 이벤트 핸들러 함수 안에서 특정 조건에 따라서 페이지를 이동시켜야 할 때 사용
+
+동적 경로
+    - 동적인 데이터를 포함하고 있는 경로
+    - ~/prd/1, ~/prd/2, ~/prd/3 : n번 상품 조회
+      
+    - URL Parameter
+      - / 뒤에 아이템의 id를 명시
+      - ~/product/1
+      - 아이템의 id 등의 변경되지 않는 값을 주소로 명시하기 위해 사용됨
+      - useParams 훅을 사용하여 URL Parameter 값을 가져올 수 있음
+      - /users/:parameter 형태로 정의
+        - :parameter : 실제 요청시 숫자나 문자열과 같은 구체적인 값으로 대체
+
+        import { Routes, Route } from "react-router-dom";
+
+        function App() {
+          return (
+            <Routes>
+              <Route path='/users/:userId' element={<UserPage />} />
+            </Routes>
+          );
+        }
+
+        function UserPage() {
+            const { userId } = useParams();       // URL에서 userId를 추출
+            return <div>user Id : {userId}</div>
+        }
+
+    - Query String
+      - URL의 ? 다음에 키-값 쌍의 형태로 데이터를 전달하는 방식
+      - 주로 검색 필터, 페이징, 정렬 옵션 등을 전달하는 데 사용
+      - 검색어 등의 자주 변경되는 값을 주소로 명시하기 위해 사용됨
+      - ~/route?key1=value1&key2=value2
+      - useSearchParams 훅을 사용하여 Query String 값을 가져오거나 설정할 수 있음 
+
+        경로에 /?value=hello 로 들어왔을 경우
+
+        function SearchPage() {
+          const [searchParams] = useSearchParams();
+          const query = searchParams.get('value');
+        
+          return (
+            <div>{query}</div>
+          )
+
+        }
+
+etc
+  - vite가 내부적으로 진행하는 이미지 최적화 설정
+  
+  - public 폴더 안에 있는 이미지들은 import를 통해서 불러오진 않지만 URL을 통해서 불러오도록 설정할 수 있음
+  - public 폴더 안 이미지를 경로를 통해서 불러오도록 설정해주면 vite가 자동으로 제공하는 이미지 최적화가 동작하지 않음
+  - <img src={"/emotion1.png"} />
+  
+  - assets 폴더 안에 있는 이미지들은 import를 통해서 불러옴
+  - import emotion1 from './assets/emotion1.png';
+  - <img src={emotion1}; />
+
+  - 최적화? : 프로덕션 모드로 실행시켜보면 (npm run build) -> 왼쪽 파일 탐색기 dist 폴더 안에 빌드 결과가 있음 -> npm run preview로 실행
+              -> 로컬호스트 4173으로 빌드된 결과물에 접속 가능 -> 개발자모드로 확인해보면 assets 폴더 안에서 설정한 이미지들은 Data URI 로 저장됨
+  - Data URI : 이미지 같은 외부 데이터들을 문자열 형태로 브라우저의 메모리에 캐싱하기 위해 사용되는 포맷
 
 
+
+  
 -->

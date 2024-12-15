@@ -1,0 +1,29 @@
+<!-- 
+CAST
+  - 데이터를 다른 데이터 타입으로 변환하는 데 사용
+  - 변환이 실패하면 기본값(0 또는 NULL) 반환
+  - CAST(값 AS 데이터타입)
+    - 값 : 변환하려는 데이터
+    - 데이터타입 : 변환하려는 데이터 타입
+      - BINARY, CHAR, DATE, DATETIME, DECIMAL, SIGNED(정수), UNSIGNED(양수 정수), TIME
+
+  EX) SELECT CAST(123 AS CHAR)
+      SELECT CAST('123.45' AS DECIMAL(10, 2))
+      SELECT CAST('2024-12-14' AS DATE);
+      SELECT CAST(CURDATE() AS CHAR);
+
+CONVERT
+  - 데이터를 다른 데이터 타입으로 변환하거나 문자 세트를 변경하는 데 사용
+  - CAST 와 유사
+  - 데이터 타입 변환 : CONVERT(값, 데이터타입)
+    - SELECT CONVERT('2024-12-14', DATE)
+
+  - 문자 세트 변환 : CONVERT(값 USING 문자세트)
+    - utf8, latin1, ascli
+    
+  EX)
+    SELECT CONVERT('안녕하세요' USING utf8)
+
+
+
+-->
