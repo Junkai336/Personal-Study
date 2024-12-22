@@ -869,7 +869,35 @@
           console.log(data);                     // {name: ~, id: ~}
         }
 
+    Web Stroage
+      - 웹 브라우저에 기본적으로 내장되어 있는 데이터베이스
+      - 별도의 프로그램 설치 필요 X, 라이브러리 설치 필요 X
+      - 자바스크립트 내장함수만으로 접근 가능
+      - 두가지 스토리지 모두 값을 저장하고 꺼내오는 방식 등 기본적으로 동작하는 방식은 동일
+      - 데이터를 어디에 보관할 것인가? 데이터가 언제 초기화 되는가? 에 따라서 두가지 스토리지에 차이점이 생김
+      - 웹 스토리지는 기본적으로 값을 문자열로 보관함 (객체타입으로 불가)
+        - localStorage.setItem("person", JSON.stringify({ name: "abc"}));     <- 객체를 문자열로 변환시켜주고 저장하면 됨
 
+      - SessionStorage
+        - 브라우저 탭 별로 데이터 보관
+        - 탭이 종료되기 전에는 데이터 유지 (새로고침)
+        - 탭이 종료되거나 꺼지면 데이터 삭제
+
+      - LocalStorage
+        - 사이트 주소별로 데이터 보관
+        - 사용자가 직접 삭제하기 전까진 데이터 영구적으로 보관 (컴퓨터가 꺼지든 탭에서 벗어나든 상관없이)
+
+      localStorage.setItem(key, value);
+      localStorage.getItem(key);
+      localStorage.removeItem(key);
+
+
+
+    오픈 그래프
+      - 웹사이트의 링크를 공유할 때 썸네일, 제목 등의 정보를 노출하는 것
+      - <meta property="og:title" content="내용">
+      - <meta property="og:description" content="내용">
+      - <meta property="og:image" content="/thumbnail.png" />
 
 
 
