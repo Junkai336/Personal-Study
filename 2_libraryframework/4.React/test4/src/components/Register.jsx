@@ -9,7 +9,7 @@ const Register = () => {
   });
 
   // current라는 프로퍼티를 가진 객체가 생성
-  const countRef = useRef();
+  const countRef = useRef(0);
   const inputRef = useRef();
 
   console.log(input);
@@ -60,8 +60,8 @@ const Register = () => {
       console.log(inputRef.current);
       // input이라는 DOM요소에 focus를 줄 수 있음
       inputRef.current.focus();
-
     }
+    
   }
 
   return (

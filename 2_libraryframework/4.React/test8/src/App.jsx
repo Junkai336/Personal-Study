@@ -67,26 +67,27 @@ function App() {
         content: content,
         date: new Date().getTime(),
       }
-    }), []
-  })
+    })
+  }, [])
 
   const onUpdate = useCallback((targetId) => {
     dispatch({
       type: "UPDATE",
       targetId: targetId,
-    }), []
-  });
+    });
+  }, []);
 
   const onDelete = useCallback((targetId) => {
     dispatch({
       type: "DELETE",
       targetId: targetId
-    }), []
-  });
+    });
+  }, [])
 
   // 컴포넌트가 리렌더링 될 때마다 객체가 다시 생성되니 여기서 useMemo로 마운트될 때 한번만 생성되도록.
+  // useCallback으로 함수를 메모이제이션 했더라도 객체는 메모이제이션 되지 않아서 계속 새로운 참조가 생성되어서 useMemo 씀
   const memoizedDispatch = useMemo(() => {
-    return onCreate, onUpdate, onDelete;
+    return { onCreate, onUpdate, onDelete };
   }, []);
 
   return (

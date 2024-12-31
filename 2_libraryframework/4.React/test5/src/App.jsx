@@ -1,6 +1,7 @@
 import './App.css'
 import Viewer from './components/Viewer'
 import Controller from './components/Controller'
+import Even from './components/Even'
 import { useState, useEffect } from 'react'
 
 function App() {

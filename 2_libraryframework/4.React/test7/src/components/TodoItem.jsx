@@ -22,7 +22,7 @@ const TodoItem = ({id, isDone, content, date, onUpdate, onDelete}) => {
 
 // 현재 컴포넌트에 props로 전달되는 onUpdate, onDelete와 같은 함수는 객체 타입이기 때문에 리렌더링 될 때마다 주소값이 새로 생성
 // (객체 타입은 값이 동일해도 새로 만들면 주소값이 다르기 때문), 그래서 다른 TodoItem도 리렌더링 됨
-// meme 메소드는 기본적으로 얕은 비교(==)를 하므로 매번 새로운 함수로서 props가 전달됨
+// memo 메소드는 기본적으로 얕은 비교(==)를 하므로 매번 새로운 함수로서 props가 전달됨
 // export default memo(TodoItem);
 
 // 최적화 기능 커스터마이징
