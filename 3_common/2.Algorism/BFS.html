@@ -1,0 +1,78 @@
+<!-- 
+BFS
+  - Breadth-First Search
+  - 너비 우선 탐색
+  - 시작 정점에서 가까운 정점부터 차례대로 탐색 방식
+
+특징
+  - 큐를 사용하여 구현
+  - 레벨별로 탐색하므로 최단 경로 문제에 적합
+  - DFS보다 탐색 범위 넓음
+
+  - 가장 짧은 경로를 찾아야 하는 경우 주로 사용됨
+  - 레벨 단위로 탐색하기 때문에 트리 또는 그래프에서 현재 노드로부터 거리가 같은 노드들을 동시에 탐색
+  - 한 레벨씩 순회하기 때문에 방문 순서가 층 구조를 이룸
+
+동작 방식
+  - 시작 노드를 큐에 삽입하고 방문했다고 표시
+  - 큐에서 노드를 꺼내 해당 노드에 인접한(=연결된) 노드 중 방문하지 않은 노드를 큐에 삽입
+  - 더이상 방문할 노드가 없을 때까지, 큐가 빌 때까지 위 과정 반복
+
+장점
+  - 최단 경로 탐색에 유리
+
+단점
+  - 메모리 사용량 많아질 수 있음
+
+사례
+  - 최단거리, 레벨탐색
+
+DFS랑 차이
+  - DFS: 시작 지점에서 더 깊이 들어가며 탐색
+  - BFS: 시작 지점에서 가까운 노드부터 순차적으로 탐색
+
+예시
+  public class BFS {
+    static ArrayList<ArrayList<Integer>> graph = new ArrayList<>();
+    static boolean[] visited;
+
+    public static void main(String[] args) {
+      int n = 6;                                // 정점 수
+      visited = new boolean[n + 1];
+
+      for (int i = 0; i <= n; i++) {            // 그래프 초기화
+        graph.add(new ArrayList<>());
+      }
+
+      graph.get(1).add(2);                      // 그래프 간선 추가
+      graph.get(1).add(3);
+      graph.get(2).add(4);
+      graph.get(2).add(5);
+      graph.get(3).add(6);
+
+      sout("BFS 결과");
+      bfs(1);
+
+    }
+
+    static void bfs(int start) {
+      Queue<Integer> queue = new LinkedList<>();
+      queue.add(start);
+      visited[start] = true;
+
+      while (!queue.isEmpty()) {
+        int node = queue.poll();             // 큐에서 정점 꺼내기
+        sout(node);
+
+        for (int next : graph.get(node)) {
+          if (!visited[next]) {
+            queue.add(next);
+            visited[next] = true;
+          }
+        }
+      }
+
+    }
+  }
+
+-->
