@@ -1,5 +1,66 @@
 <!-- 
+JPA가 실무에서 어려운 이유
+  - 객체와 테이블을 올바르게 매핑하고 설계하는 방법을 몰라서
+    - 객체랑 테이블이 한 두개가 아니고 최소 수십 개 이상의 객체와 테이블이 복잡하게 얽혀서 돌아감
+    - JPA에서는 객체 테이블을 정확히 설계하고 매핑해야 함
 
+  - JPA의 내부 동작 방식을 이해하지 못해서
+    - 동작 방식을 모르고 이용하면 디버깅이 오래 걸리고 장애 상황에서 대처가 안됨
+    - JPA가 어떤 SQL을 만들어내는지, 이 SQL을 JPA가 언제 실행하는지 알아야 함
+
+JPA 사용해야 하는 이유
+  - SQL 중심적인 개발 -> 객체 중심 개발 : 자바 컬렉션 객체에 저장하듯이 던지면 됨
+  - 패러다임 불일치 해결 : 상속, 연관관계, 객체 그래프 탐색, 동일한 트랜잭션 내 JPA에서 == 비교할 때 같음, ...
+  - 생산성, 유지보수, 성능
+
+JPA 성능 최적화 기능
+  - 1차 캐시와 동일성(identity) 보장
+    - 같은 트랜잭션 안에서는 같은 엔티티를 반환
+    - DB Isolation Level이 Read Commit이어도 애플리케이션에서 Repeatable Read 보장
+
+    String memberId = "1";
+    Member m1 = jpa.find(Member.class, memberId);   // SQL
+    Member m2 = jpa.find(Member.class, memberId);   // 캐시
+    m1 == m2 => true
+
+  - 트랜잭션을 지원하는 쓰기 지연(transactional write-behind)
+    - 트랜잭션을 커밋할 때까지 INSERT SQL을 모음
+    - JDBC BATCH SQL 기능을 사용해서 한번에 SQL 전송
+
+    transaction.begin();
+    em.persist(member1);
+    em.persist(member2);
+    em.persist(member3);
+    transaction.commit(); // 커밋하는 순간 데이터베이스에 insert sql을 모아서 보냄 (네트워크 비용 절감) (버퍼라이팅 가능)
+  
+  - 지연 로딩(Lazy Loading)
+    - 객체가 실제 사용될 때 로딩
+
+    Member member = memberDAO.find(memberId);       // select * from member
+    Team team = member.getTeam();                   // select * from team   이때 실제 team 데이터를 가져와서 값을 채워준다
+    String teamName = team.getName();
+
+  - 즉시 로딩
+    - JOIN SQL로 한번에 연관된 객체까지 미리 조회
+
+    Member member = memberDAO.find(memberId);       // select m.*, t.* from member join team ..
+    Team team = member.getTeam();
+    String teamName = team.getName();
+
+JPA
+  - Java Persistence API
+  - 자바의 ORM 기술 표준
+  
+ORM
+  - Object-relational mapping (객체 관계 매핑)
+  - 객체랑 관계형 데이터베이스랑 매핑
+  - 매핑 : 중간에서 뭔가 해준다.
+  - 객체는 객체대로 설계, RDBMS는 RDBMS대로 설계, 중간에서 ORM 프레임워크가 매핑해서 패러다임의 불일치를 해결
+  - 애플리케이션과 JDBC 사이에서 동작
+  - 
+
+Hibernate
+  - 
 
 
 -->

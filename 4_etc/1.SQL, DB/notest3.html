@@ -1,6 +1,61 @@
 <!-- 
 스키마
-  - 
+  - 데이터베이스, 프로그래밍, 데이터 모델링 등에서 데이터 구조를 정의하고 조직화하는 데 사용되는 설계 또는 청사진
+  - 특정 시스템에서 데이터를 저장하고 관리하는 방식과 관련된 규칙 구조 정의
+  - 데이터베이스 스키마는 테이블 구조와 테이블 간의 관계를 정의하고 SQL 또는 ORM 도구로 관리
+
+구성요소
+  - 테이블
+    - 데이터가 저장되는 기본 단위
+    - 컬럼(열) : 속성
+    - 인스턴스(행) : 개별 데이터 저장
+
+  - 제약 조건
+    - 데이터의 무결성을 유지하기 위해 사용
+      - Primary Key : 고유 식별자
+      - Foreign Key : 다른 테이블과의 관계
+      - Unique : 중복 불허
+      - Not Null : 값 필수
+
+  - 데이터 타입
+    - 각 컬럼의 데이터 타입 지정하여 데이터 유효성 보장 (varchar, int, date, boolean, ...)
+
+설계 과정
+  - 요구사항 분석 : 저장해야 할 데이터와 관계 정의
+  - ERD 작성 : 데이터 모델링을 통해 엔티티와 관계를 시각화
+  - 정규화 : 데이터 중복을 최소화하고 무결성 높임
+  - 구현 : SQL 스크립트나 ORM 도구를 사용해 스키마 정의
+
+중요성
+  - 데이터 무결성 : 데이터 오류 방지
+  - 확장성 : 요구사항 변경에 유연하게 대응할 수 있도록 설계
+  - 성능 최적화 : 효율적인 데이터 검색과 처리
+
+  CREATE TABLE users (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(50) NOT NULL,
+    email VARCHAR(100) UNIQUE NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+  );
+
+  @Entity
+  @Table(name = "users")
+  public class User {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @Column(nullable = false, length = 50)
+    private String name;
+
+    @Column(nullable = false, unique = true, length = 100)
+    private String email;
+
+    @Column(name = "created_at", nullable = false, updatable = false)
+    private LocalDateTime createdAt = LocalDateTime.now();
+
+    // 게터 세터
+  }
 
 ERD
   - Entity Relationship Diagram
