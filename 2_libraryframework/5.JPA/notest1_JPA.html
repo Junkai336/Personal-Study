@@ -46,10 +46,6 @@ JPA 성능 최적화 기능
     Member member = memberDAO.find(memberId);       // select m.*, t.* from member join team ..
     Team team = member.getTeam();
     String teamName = team.getName();
-
-JPA
-  - Java Persistence API
-  - 자바의 ORM 기술 표준
   
 ORM
   - Object-relational mapping (객체 관계 매핑)
@@ -57,10 +53,43 @@ ORM
   - 매핑 : 중간에서 뭔가 해준다.
   - 객체는 객체대로 설계, RDBMS는 RDBMS대로 설계, 중간에서 ORM 프레임워크가 매핑해서 패러다임의 불일치를 해결
   - 애플리케이션과 JDBC 사이에서 동작
-  - 
+
+  - 객체 지향 언어에서 Class는 데이터베이스의 Table에 매핑
+  - Class의 Field는 테이블의 Column에 매핑
+  - 객체를 생성, 수정, 삭제, 조회할 때 필요한 SQL 쿼리를 자동으로 생성 (save, update, delete, find 메소드 호출시 내부적으로 SQL 실행)
+  - 데이터베이스에 종속되지 않으므로 다양한 데이터베이스를 쉽게 교체할 수 있고 데이터베이스에 맞는 SQL 쿼리를 자동으로 생성해 줌
+
+  ORM 장점
+    - SQL 쿼리를 작성하지 않고도 DB 작업 가능하므로 개발 속도 빨라짐
+    - 코드 기반 DB 관리하므로 유지보수성 good
+    - 특정 DBMS에 의존하지 않으며 코드 변경 없이 DB 교체 가능
+    - 객체 지향 프로그래밍의 원칙에 잘 맞아 애플리케이션 설계가 깔끔해짐
+
+  ORM 단점
+    - ORM이 생성하는 쿼리는 단순한 작업에는 적합하나, 복잡한 쿼리는 성능 문제가 발생할 수도 있음
+    - SQL을 추상화하므로, 직접 작성한 SQL보다 성능이 낮을 수 있음
 
 Hibernate
-  - 
+  - Java ORM 프레임워크
+  - 가장 널리 사용되는 ORM 프레임워크
+  - JPA의 표준 구현체
+  - JPA의 구현체로서 동작하며 독립적으로 사용할 수 있는 프레임워크
+  - 1차/2차 캐시, HQL, 배치 처리 등 추가 기능 제공
+  - org.hibernate 패키지에서 제공하는 클래스 사용
+  - 개발자는 JPA 표준 API를 사용하고 실제 구현체로 Hibernate를 선택하여 활용함
+
+JPA
+  - 자바 EE에서 제공하는 ORM 표준 스펙
+  - Java Persistence API
+  - 자바의 ORM 기술 표준
+  - Hibernate, EclipseLink, OpenJPA 등이 JPA 구현체임
+  - 구현체가 필요하고 스펙만 제공함.
+  - javax-persistence 패키지로 정의된 인터페이스 사용
+
+MyBatis
+  - 완전한 ORM은 아니지만 SQL 매퍼 도구로 사용됨
+  - SQL 작성 자유도와 객체 매핑 지원
+
 
 
 -->
