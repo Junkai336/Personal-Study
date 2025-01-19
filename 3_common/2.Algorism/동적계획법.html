@@ -15,7 +15,7 @@
     - 메모이제이션(Top-Down)이나 테이블 기반 계산(Bottom-Up)을 통해 중복 계산 방지
 
   - 최적 부분 구조
-    - 문제를 작은 문제로 나눳을 때 작은 문제들의 최적 결과를 합쳐도 전체 문제의 최적 결과가 나옴
+    - 문제를 작은 문제로 나눴을 때 작은 문제들의 최적 결과를 합쳐도 전체 문제의 최적 결과가 나옴
     - 경로 최적화 문제에서 특정 지점까지의 최단 거리를 알면, 전체 최단 거리를 계산할 수 있음
 
   - 결과 저장 (캐싱)
@@ -67,6 +67,28 @@
 
           sout("fibonacci n = " fibonacci(n));
         }
+      }
+
+      ---
+
+      public class Fibonacci {
+        static HashMap<Integer, Integer> memo = new HashMap<>();
+
+        public static int fib(int n) {
+          if (n <= 1) return n;
+          if (memo.containsKey(n)) return memo.get(n);
+
+          int result = fib(n - 1) + fib(n - 2);
+
+          memo.put(n, result);
+
+          return result;
+        }
+
+        public static void main(String[] args) {
+          sout(fib(10));
+        }
+      
       }
 
   - Bottom-Up 방식

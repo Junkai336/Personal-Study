@@ -89,7 +89,35 @@ JPA
 MyBatis
   - 완전한 ORM은 아니지만 SQL 매퍼 도구로 사용됨
   - SQL 작성 자유도와 객체 매핑 지원
+-->
 
+<!-- 
+데이터베이스 방언
+  - JPA는 특정 데이터베이스에 종속되지 않음
+  - DB마다 제공하는 SQL 문법과 함수가 조금씩 다른데 JPA가 알아서 번역해서 써줌 
+    (예: MYSQL의 LIMIT , ORACLE의 ROWNUM)
+  - JPA -> dialect -> mysql dialect || oracle dialect || ...
+  - persistence.xml 에 <property name="hibernate.dialect" value="org.hibernate.dialect.땡땡떙Dialect"/>
 
+JPA 구동 방식
+  - Persistence 클래스가 persistence.xml 설정 정보를 읽어서 EntityManagerFactory 클래스를 만듬
+  - 필요할 때마다 EntityManager를 생성하고 실행
+  - 모든 데이터를 변경하는 모든 작업은 JPA에서 꼭 트랜잭션 안에서 작업을 해야 함
+
+JPQL
+  - Java Persistence Query Language
+  - JPA에서 사용하는 객체 지향 쿼리 언어
+  - SQL과 유사하지만 DB테이블 대신 JPA 엔티티 객체를 대상으로 쿼리를 작성하는 언어
+  
+  - 엔티티와 엔티티의 필드를 대상으로 쿼리 작성 (DB의 USER 테이블이 USER 엔티티로 매핑되어 있으면 USER 엔티티 기반으로 쿼리 작성)
+  - DB에 종속적이지 않기 때문에 특정 DB의 SQL 문법과 무관하게 사용 가능 (JPA 구현체가 DB에 맞는 SQL로 변환함)
+  - 파라미터 바인딩을 통해 동적 쿼리 생성 가능
+  - 엔티티와 연관관계를 사용하므로 객체 모델 기반으로 개발 가능
+
+    ex)
+      SELECT u FROM User u WHERE u.age > 20
+      SELECT u FROM User u WHERE u.name = 'ABC'
+      SELECT o FROM Order o JOIN o.user u WHERE u.name = 'ABC'
+      SELECT u.department, COUNT(u) FROM User u GROUP BY u.department HAVING COUNT(u) > 5
 
 -->
