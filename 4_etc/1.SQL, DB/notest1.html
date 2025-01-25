@@ -175,108 +175,9 @@
         - SELECT 칼럼명 AS 지정할명칭 FROM 테이블명
 
         - SELECT NAME 'Hello' FROM member = SELECT NAME AS 'Hello' FROM member : AS를 생략할 수도 있다.
-
-
-
-    문자열 자르기
-
-        - ORACLE
-
-            - SUBSTR(문자열, 시작위치, 길이) : 문자열에서 시작위치부터 길이만큼 출력
-
-            ex) SELECT SUBSTR(MAIL, 1, 3) FROM TABLE WHERE NAME = 'AIDEN' : MAIL의 1번째부터 3글자 출력 / AIDEN -> AID
-
-        - MYSQL, MSSQL
-
-            - SUBSTRING(문자열, 시작위치, 길이) : 
-
-            - LEFT(문자열, 길이) : 왼쪽부터 길이만큼 출력
-
-            - RIGHT(문자열, 길이) : 오른쪽부터 길이만큼 출력
-
-
-
-    문자길이 채우기
-
-        - SELECT LPAD(데이터, 고정길이, 문자) FROM DUAL : 고정길이 안에 데이터를 출력하고 남는 공간을 문자로 채운다. 문자가 LPAD는 왼쪽을 채우고 RPAD는 오른쪽을 채운다.
-                                                            고정길이에 숫자 변수같은거 넣어도 됨
-
-            - SELECT LPAD('A', 4, 'B') AS TEST_LPAD FROM DUAL : BBBA
-            - SELECT RPAD('A', 4, 'B') AS TEST_RPAD FROM DUAL : ABBB
-
-        REPLICATE(문자열 또는 데이터, 정수 또는 정슈 유형의 식) : 문자열 또는 데이터를 정수 또는 정수 유형의 식만큼 출력한다.
-
-            - SELECT REPLICATE('0', 5) : 00000
-
-            좌우측으로 붙이기
-
-                - SELECT REPLICATE('0', 5 - LEN('AA')) + AA : 000AA
-                - SELECT 'AA' + REPLICATE('0', 5 - LEN('AA')) : AA000
-
-                -> LEN : 인수의 길이 리턴
-                -> + 뒤에 붙일 문자열과 똑같은 값을 넣어주면 고정길이 5에서 뒤에 붙을 문자열의 길이만큼 뺀다. = 0이 고정길이 5에서 AA만큼 뺀 3개 출력 뒤 AA 출력
-
-
-                - SELECT 'AA' + REPLICATE('0', 5) : 00000AA
-                
-                -> LEN() 없으면 그냥 개수만큼 뒤나 앞에 붙음
-
-
-                - SELECT 'AA' + REPLICATE('0', 6 - LEN('AABB')) + 'BB' : AA00BB
-
-
-
-    문자 합치기
-
-        - ||(쌍파이프) : 문자(데이터)와 문자(데이터) 사이에 넣음
-
-            - SELECT NAME || '는 ' || CLASS || '반이고 ' || POINT || '점이다' AS 'ALL IN ONE WITH CHARS'
-
-        - CONCAT(문자{데이터}, 문자{데이터}) AS '칼럼명'
-
-            - SELECT CONCAT(NAME, '는 ', CLASS, '반이고 ', POINT, '점이다') ALL IN ONE
 -->
 
 <!-- 
-
-    문자열 길이 출력 함수
-
-        - 문자열의 길이를 출력
-
-        MYSQL
-            - LENGTH(문자 혹은 칼럼)
-            - BYTE의 길이를 가져온다 (영문자: 1BYTE , 한글: 3BYTE) 철수는 6BYTE HELLO는 5BYTE
-
-            - CHAR_LENGTH(문자 혹은 칼럼)
-            - 문자/칼럼의 문자 개수를 출력한다. / 철수 2 , HELLO 5
-
-        ORACLE
-            - LENGTHB()
-
-            - LENGTH()
-
-        MSSQL
-            - DATALENGTH()
-            
-            - LEN()
-
-
-
-    데이터를 대소문자로 변환하기
-
-        - LOWER() : 값을 소문자로 변경
-
-            ex) SELECT LOWER(COLOR) FROM TABLE
-                => ReD -> red
-
-        - UPPER() : 값을 대문자로 변경 
-
-            ex) SELECT * FROM TABLE WHERE UPPER(COLOR) = 'BLUE'
-                => 대소문자를 구분할 경우 대소문자를 맞춰서 출력하는 식
-
-        - INITCAP() : 값의 첫 번째 문자만 대문자로 변환해 출력 (나머지 문자는 소문자로 됨)
-
-
 
     문자가 있는지 찾는 함수
 
@@ -664,23 +565,6 @@
 
 
 
-    공백 제거
-
-        - SELECT 열이름1, RTRIM (열이름2) FROM 테이블명 : 오른쪽 공백 제거
-
-        - SELECT 열이름1, LTRIM (열이름2) FROM 테이블명 : 왼쪽 공백 제거
-
-        - SELECT 열이름1, TRIM (열이름2) FROM 테이블명 : 모든 공백 제거
-
-
-
-    OR
-
-
-    ON
-
-
-
     ALL, SOME, ANY
 
         - 비교 연산자와 함께 사용
@@ -870,14 +754,4 @@
     https://wildeveloperetrain.tistory.com/155
     https://velog.io/@kdh10806/CHAR-vs-VARCHAR
     
--->
-
-<!-- 
-
-    PARTITION?
-
-    OVER?
-
-    RANK?
-
 -->

@@ -1,10 +1,175 @@
 <!-- 
 
-    기타 쿼리문 예제들
+    문자열 함수
+
+        ASCII 코드 반환
+            - MSSQL : CHAR(코드값)
+            - MYSQL : CHAR(코드값)
+            - ORACLE : CHR(코드값)
+            - POSTGRESQL : CHR(코드값)
+
+                ex) SELECT CHR(65) FROM SAMPLE
+                    => A
 
 
+        문자를 ASCII 코드로 변환
+            - MSSQL, MYSQL, ORACLE, POSTGRESQL : ASCII(문자)
+            
+                ex) SELECT ASCII('A') FROM SAMPLE
+                    => 65
 
 
+        값을 소문자로 변경
+            - MSSQL, MYSQL, ORACLE, POSTGRESQL : LOWER(문자열)
+
+                ex) SELECT LOWER(COLOR) FROM TABLE
+                    => ReD -> red
+
+
+        값을 대문자로 변경 
+            - MSSQL, MYSQL, ORACLE, POSTGRESQL : UPPER(문자열)
+
+                ex) SELECT * FROM TABLE WHERE UPPER(COLOR) = 'BLUE'
+                    => 대소문자를 구분할 경우 대소문자를 맞춰서 출력하는 식
+
+
+        값의 첫 번째 문자만 대문자로 변환해 출력 (나머지 문자는 소문자로 됨)
+            - MSSQL, MYSQL : 커스텀 함수 필요
+            - ORACLE, POSTGRESQL : INITCAP()
+
+                ex) SELECT INITCAP('hello world!');
+                    => Hello World!
+
+
+        앞뒤 공백 제거
+            - MSSQL : LTRIM(RTRIM(문자열))  /   공백 제거만 가능
+            - MYSQL, POSTGRESQL : TRIM(문자열) 또는 TRIM([위치] '문자' FROM 문자열)
+            - ORACLE : TRIM(문자열) 또는 TRIM('문자' FROM 문자열)
+
+                - 위치
+                    - LEADING : 왼쪽에서만 지정된 문자 제거, 문자열의 앞쪽에서 제거 수행, 중간과 끝에는 영향 X
+                    - TRAILING : 오른쪽에서만 지정된 문자 제거,       뒤쪽                중간과 시작부분
+                    - BOTH : 양쪽에서 제거, 기본값,                                       중간
+
+                ex) SELECT TRIM(' 이름 ') AS NAME
+                    => 이름
+
+                    SELECT TRIM(BOTH 'x' FROM 'xxProductxx') AS NAME
+                    => Product
+
+                    SELECT TRIM(LEADING 'x' FROM 'xxxHello Worldxxx') AS NAME
+                    => Hello Worldxxx
+
+
+        오른쪽 공백 제거
+            - MSSQL, MYSQL : RTRIM(문자열)
+            - ORACLE, POSTGRESQL : RTRIM(문자열, [특정문자])
+            
+                ex) SELECT RTRIM('핑크블랙핑크', '핑크') FROM EX;
+                    => '핑크블랙'
+
+
+        왼쪽 공백 제거
+            - MSSQL, MYSQL : LTRIM(문자열)
+            - ORACLE, POSTGRESQL : LTRIM(문자열, [특정문자])
+
+
+        문자열 자르기
+            - MSSQL : SUBSTRING(문자열, 시작위치, 길이)
+            - MYSQL : SUBSTIRNG(문자열, 시작위치, [길이])   / 음수 시작 지원 (뒤에서부터 시작)
+            - ORACLE, POSTGRESQL : SUBSTR(문자열, 시작위치 [길이])  / 음수 시작 지원 (뒤에서부터 시작)
+
+                ex) SELECT SUBSTR('Hello World', 1, 5) AS EX
+                    => 'Hello'
+
+                    SELECT SUBSTRING('Hello World', 1, 5) AS EX
+                    => 'Hello'
+
+                    SELECT SUBSTR('Hello World', -5) AS EX FROM EXAM;
+                    => 'World'
+
+            - MSSQL, MYSQL : LEFT(문자열, 길이), RIGHT(문자열, 길이)
+
+                ex) SELECT LEFT('HELLO WORLD', 5) AS EX
+                    => 'HELLO'
+
+
+        문자열 길이
+            - MSSQL : 
+                문자길이 : CHAR_LENGTH(문자열)
+                바이트길이 : LENGTH(문자열)
+            - MYSQL :
+                문자길이 : LEN(문자열)
+                바이트길이 : DATALENGTH(문자열)
+            - ORACLE : 
+                문자길이 : LENGTH(문자열)
+                바이트길이 : LENGTHB(문자열)
+            - POSTGRESQL : 
+                문자길이 : LENGTH(문자열)
+                바이트길이 : OCTET_LENGTH(문자열)
+
+                ex) SELECT LEN('Hello World') AS EX
+                    => 11
+
+
+        문자열 대체
+            - MSSQL, MYSQL, POSTGRESQL : REPLACE(문자열, 변경전문자열, 변경후문자열)
+            - ORACLE : REPLACE(문자열, 변경전문자열, [변경후문자열])
+
+                ex) SELECT REPLACE('헬로우 월드', '헬로우')
+                    => '월드'
+
+                    SELECT REPLACE('헬로우 월드', '헬로우', '하이')
+                    => '하이 월드'
+
+
+        문자 길이 채우기
+            - MSSQL : 없음
+            - MYSQL, ORACLE, POSTGRESQL : LPAD(문자열, 최종문자열길이, 채울문자), RPAD(문자열, 최종문자열길이, 채울문자)
+            - 원본 문자열 길이보다 작을 경우 결과 문자열리 잘림
+
+                ex) SELECT LPAD('123', 5, '0') AS EX
+                    => 00123
+
+                    SELECT LPAD('HELLO', 3, '*') AS EX
+                    => 'HEL'
+
+                    SELECT LPAD('ABC', 8, '-') AS EX
+                    => '-----ABC'
+
+                    SELECT RPAD('ABC', 8) AS EX
+                    => 'ABC-----'
+
+                    SELECT RPAD('HELLO', 3, '*') AS EX
+                    => 'HEL'
+
+
+        문자 반복
+            - MSSQL : REPLICATE(반복문자열, 반복횟수)
+
+                ex) SELECT REPLICATE('A', 5) AS EX
+                    => AAAAA
+
+                ex) SELECT RIGHT(REPLICATE('0', 10) + '123', 10) AS EX
+                    => 0000000123
+
+
+    문자 합치기
+
+        - MSSQL, MYSQL : || 지원 안하므로 + 연산자나 CONCAT 사용
+        - ORACLE, POSTGRESQL : ||(쌍파이프) - 문자(데이터)와 문자(데이터) 사이에 넣음
+
+            ex) SELECT 'VALUE: ' || NULL || '123' AS EX
+                => 'VALUE: 123'
+
+
+        - MSSQL, MYSQL, POSTGRESQL : CONCAT(문자열1, 문자열2, ...)
+        - ORACLE : CONCAT(문자열1, 문자열2) / 2개 문자열만 가능하므로 || 로 연결해야 함
+
+            ex) CONCAT('POSTGRESQL', 'IS', 'GOOD') AS EX
+                => 'POSTGRESQL IS GOOD'
+
+                
 
     SELECT문
         
@@ -30,34 +195,4 @@
         10.ORDER BY
         11.TOP
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    
 -->
