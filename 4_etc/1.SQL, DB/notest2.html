@@ -3,6 +3,7 @@
     문자열 함수
 
         ASCII 코드 반환
+
             - MSSQL : CHAR(코드값)
             - MYSQL : CHAR(코드값)
             - ORACLE : CHR(코드값)
@@ -13,6 +14,7 @@
 
 
         문자를 ASCII 코드로 변환
+
             - MSSQL, MYSQL, ORACLE, POSTGRESQL : ASCII(문자)
             
                 ex) SELECT ASCII('A') FROM SAMPLE
@@ -20,6 +22,7 @@
 
 
         값을 소문자로 변경
+
             - MSSQL, MYSQL, ORACLE, POSTGRESQL : LOWER(문자열)
 
                 ex) SELECT LOWER(COLOR) FROM TABLE
@@ -27,6 +30,7 @@
 
 
         값을 대문자로 변경 
+
             - MSSQL, MYSQL, ORACLE, POSTGRESQL : UPPER(문자열)
 
                 ex) SELECT * FROM TABLE WHERE UPPER(COLOR) = 'BLUE'
@@ -34,6 +38,7 @@
 
 
         값의 첫 번째 문자만 대문자로 변환해 출력 (나머지 문자는 소문자로 됨)
+
             - MSSQL, MYSQL : 커스텀 함수 필요
             - ORACLE, POSTGRESQL : INITCAP()
 
@@ -42,6 +47,7 @@
 
 
         앞뒤 공백 제거
+
             - MSSQL : LTRIM(RTRIM(문자열))  /   공백 제거만 가능
             - MYSQL, POSTGRESQL : TRIM(문자열) 또는 TRIM([위치] '문자' FROM 문자열)
             - ORACLE : TRIM(문자열) 또는 TRIM('문자' FROM 문자열)
@@ -62,6 +68,7 @@
 
 
         오른쪽 공백 제거
+
             - MSSQL, MYSQL : RTRIM(문자열)
             - ORACLE, POSTGRESQL : RTRIM(문자열, [특정문자])
             
@@ -70,11 +77,13 @@
 
 
         왼쪽 공백 제거
+
             - MSSQL, MYSQL : LTRIM(문자열)
             - ORACLE, POSTGRESQL : LTRIM(문자열, [특정문자])
 
 
         문자열 자르기
+
             - MSSQL : SUBSTRING(문자열, 시작위치, 길이)
             - MYSQL : SUBSTIRNG(문자열, 시작위치, [길이])   / 음수 시작 지원 (뒤에서부터 시작)
             - ORACLE, POSTGRESQL : SUBSTR(문자열, 시작위치 [길이])  / 음수 시작 지원 (뒤에서부터 시작)
@@ -95,6 +104,7 @@
 
 
         문자열 길이
+
             - MSSQL : 
                 문자길이 : CHAR_LENGTH(문자열)
                 바이트길이 : LENGTH(문자열)
@@ -113,6 +123,7 @@
 
 
         문자열 대체
+
             - MSSQL, MYSQL, POSTGRESQL : REPLACE(문자열, 변경전문자열, 변경후문자열)
             - ORACLE : REPLACE(문자열, 변경전문자열, [변경후문자열])
 
@@ -124,6 +135,7 @@
 
 
         문자 길이 채우기
+
             - MSSQL : 없음
             - MYSQL, ORACLE, POSTGRESQL : LPAD(문자열, 최종문자열길이, 채울문자), RPAD(문자열, 최종문자열길이, 채울문자)
             - 원본 문자열 길이보다 작을 경우 결과 문자열리 잘림
@@ -145,6 +157,7 @@
 
 
         문자 반복
+
             - MSSQL : REPLICATE(반복문자열, 반복횟수)
 
                 ex) SELECT REPLICATE('A', 5) AS EX
@@ -187,42 +200,52 @@
 
                 - SELECT INSTR('2', '1')
 
+-->
 
-        문자/날짜 형 변환
+<!-- 
 
-            - ORACLE
+    명시적 형변환
 
-                - TO_CHAR(데이터, '출력 형식') : 숫자 또는 날짜 데이터를 문자형으로 변경
+        숫자 또는 날짜 데이터를 문자열로 변환
 
-                    - SELECT TO_CHAR(SYSDATE, 'YYYY-MM-DD') : 오늘 날짜의 출력 형식을 결정해서 문자로 리턴
+            - MSSQL : FORMAT(value, format) 또는 CONVERT(VARCHAR, value, style)
+            - MYSQL : DATE_FORMAT(date, format)
+            - ORACLE, POSTGRESQL : TO_CHAR(value, 'format')
 
-                - TO_DATE(데이터, '날짜 형식')
+                ex) SELECT FORMAT(GETDATE(), 'yyyy-MM-dd HH:mm:ss')
+                    => 2025-01-25 14:35:00
 
-                    - SELECT TO_DATE('20080101', 'YYYY/MM/DD') : 20080101이라는 문자를 2008/01/01 형태의 날짜로 리턴
-
-
-            - MYSQL
-
-                - DATE FORMAT(날짜, 출력 형식) : 날짜를 문자열로 변환
-
-                    - SELECT DATE_FORMAT('2019-09-16 20:23:12', '%Y/%M/%D') : 2019/09/16
-
-                - STR_TO_DATE(문자, 출력 형식) : 문자열을 날짜로 변환
-
-                    - SELECT STR_TO_DATE('20080101', '%Y-%M-%D') : 2008-01-01 날짜로 리턴
+                    SELECT DATE_FORMAT(NOW(), '%Y-%m-%d %H:%i:%s')
+                    SELECT TO_CHAR(SYSDATE, 'YYYY-MM-DD HH24:MI:SS') FROM EX
+                    SELECT TO_CHAR(NOW(), 'YYYY-MM-DD HH24:MI:SS')
 
 
-            - MSSQL
+        문자열을 지정된 형식의 날짜로 변환
 
-                - CONVERT(포맷[길이], 날짜, 변환 형식) : 날짜를 문자로 변환
+            - MSSQL : CAST(string AS DATE) 또는 CONVERT(DATE, string)
+            - MYSQL : STR_TO_DATE(string, format)
+            - ORACLE, POSTGRESQL : TO_DATE(string, 'format')
 
-                    - SELECT CONVERT(VARCHAR, GETDATE(), 120) : 2024-03-11 21:03:03
-                    => 120 : YYYY-MM-DD HH24:MI:SS 형식, 다른 숫자들은 다른 형식 의미, 찾아봐야함
+                ex) SELECT CAST('2025-01-25' AS DATE)
+                    => 2025-01-25
 
-                - CONVERT(날짜 형식, 문자) : 문자를 날짜로 변환
+                    SELECT CONVERT(DATE, '2025-01-25')
+                    SELECT STR_TO_DATE('25-01-2025', '%d-%m-%Y')
+                    SELECT TO_DATE('25-01-2025', 'DD-MM-YYYY') FROM EX
+                    => 2025-01-25
 
-                    - SELECT CONVERT(DATE, '2008-01-01') : 2008-01-01 문자가 날짜로 변경
-                    - SELECT CONVERT(DATETIME, '2008-01-01 15:14:13') : 2008-01-01 15:14:13 문자가 날짜/시간으로 변경됨
+
+        문자열을 숫자로 변환
+
+            - MSSQL : CAST(STRING AS INT) 또는 CONVERT(INT, STRING)
+            - MYSQL : CAST(STRING AS SIGNED) 또는 CAST(STRING AS DECIMAL)
+            - ORACLE : TO_NUMBER(STRING)
+            - POSTGRESQL : CAST(STRING AS NUMERIC) 또는 ::NUMERIC
+
+                ex) SELECT CAST('123' AS INT)
+                    SELECT CAST('123.45' AS DECIMAL)
+                    SELECT TO_NUMBER('123.45') FROM EX
+                    SELECT '123.45'::NUMERIC
 
 -->
 
@@ -369,19 +392,6 @@
 
                     SELECT NOW() + INTERVAL '3 MONTH'
                     => 현재 날짜에 3개월 추가
-
-
-        문자열을 숫자로 변환
-
-            - MSSQL : CAST(STRING AS INT) 또는 CONVERT(INT, STRING)
-            - MYSQL : CAST(STRING AS SIGNED) 또는 CAST(STRING AS DECIMAL)
-            - ORACLE : TO_NUMBER(STRING)
-            - POSTGRESQL : CAST(STRING AS NUMERIC) 또는 ::NUMERIC
-
-                ex) SELECT CAST('123' AS INT)
-                    SELECT CAST('123.45' AS DECIMAL)
-                    SELECT TO_NUMBER('123.45') FROM EX
-                    SELECT '123.45'::NUMERIC
 
 
         날짜 또는 숫자를 지정된 형식의 문자로 변환
