@@ -44,7 +44,6 @@
             - DELETE FROM 테이블명
             - DELETE FROM 테이블명 WHERE 조건
 
-
 -->
 
 
@@ -120,7 +119,6 @@
 -->
 
 
-
 <!-- 
 
     조건에 따라 값 정해주기
@@ -166,8 +164,6 @@
 
 -->
 
-
-
 <!--
 
     칼럼에 별칭 붙이기
@@ -175,184 +171,6 @@
         - SELECT 칼럼명 AS 지정할명칭 FROM 테이블명
 
         - SELECT NAME 'Hello' FROM member = SELECT NAME AS 'Hello' FROM member : AS를 생략할 수도 있다.
--->
-
-<!-- 
-
-    문자가 있는지 찾는 함수
-
-        - MSSQL
-
-            - SELECT CHARINDEX('1', '2')
-            - 2라는 문자열 내에서 1이라는 문자가 있는지 없는지 확인. 
-            - 있다면 문자의 위치를 리턴 (123456번째)
-            - 없다면 0 리턴
-
-            ex) SELECT NAME FROM TABLE WHERE CHARINDEX('naver', E-MAIL) > 0
-                => E-MAIL에 'naver'란 문자가 포함된 NAME 필드가 출력된다.
-
-
-        - ORACLE, MYSQL
-
-            - SELECT INSTR('2', '1')
-
-
-
-    문자/날짜 형 변환
-
-        - ORACLE
-
-            - TO_CHAR(데이터, '출력 형식') : 숫자 또는 날짜 데이터를 문자형으로 변경
-
-                - SELECT TO_CHAR(SYSDATE, 'YYYY-MM-DD') : 오늘 날짜의 출력 형식을 결정해서 문자로 리턴
-
-            - TO_DATE(데이터, '날짜 형식')
-
-                - SELECT TO_DATE('20080101', 'YYYY/MM/DD') : 20080101이라는 문자를 2008/01/01 형태의 날짜로 리턴
-
-
-
-        - MYSQL
-
-            - DATE FORMAT(날짜, 출력 형식) : 날짜를 문자열로 변환
-
-                - SELECT DATE_FORMAT('2019-09-16 20:23:12', '%Y/%M/%D') : 2019/09/16
-
-            - STR_TO_DATE(문자, 출력 형식) : 문자열을 날짜로 변환
-
-                - SELECT STR_TO_DATE('20080101', '%Y-%M-%D') : 2008-01-01 날짜로 리턴
-
-
-
-        - MSSQL
-
-            - CONVERT(포맷[길이], 날짜, 변환 형식) : 날짜를 문자로 변환
-
-                - SELECT CONVERT(VARCHAR, GETDATE(), 120) : 2024-03-11 21:03:03
-                => 120 : YYYY-MM-DD HH24:MI:SS 형식, 다른 숫자들은 다른 형식 의미, 찾아봐야함
-
-            - CONVERT(날짜 형식, 문자) : 문자를 날짜로 변환
-
-                - SELECT CONVERT(DATE, '2008-01-01') : 2008-01-01 문자가 날짜로 변경
-                - SELECT CONVERT(DATETIME, '2008-01-01 15:14:13') : 2008-01-01 15:14:13 문자가 날짜/시간으로 변경됨
-
--->
-
-
-<!-- 
-
-    날짜 계산하기
-
-        - ORACLE
-
-            - SYSDATE 함수 : 실행될 때의 시간을 리턴
-                - SELECT SYSDATE + 1 : 1일 후 출력
-                - SELECT SYSDATE + 1/24 : 1시간 후
-                - SELECT SYSDATE + 1/24/60 : 1분 후
-                - SELECT SYSDATE + 1/24/60/60 : 1초 후
-
-            - ADD_MONTHS(날짜, 숫자) : 날짜에서 숫자만큼 월을 더한다
-                - SELECT ADD_MONTHS(SYSDATE, 3) : 3달 후 출력 -3이면 3달 전
-
-            - SELECT LAST_DAY(SYSDATE) : 9월이면 9월30일 출력됨
-
-            - SELECT SYSDATE - TO_DATE('20240201', 'YYYYMMDD') : 현재 날짜와 2024/02/01 의 차이를 구함
-
-            - SELECT TRUNC(SYSDATE) - TO_DATE('20240201', 'YYYYMMDD') : 날짜빼기를 하면 시간부분도 계산되어 소수점이 나오는데, 이 경우 년월일만 남기고 시간 부분은 모두 0으로 잘라 사용됨
-
-
-
-        - MYSQL
-
-            - DATE_ADD(날짜, INTERVAL 숫자계산형식)
-
-                - 월 : DATE_ADD(SYSDATE, INTERVAL 1 MONTH) : 현재 날짜에서 1월 더한다.
-                - MONTH, DAY, HOUR, MINUTE, SECOND
-
-
-
-
-        - MSSQL
-
-            - DATEADD(시간단위, 더할수치, 기준시간)
-
-                - SELECT DATEADD(MONTH, 1, GETDATE()) : 현재날짜에서 1월 더함
-
-                - SELECT DATEADD(DAY, -(DAY(GETDATE()-1)), GETDATE()) : 월의 첫째날 구하기
-                - SELECT DATEADD(MONTH, 1, GETDATE()) - DAY(GETDATE()) : 월의 마지막날 구하기 (다음 달에서 현재 날짜만큼 날 빼면 자동적으로 현재 월의 마지막 날 출력)
-
-            - DATEDIFF(시간단위, 시작시간, 종료시간)
-
-                - SELECT DATEDIFF(MI, GETDATE(), GETDATE()+2) : 2880분(2일) 출력
-
-
-
-    돌아오는 요일 날짜 계산
-
-        - NEXT_DAY(날짜, '요일')
-        - NEXT_DAY(날짜, 숫자)      {숫자 기술 시 : 일요일=1 토요일=7}
-
-        ex) 철수의 생일 : 1999/05/25
-
-            - SELECT NAME, BIRTH_DAY, NEXT_DAY(BIRTH_DAY, '금요일') AS NEXT_FRI
-            => 철수의 생일 1999/05/25(화) 이후 오는 금요일의 날짜 1999년 5월 28일(금) 리턴
-
-
-
-    DB에서 현재시간 가져오기
-
-        - WHERE절 등 현재시간이 필요한 곳에서 어디든지 사용할 수 있다.
-
-        - ORACLE
-
-            - SELECT SYSDATE FROM DUAL
-
-        - MYSQL
-
-            - SELECT NOW()
-
-        - MSSQL
-
-            - SELECT GETDATE() : 2024-03-11 13:33:000
-            
-            ex) SELECT * FROM TABLE A WHERE TIME_STAMP < GETDATE()
-                => TIME_STAMP가 현재시간 이전인 데이터만 출력한다.
-
-
-
-    날짜 여부
-
-        - ISDATE(EXPRESSION)
-
-            - ex) PRINT ISDATE (GETDATE());
-            - 해당 문자열이 date, time, datetime 값인 경우 1반환 아닐 경우 0 반환
-
-
-
-    SQL 값이 NULL 일 경우
-
-        - ORACLE
-
-            - NVL(EXPR1, EXPR2) : EXPR1이 NULL이면 EXPR2의 값을 / EXPR1이 NULL이 아니면 EXPR1 값 출력 / EXPR = expression (표현식)
-                ex) SELECT NAME, NVL(SALARY, 'NO PAY') AS SALARY : SALARY가 NULL이면 'NO PAY' 아니면 SALARY 출력 (SALARY의 값을 출력한다는 뜻인듯)
-            
-            - NVL2(EXPR1, EXPR2, EXPR3) : EXPR1이 NULL 이 아니면 EXPR2 / EXPR1이 NULL이면 EXPR3 값 출력
-                ex) SELECT NAME, NVL2(SALARY, 'PAY', 'NO PAY') : SALARY가 NULL이 아니면 'PAY', NULL이면 'NO PAY' 출력
-
-        - MYSQL
-
-            - IFNULL(EXPR1, EXPR2) : NVL과 동일
-
-        - MSSQL
-
-            - ISNULL(EXPR1, EXPR2) : NVL과 동일
-
-        - 공통
-
-            - COALESCE(EXPR1, EXPR2, EXPR3) : 가장 앞에 있는 EXPR 값이 NULL 이 아닌 것을 반환
-                ex) SELECT NAME, COLEASCE(SALARY, POINT, 'NOTHING') AS 'SALARY OR POINT' : SALARY 출력 , NULL이면 POINT , POINT조차 NULL이면 "NOTHING"
-
-
 -->
 
 <!-- 
@@ -544,24 +362,6 @@
     새롭게 지정하고 싶은 열이름
 
         - SELECT 열이름 "새로운 열이름" FROM 테이블명;
-
-
-
-    숫자 함수
-
-        - ROUND() : 소숫점의 자릿수를 지정하여 반올림
-        
-        - TRUNC() : 해당 소수점 자리에서 잘라낼 때 사용
-        
-        - MOD(M,N) : M을 N으로 나눈 나머지를 나타냄
-
-        - ABS() : 값을 절대값으로 변환할 때 사용
-
-        - SIGN() : 숫자가 양수면 1, 음수면 -1, 0이면 0 반환
-        
-        - SQRT() : 제곱근
-
-        - POWER(데이터, N) : N승
 
 
 
