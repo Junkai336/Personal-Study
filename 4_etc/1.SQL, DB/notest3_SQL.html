@@ -1,0 +1,224 @@
+<!-- 
+  JOIN
+
+    EQUL JOIN
+      - 동등 조인
+      - 등호(=)를 사용하는 조인
+
+      - 두 테이블 컬럼 값이 동일한 경우를 기준으로 데이터 결합
+      - 예: SQL의 INNER JOIN
+
+
+    NON EQUL JOIN
+      - 비동등 조인
+      - 등호 외에 다른 비교 연산자(>, <, <=, >=, !=, BETWEEN 등)을 사용하는 조인
+
+        ex) 
+          SELECT
+            A.SCORE,
+            A.MIN_SCORE,
+            A.MAX_SCORE
+          FROM
+            AAA AS A
+          JOIN 
+            BBB AS B
+          ON
+            A.SCORE BETWEEN A.MIN_SCORE AND A.MAX_SCORE
+
+
+    STANDARD JOIN
+      - ANSI JOIN, 표준 조인
+
+
+      INNER JOIN
+        - JOIN 조건에 충족하는 데이터만 출력 (교집합)
+
+
+      OUTER JOIN
+        - JOIN 조건에 만족하지 않는 행들도 출력되는 형태
+        - LEFT OUTER JOIN(LEFT JOIN), RIGHT OUTER JOIN(RIGHT JOIN), FULL OUTER JOIN
+
+
+        LEFT OUTER JOIN
+          - 왼쪽 테이블의 '모든 행'을 반환
+          - 오른쪽 테이블과 매칭되지 않는 데이터는 NULL로 채움
+
+            ex)
+              SELECT
+                E.EMP_ID,
+                E.NAME,
+                E.DEPT_ID,
+                D.DEPT_NAME
+              FROM
+                EMPLOYEES E
+              LEFT OUTER JOIN 
+                DEPARTMENT D
+              ON
+                E.DEPT_ID = D.DEPT_ID
+
+              A 테이블
+              emp_id	name	dept_id
+              1	       A	    10
+              2	       B	    20
+              3	       C	    30
+
+              B 테이블
+              dept_id dept_name
+              10	      HR
+              10	      HR2
+              20	      IT
+              40	    Marketing
+              50	      Sales
+
+              결과
+              emp_id	  name	  dept_id	  dept_name
+                1	     Alice	    10	      HR
+                1	     Alice	    10	      HR2
+                2	     Bob	      20	      IT
+                3	     Charlie	  30	      NULL
+
+              주의
+                - ON 조건에 맞는 행을 조인하면서 + 왼쪽에 있는 모든 행 나옴
+
+
+        RIGHT OUTER JOIN
+          - 오른쪽 테이블의 모든행 반환
+          - 왼쪽 테이블과 매칭되지 않는 데이터는 NULL로 채움
+
+
+        FULL OUTER JOIN
+          - 양쪽 테이블의 모든 행 반환
+          - 매칭되지 않는 데이터는 NULL로 반환
+          - 합집합
+          - MYSQL : 미지원 (UNION으로 대체)
+
+            ex)
+              LEFT OUTER JOIN 예제
+
+              SELECT
+                E.EMP_ID,
+                E.NAME,
+                E.DEPT_ID,
+                D.DEPT_NAME
+              FROM
+                EMPLOYEES E
+              FULL OUTER JOIN
+                DEPARTMENT D
+              ON
+                E.DEPT_ID = D.DEPT_ID
+
+              결과
+              emp_id	name	dept_id	dept_name
+              1	    Alice	    10	    HR
+              1	    Alice	    10	    HR2
+              2	    Bob	      20	    IT
+              3     Charlie	  30	    NULL
+              NULL	NULL	    40	    Marketing
+              NULL	NULL	    50	    Sales
+
+
+      NATURAL JOIN
+        - 동일한 이름의 컬럼을 자동으로 조인 (ON절 X)
+        - 컬럼을 명시하지 않아도 됨
+        - A테이블과 B테이블에서 같은 이름을 가진 컬럼들이 모두 동일한 데이터를 가지고 있으면 JOIN 됨
+        - MSSQL : 미지원
+
+      
+      CROSS JOIN
+        - 두 테이블의 모든 데이터의 데카르트 곱(Cartesian Product) 반환
+        - A 테이블 행 개수 * B 테이블 행 개수만큼 행이 반환
+        - A와 B에서 조합할 수 있는 모든 경우의 수가 출력됨
+
+
+      USING
+        - NATURAL JOIN과 비슷하지만, 특정 컬럼을 명시적으로 지정하여 조인할 때 사용
+        - USING은 동일한 이름의 컬럼을 기준으로 동작
+        - 조인 결과에서 중복된 컬럼은 하나만 반환
+        - MSSQL : 미지원
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+-->
+
+
+
+<!-- 
+
+    서브쿼리
+
+        - 하나의 SQL문 안에 포함된 다른 SQL문
+
+        - 조건에 따른 데이터 필터링 : 다른 테이블의 결과에 따라 데이터를 필터링할 때 사용
+        - 비교에 따른 데이터 검색 : 서브쿼리를 사용하여 두 개 이상 테이블 비교 후 원하는 결과 도출
+        - 그룹화된 데이터 비교 : 그룹화된 데이터 비교 후 원하는 결과 도출
+
+        일반 서브쿼리
+            - 하나의 변수처럼 사용, 쿼리 결과에 따라 구분
+
+            - 단일행 서브쿼리(SingleRow Subquery)
+                - 쿼리 결과가 단일행만 리턴
+
+                ex)
+                    SELECT FIRSTNAME, LASTNAME FROM EMPLOYEES
+                        WHERE EMPLOYEEID = (SELECT MANAGERID FROM EMPLOYESS WHERE EMPLOYEEID = 100);
+                    => EMPLOYEEID 가 100인 MANAGERID가 나오고 이후 외부쿼리의 EMPLOYEEID와 일치하는 행 반환
+
+            - 다중행 서브쿼리(MultieRow Subquery)
+                - 쿼리 결과가 다중행을 리턴
+
+                ex)
+                    SELECT FIRSTNAME, LASTNAME FROM EMPLOYEES
+                        WHERE DEPARTMENT IN (SELECT DEPARTMENT FROM DEPARTMENTS WHERE LOCATION = 'NEW YORK');
+                    => LOCATION이 NEW YORK인 부서의 DEPARTMENT 값 반환 후 이 값을 포함하는 직원 반환
+
+            - 다중칼럼 서브쿼리(MultieColumn Subquery)
+                - 쿼리 결과가 다중칼럼을 리턴
+
+
+
+        인라인 뷰(Inline View)
+            - 뷰 형태로써 테이블을 리턴 (테이블 대체)
+            - FROM 내 쿼리 또는 JOIN 할 테이블을 리턴할 때 사용
+
+
+
+        스칼라 서브쿼리(Scalar Subquery)
+            - 하나의 칼럼처럼 사용되는 서브쿼리
+
+            ex) SELECT FIRSTNAME, LASTNAME, (SELECT MAX(SALARY) FROM SALARIES) AS MAXSALARY FROM EMPLOYEES;
+            => SALARIES 테이블에서 최대 급여 반환 후 이 값을 모든 직원의 각 행에 추가하여 함께 반환
+            
+            ex) SELECT FIRSTNAME, LASTNAME, SALARY FROM EMPLOYEES
+                    WHERE SALARY > (SELECT AVG(SALARY) FROM EMPLOYEES);
+            => SALARY가 평균보다 높은 직원들 출력
+            
+
+        상호 연관 서브쿼리(Correlative Subquery)
+            - 메인 쿼리의 값을 사용하는 서브쿼리
+            - 메인 쿼리의 결과로 서브쿼리가 실행 , 그 결과로 메인쿼리가 또 실행되는 서로 연관된 쿼리
+            (스칼라 서브쿼리 이면서 상호 연관 서브쿼리 일 수 있다.)
+
+
+
+
+
+-->
