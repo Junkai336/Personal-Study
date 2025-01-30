@@ -63,6 +63,11 @@
 
         - SELECT 칼럼명 FROM 테이블명 WHERE 칼럼명 NOT BETWEEN 5000 AND 10000 : 해당 범위에 해당하지 않는 값 불러오기
 
+    WHERE 절
+
+        - WHERE NULL = NULL (항상 FALSE)
+        - WHERE 컬럼 = NULL (항상 FALSE)
+        - NULL은 값이 아니라 상태
 
 
     ORDER BY 절
@@ -71,6 +76,7 @@
         - SELECT 칼럼명 FROM 테이블명 ORDER BY 정렬기준칼럼명 DESC or ASC, 정렬기준칼럼명 DESC or ASC : 앞에 정의된 칼럼기준 정렬 후 다음에 나열된 칼럼 기준으로 정렬
 
         - SELECT 절 다음에 수행되기 때문에 SELECT 절에서 정의한 ALIAS를 사용할 수 있음
+        - FROM - WHERE - GROUP BY - HAVING - SELECT - ORDER BY
 
         - 정렬의 기준이 되는 칼럼에 NULL 데이터 포함되어 있을 경우 DB 종류에 따라 정렬 위치가 달라짐
             - MSSQL, MYSQL, POSTGRESQL : NULL을 최소값으로 봄 (ASC면 맨 앞 위치)
@@ -197,6 +203,8 @@
         - SELECT 칼럼명 AS 지정할명칭 FROM 테이블명
 
         - SELECT NAME 'Hello' FROM member = SELECT NAME AS 'Hello' FROM member : AS를 생략할 수도 있다.
+
+        - alias를 별도로 지정해주지 않으면 컬럼명이 대문자로 출력
 -->
 
 <!-- 
