@@ -121,8 +121,12 @@
         - 동일한 이름의 컬럼을 자동으로 조인 (ON절 X)
         - 컬럼을 명시하지 않아도 됨
         - A테이블과 B테이블에서 같은 이름을 가진 컬럼들이 모두 동일한 데이터를 가지고 있으면 JOIN 됨
+        - 두 테이블에서 동일한 이름의 컬럼을 자동으로 찾아서 조인한다.
         - 공통 칼럼 앞에 테이블명이나 alias를 붙이면 에러 발생
         - MSSQL : 미지원
+
+          ex) SELECT * FROM EMPLOYEES NATURAL JOIN DEPARTMENTS
+              => 공통으로 가지는 컬럼 DEPT_ID를 기준으로 조인
 
       
       CROSS JOIN
@@ -130,47 +134,155 @@
         - A 테이블 행 개수 * B 테이블 행 개수만큼 행이 반환
         - A와 B에서 조합할 수 있는 모든 경우의 수가 출력됨
 
+          ex) SELECT C.COLOR, S.SIZE FROM COLORS C CORSS JOIN S
+              => color가 3개 행, size가 3개 행 있으면 결과는 총 3*3 = 9행 (모든 색상과 모든 사이즈 조합 출력)
+
 
       USING
         - NATURAL JOIN과 비슷하지만, 특정 컬럼을 명시적으로 지정하여 조인할 때 사용
+        - USING은 조건 설정에 제약이 있고 INNER JOIN은 유연하게 조인 조건 지정 가능
         - USING은 동일한 이름의 컬럼을 기준으로 동작
         - 조인 결과에서 중복된 컬럼은 하나만 반환
         - MSSQL : 미지원
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+          ex) SELECT * FROM EMPLOYEES JOIN DEPARTMENTS USING (DEPT_ID)
 
 
 -->
-
 
 
 <!-- 
 
     서브쿼리
 
-        - 하나의 SQL문 안에 포함된 다른 SQL문
-
+        - 하나의 SQL문(쿼리) 안에 포함된 다른 SQL문(쿼리)
         - 조건에 따른 데이터 필터링 : 다른 테이블의 결과에 따라 데이터를 필터링할 때 사용
         - 비교에 따른 데이터 검색 : 서브쿼리를 사용하여 두 개 이상 테이블 비교 후 원하는 결과 도출
         - 그룹화된 데이터 비교 : 그룹화된 데이터 비교 후 원하는 결과 도출
+        
+
+        위치에 따른 분류
+          - SELECT절 : 스칼라 서브쿼리 (Scalar Subquery)
+          - FROM절 : 인라인 뷰 (Inline View)
+          - WHERE절, HAVING절 : 중첩 서브쿼리 (Nested Subquery)
+
+
+        스칼라 서브쿼리
+          - 하나의 행과 하나의 열만 반환하는 서브쿼리
+          - 여러 개의 행을 반환하면 오류 발생
+          - 각 행마다 실행되므로 데이터가 많아질수록 성능 저하
+          - 주로 SELECT 절에 위치하지만 컬럼이 올 수 있는 대부분 위치에 사용 가능 
+            (
+              단일값 설정: UPDATE의 SET문, 
+              단일값 삽입: INSERT의 VALUES문, 
+              동적으로 정렬 기준 설정: ORDER BY절, 
+              단일값 조건 비교: WHERE절, 
+              단일값 기준 필터링: HAVING절
+            )
+          - 중첩 서브쿼리와의 차이는 스칼라는 단일 값만 반환하는 서브쿼리고 중첩 서브쿼리는 다른 서브쿼리를 포함하는 서브쿼리, 다중행 다중열 반환 가능
+          - 반드시 단일값을 반환해야 하므로 반드시 하나의 행이 나오도록 보장해야 함
+          - 0개 행 반환하면 NULL
+
+            ex) SELECT FIRSTNAME, LASTNAME, (SELECT MAX(SALARY) FROM SALARIES) AS MAXSALARY FROM EMPLOYEES;
+                => SALARIES 테이블에서 최대 급여 반환 후 이 값을 모든 직원의 각 행에 추가하여 함께 반환
+            
+            ex) SELECT FIRSTNAME, LASTNAME, SALARY FROM EMPLOYEES
+                    WHERE SALARY > (SELECT AVG(SALARY) FROM EMPLOYEES);
+                => SALARY가 평균보다 높은 직원들 출력
+
+            ex) UPDATE EMPLOYEES SET BOUNUS = (SELECT AVG(SALARY) FROM EMPLOYEES) WHERE DEPT_ID = 1;
+                => 직원의 평균 월급이 보너스로 주어짐
+
+
+        인라인 뷰
+          - FROM 절 등 테이블명이 올 수 있는 위치에 사용 가능
+          - 쿼리 실행 시 임시 결과셋(가상 테이블) 생성
+          - 주 쿼리에서 다른 테이블처럼 활용 가능
+          - 실행과정에서 먼저 서브쿼리를 평가하여 임시 테이블을 만들고 이후 주 쿼리가 이 결과셋에 대해 조인이나 조건식을 적용하는 형태
+
+          - 반드시 별칭을 지정해야 한다.
+          - 쿼리 실행시에만 존재하는 임시 결과셋으로 집계, 정렬, 필터링 결과를 임시 저장하고 재사용 가능
+          - 다중 단계의 집계나 복잡한 계산을 인라인 뷰로 분리하면, 주 쿼리 가독성 좋아지고 유지보수 좋아짐
+          
+          - 복잡한 서브쿼리 로직을 분리하여 주 쿼리를 더 명확하게 만들 수 있음
+          - 집계, 필터링, 정렬 등 다양한 작업을 임시 테이블처럼 처처리할 수 있어 복잡한 작업에 유용
+
+          - 스칼라 서브쿼리 : 단일 행, 단일 열 값 반환, 주로 SELECT WHERE HAVING ORDER BY 등 단일 값이 필요한 위치에 사용
+          - 인라인 뷰 : 다수 행, 다수 열 반환 가능, FROM 절에서 사용되어 임시 테이블처럼 동작
+          - 중첩 서브쿼리 : 서브쿼리 내부에 또다른 서브쿼리를 포함하는 형태, 복잡한 조건 처리할 때 사용
+                            인라인 뷰는 단순히 결과셋을 임시 테이블처럼 사용하는 것
+          
+            ex)
+              SELECT
+                  E.FIRSTNAME,
+                  E.LASTNAME,
+                  E.SALARY,
+                  T.MAX_SALARY
+              FROM
+                  EMPLOYEES E,
+                  (
+                    SELECT
+                      DEPARTMENT_ID,
+                      MAX(SALARY) AS MAX_SALARY
+                    FROM
+                      EMPLOYEES
+                    GROUP BY
+                      DEPARTMENT_ID
+                  ) AS T
+              WHERE
+                  E.DEPARTMENT_ID = T.DEPARTMENT_ID
+              AND E.SALARY = T.MAX_SALARY
+                  => 직원의 부서 ID별 최대 급여 계산한 결과와 직원 테이블과 조인하여 최고 급여를 받은 직원 조회
+
+            ex)
+              SELECT
+                T.EMPLOYEE_ID,
+                T.FIRSTNAME,
+                T.LASTANME,
+                T.TOTAL_SALES
+              FROM
+                (
+                  SELECT
+                    EMPLOYEE_ID,
+                    FIRSTNAME,
+                    LASTNAME,
+                    SUM(SALES) AS TOTAL_SALES
+                  FROM
+                    SALES_RECORDS
+                  WHERE
+                    SALE_DATE BETWEEN '2025-01-01' AND '2025-01-31'
+                  GROUP BY
+                    EMPLOYEE_ID, FIRSTNAME, LASTNAME
+                ) AS T
+              WHERE
+                T.TOTAL_SALES > 10000
+              ORDER BY
+                T.TOTAL_SALES DESC
+                  => 1월달의 판매량 합계를 인라인뷰로 계산하고 만원이상 판 직원만 조회
+
+
+        중첩 서브쿼리
+          - WHERE절과 HAVING절에서 사용 가능
+          
+          - 연관 서브쿼리
+            - 메인 쿼리와 관계를 맺고 있음
+            - 서브쿼리 내에 메인쿼리의 컬럼이 존재
+
+          - 비연관 서브쿼리
+            - 메인 쿼리와 관계를 맺고 있지 않음
+            - 서브쿼리 내에 메인쿼리의 컬럼이 존재하지 않음
+
+
+
+
+
+
+
+
+
+
+
+
 
         일반 서브쿼리
             - 하나의 변수처럼 사용, 쿼리 결과에 따라 구분
@@ -193,24 +305,6 @@
 
             - 다중칼럼 서브쿼리(MultieColumn Subquery)
                 - 쿼리 결과가 다중칼럼을 리턴
-
-
-
-        인라인 뷰(Inline View)
-            - 뷰 형태로써 테이블을 리턴 (테이블 대체)
-            - FROM 내 쿼리 또는 JOIN 할 테이블을 리턴할 때 사용
-
-
-
-        스칼라 서브쿼리(Scalar Subquery)
-            - 하나의 칼럼처럼 사용되는 서브쿼리
-
-            ex) SELECT FIRSTNAME, LASTNAME, (SELECT MAX(SALARY) FROM SALARIES) AS MAXSALARY FROM EMPLOYEES;
-            => SALARIES 테이블에서 최대 급여 반환 후 이 값을 모든 직원의 각 행에 추가하여 함께 반환
-            
-            ex) SELECT FIRSTNAME, LASTNAME, SALARY FROM EMPLOYEES
-                    WHERE SALARY > (SELECT AVG(SALARY) FROM EMPLOYEES);
-            => SALARY가 평균보다 높은 직원들 출력
             
 
         상호 연관 서브쿼리(Correlative Subquery)
@@ -221,5 +315,25 @@
 
 
 
+
+-->
+
+<!-- 
+  VIEW
+
+-->
+
+<!-- 
+  집합연산자
+
+    - UNION
+
+    - UNION ALL
+
+    - INTERSECT
+
+    - MINUS
+
+    - EXCEPT
 
 -->
