@@ -421,37 +421,6 @@
 
 
 
-        UNION 문
-
-            - 2개 이상의 SELECT 문의 결과를 결합하는데 사용
-            - 중복 행은 제거됨
-            - ex)
-                SELECT COLUMN1, COLUMN2 FROM TABLE1
-                UNION
-                SELECT COLUMN1, COLUMN2 FROM TABLE2
-
-
-
-        INTERSECT 문
-
-            - 2개 이상의 SELECT 문의 결과 중 공통된 행만 반환
-            - ex)
-                SELECT PRODUCT_ID, PRODUCT_NAME FROM PRODUCTS
-                INTERSECT
-                SELECT COLUMN1, COLUMN2 FROM TABLE2
-
-
-
-        EXCEPT 문
-
-            - 첫번째 SELECT 문의 결과에서 두 번째 SELECT 문의 결과를 제외한 행 반환
-            - ex)
-                SELECT COLUMN1, COLUMN2 FROM TABLE1
-                EXCEPT
-                SELECT COLUMN1, COLUMN2 FROM TABLE2
-
-
-
         CREATE INDEX 문
 
             - 인덱스 생성 (데이터베이스 검색 속도 향상시키는 데 사용)

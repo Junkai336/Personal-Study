@@ -263,63 +263,205 @@
 
         중첩 서브쿼리
           - WHERE절과 HAVING절에서 사용 가능
+          - 메인 쿼리(외부 쿼리) 내에서 하나의 서브쿼리(내부 쿼리)를 포함하는 구조
+          - 내부 쿼리의 결과가 외부 쿼리의 조건이나 계산에 사용
+
+          - 여러 테이블의 데이터나 집계 결과를 비교하여 조건을 설정할 때 유용
+          - 내부 쿼리에서 계산된 결과(평균, 최대값, 합계 등)을 외부 쿼리의 조건이나 컬럼에 사용할 수 있음
+          - 특정 조건을 만족하는 데이터를 추출하거나 여러 단계의 필터링이 필요한 경우 활용 가능
           
-          - 연관 서브쿼리
+          - 연관 서브쿼리 (상관 서브쿼리)
             - 메인 쿼리와 관계를 맺고 있음
             - 서브쿼리 내에 메인쿼리의 컬럼이 존재
+            - 내부 쿼리가 외부 쿼리의 컬럼이나 조건에 의존
+            - 외부 쿼리의 각 행마다 내부 쿼리가 실행되어 결과가 달라질 수 있음
 
-          - 비연관 서브쿼리
+            ex)
+              SELECT
+                E1.EMPLOYEE_ID,
+                E1.FIRSTNAME,
+                E1.LASTANME,
+                E1.SALARY
+              FROM
+                EMPLOYEES E1
+              WHERE
+                E1.SALARY = (
+                              SELECT 
+                                MAX(E2.SALARY)
+                              FROM
+                                EMPLOYEES E2
+                              WHERE
+                                E2.DEPARTMENT_ID = E1.DEPARTMENT_ID
+                            )
+                => 각 부서별로 최대 급여를 받는 직원 조회
+                => 외부 쿼리의 컬럼인 DEPARTMENT_ID를 참조하여 동적으로 실행됨
+                => 각 행마다 내부 서브쿼리가 실행되어 부서별 최대 급여 계산산
+
+
+          - 비연관 서브쿼리 (비상관 서브쿼리)
             - 메인 쿼리와 관계를 맺고 있지 않음
             - 서브쿼리 내에 메인쿼리의 컬럼이 존재하지 않음
+            - 내부 쿼리가 외부 쿼리의 컬럼이나 조건에 의존하지 않고 독립적으로 실행됨 (내부 쿼리의 결과가 먼저 계산)
+
+            ex)
+              SELECT
+                EMPLOYEE_ID, 
+                FIRSTNAME, 
+                LASTNAME, 
+                SALARY
+              FROM
+                EMPLOYEES
+              WHERE
+                SALARY > (SELECT AVG(SALARY) FROM EMPLOYEES)
+                => 평균 급여보다 높은 직원 조회
+                => 외부 쿼리와 관계없음
+                => 외부 쿼리와 독립적으로 실행되기 때문에 단 한 번 계산됨
 
 
+          - 다중 중첩 서브쿼리
+            - 하나의 서브쿼리 내에 또 다른 서브쿼리 포함
+            - 내부 쿼리들이 계층적으로 실행되어 복잡한 조건이나 데이터 가공하는 데 사용
+            - 특정 조건을 만족하는 데이터 집합을 먼저 추출한 후 그 결과를 다시 다른 조건과 결합할 때 사용
+
+            ex)
+              SELECT
+                EMPLOYEE_ID,
+                FIRSTNAME,
+                LASTANAME
+              FROM
+                EMPLOYEES
+              WHERE
+                DEPARTMENT_ID IN (
+                                  SELECT
+                                    DEPARTMENT_ID
+                                  FROM
+                                    DEPARTMENTS
+                                  WHERE
+                                    LOCATION_ID IN (
+                                                    SELECT
+                                                      LOCATION_ID
+                                                    FROM
+                                                      LOCATIONS
+                                                    WHERE
+                                                      CITY = 'SEOUL'
+                                                    )
+                                  )
+
+        서브쿼리 유형
 
 
+          - 단일행 서브쿼리
+            - 실행 결과로 하나의 행만 반환하는 서브쿼리
+            - 비교 연산자(=, <, >, <=, >=)와 함께 사용
+            - 반환된 단일 행의 값을 외부 쿼리의 조건이나 계산에 활용
+
+              ex)
+                SELECT
+                  EMPLOYEE_ID, SALARY
+                FROM
+                  EMPLOYEES
+                WHERE
+                  SALARY = (SELECT MAX(SALARY) FROM EMPLYEES)
+
+          - 다중행 서브쿼리
+            - 실행 결과로 두 개 이상의 행을 반환하는 서브쿼리
+            - 여러 행의 결과를 조건으로 비교할 때 IN, ANY, ALL 등 연산자와 함께 사용
+
+              ex)
+                SELECT
+                  EMPLOYEE_ID, SALARY
+                FROM
+                  EMPLOYEES
+                WHERE
+                  DEPARTMENT_ID IN (
+                                    SELECT
+                                      DEPARTMENT_ID
+                                    FROM
+                                      DEPARTMENTS
+                                    WHERE
+                                      LOCATION = 'HELLO~'
+                                    )
 
 
+          - 다중칼럼 서브쿼리리
+            - 서브쿼리의 결과가 두 개 이상의 컬럼으로 구성되는 경우
+            - 튜플 단위의 비교가 필요할 때 사용되고 주로 (컬럼1, 컬럼2, ...) 와 같은 형식으로 외부 쿼리의 값과 비교
 
+              ex)
+                SELECT
+                  EMPLOYEE_ID,
+                  SALARY
+                FROM
+                  EMPLOYEES
+                WHERE
+                  (DEPARTEMNT_ID, SALARY) IN (
+                                              SELECT
+                                                DEPARTMENT_ID, MAX(SALARY)
+                                              FROM
+                                                EMPLOYEES
+                                              GROUP BY
+                                                DEPARTMENT_ID
+                                              )
+                => 각 DEPARTMENT_ID 별 최대 SALARY와 해당 부서 ID를 튜플로 반환
+                    외부 쿼리는 직원의 부서와 급여가 이 튜플과 일치하는지 비교
 
-
-
-
-
-
-        일반 서브쿼리
-            - 하나의 변수처럼 사용, 쿼리 결과에 따라 구분
-
-            - 단일행 서브쿼리(SingleRow Subquery)
-                - 쿼리 결과가 단일행만 리턴
-
-                ex)
-                    SELECT FIRSTNAME, LASTNAME FROM EMPLOYEES
-                        WHERE EMPLOYEEID = (SELECT MANAGERID FROM EMPLOYESS WHERE EMPLOYEEID = 100);
-                    => EMPLOYEEID 가 100인 MANAGERID가 나오고 이후 외부쿼리의 EMPLOYEEID와 일치하는 행 반환
-
-            - 다중행 서브쿼리(MultieRow Subquery)
-                - 쿼리 결과가 다중행을 리턴
-
-                ex)
-                    SELECT FIRSTNAME, LASTNAME FROM EMPLOYEES
-                        WHERE DEPARTMENT IN (SELECT DEPARTMENT FROM DEPARTMENTS WHERE LOCATION = 'NEW YORK');
-                    => LOCATION이 NEW YORK인 부서의 DEPARTMENT 값 반환 후 이 값을 포함하는 직원 반환
-
-            - 다중칼럼 서브쿼리(MultieColumn Subquery)
-                - 쿼리 결과가 다중칼럼을 리턴
-            
-
-        상호 연관 서브쿼리(Correlative Subquery)
-            - 메인 쿼리의 값을 사용하는 서브쿼리
-            - 메인 쿼리의 결과로 서브쿼리가 실행 , 그 결과로 메인쿼리가 또 실행되는 서로 연관된 쿼리
-            (스칼라 서브쿼리 이면서 상호 연관 서브쿼리 일 수 있다.)
-
-
-
-
+                => 외부쿼리 EMPLOYEES의 DEPARTMENT_ID, SALARY가 내부쿼리 DEPARTMENT_ID, SALARY랑 일치하면 인스턴스 반환한다는 소리
 
 -->
 
 <!-- 
   VIEW
+    - 실제 데이터를 저장하지 않고, 기본 테이블의 데이터를 조회하기 위해 미리 정의된 SELECT문
+    - 사용자가 뷰에 대해 SELECT 실행시 뷰를 구성하는 SELECT 쿼리 실행 후 결과 반환
+    - 뷰를 조회할 때마다 기본 테이블의 최신 데이터 반영 후 결과를 보여줌 (기존 테이블 변경 = 뷰 결과 변화)
+
+    - 복잡한 쿼리 캡슐화, 특정 사용자에게 필요한 데이터만 노출시키는 용도로 좋음
+    - 사용자가 직접 기본 테이블의 모든 데이터를 조회하지 못하도록 view를 통해 필요한 컬럼만 노출시킬 수 있음
+    - 동일한 데이터를 여러번 조회할 때 복잡한 쿼리를 매번 작성하는 대신 뷰를 사용하여 일관된 데이터를 쉽게 재사용 가능
+    - 기본 테이블 구조가 변경되더라도 뷰의 정의만 적절히 업데이트하면 동일한 인터페이스 유지 가능 (논리적 데이터 독립성)
+    - 복잡한 조인, 집계, 계산 로직이 포함된 쿼리를 하나의 뷰로 정의하면 단순한 테이블처럼 사용할 수 있어 쿼리 작성, 유지보수 용이해짐
+
+    - 기본 테이블의 구조가 변경되면 뷰는 기본 테이블에 종속적이므로 함께 수정 필요
+
+    - 정의
+      CREATE VIEW 직원정보 AS
+        SELECT 
+          A, 
+          B, 
+          C, 
+          ...
+        FROM 
+          EXAM
+
+
+      ex) 셀렉트
+        CREATE VIEW ACTIVE_CUSTOMERS AS
+          SELECT
+            CUSTOMER_ID,
+            CUSTOMER_NAME,
+            PHONE
+          FROM
+            CUSTOMERS
+          WHERE
+            ACTIVE = 'Y'
+
+          SELECT * FROM ACTIVE_CUSTOMERS
+          
+          => 그냥 셀렉트 별 프롬 테이블하면 다 반환됨
+
+      ex) 업데이트
+        UPDATE
+          ACTIVE_CUSTOMERS
+        SET
+          PHONE = '010-1234-1234'
+        WHERE
+          CUSTOMER_ID = 1
+
+          => VIEW를 이용하여 CUSTOMERS 테이블의 PHONE 컬럼 업데이트
+          => VIEW가 단순 뷰면 업데이트가 허용되고, 여러 테이블 조인하거나 집계 함수 등이 포함되어 있으면 제한됨
+
+          => 업데이트 가능한 VIEW : 기본 테이블의 모든 열이 직접적으로 참조되어야 함
+                                    데이터의 변경이 단일 기본 테이블에만 영향을 주는 경우에 한정
 
 -->
 
@@ -335,5 +477,37 @@
     - MINUS
 
     - EXCEPT
+
+
+
+
+            UNION 문
+
+            - 2개 이상의 SELECT 문의 결과를 결합하는데 사용
+            - 중복 행은 제거됨
+            - ex)
+                SELECT COLUMN1, COLUMN2 FROM TABLE1
+                UNION
+                SELECT COLUMN1, COLUMN2 FROM TABLE2
+
+
+
+        INTERSECT 문
+
+            - 2개 이상의 SELECT 문의 결과 중 공통된 행만 반환
+            - ex)
+                SELECT PRODUCT_ID, PRODUCT_NAME FROM PRODUCTS
+                INTERSECT
+                SELECT COLUMN1, COLUMN2 FROM TABLE2
+
+
+
+        EXCEPT 문
+
+            - 첫번째 SELECT 문의 결과에서 두 번째 SELECT 문의 결과를 제외한 행 반환
+            - ex)
+                SELECT COLUMN1, COLUMN2 FROM TABLE1
+                EXCEPT
+                SELECT COLUMN1, COLUMN2 FROM TABLE2
 
 -->
