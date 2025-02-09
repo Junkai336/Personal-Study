@@ -1,9 +1,259 @@
 <!-- 
+    그룹단위 결과출력
+
+        - GROUP BY
+
+            - 반드시 그룹 함수 ( COUNT, MAX, MIN, AVG, SUM ) 들과 함께 쓰인다.
+            - GROUP BY 절이 그룹 함수들의 연산에 기준이 된다.
+            - 칼럼을 기준으로 같은 값이면 GROUP BY로 묶이는 듯?????
+
+            ex) SELECT COMPANY, SUM(SALARY) FROM TABLE GROUP BY COMPANY
+                => COMPANY가 A,B,C 3개 있을 때 각각 나뉘어서 SALARY 합계값 출력
+
+                COMPANY SUM(SALARY)
+                A       1100
+                B       1200
+                C       1000
+
+
+
+        - HAVING
+
+            - WHERE 절은 GROUP BY 절보다 먼저 처리된다.
+            - HAVING 절은 GROUP BY 절 이후에 처리된다. (WHERE절과 역할은 같다.)
+
+            - WHERE 절에 사용해도 되는 조건까지 HAVING 절로 써버리면 성능상 불리할 수 있음 (GROUP BY할 데이터량이 많아져서)
+            - WHERE 절은 데이터 개별 행에 적용
+            - 집계 함수는 각 행이 아닌 그룹화된 데이터에 적용 (집계 함수에 대한 조건절은 HAVING 절 이용)
+
+            - 데이터를 그룹핑한 후 특정 그룹을 골라낼 때 사용
+            - SELECT절 이전에 실행되기 때문에 SELECT 절에 명시되지 않은 집계 함수로도 조건을 부여할 수 있다.
+
+            ex) SELECT COMPANY, SUM(SALARY) FROM TABLE GROUP BY COMPANY HAVING SUM(SALARY) >= 1200
+                => 이 경우는 COMPANY B의 SUM 1200만 출력된다.
+
+            ex) SELECT 
+                    PRODUCT_CODE, 
+                    COUNT(ORDER_CNT) AS ORDER-CNT
+                FROM 
+                    ORDER_PRODUCT
+                WHERE 
+                    ORDER_DATE BETWEEN '20210701' AND '20210731'
+                GROUP BY 
+                    PRODUCT_CODE
+                HAVING 
+                    COUNT(ORDER_CNT) >= 1000
 
 
 -->
 
 <!-- 
 집계함수
+
+        - SUM(EXPR)
+
+            - EXPR의 총합을 구하는 함수
+            - 집계 함수는 NULL을 제외하고 유효한 숫자값만 계산함 (SUM, AVG, COUNT, MIN, MAX)
+            
+            ex) SELECT SUM(SALARY) FROM TABLE
+            ex) SELECT CLASS, SUM(SALARY) FROM TABLE GROUP BY CLASS
+                => 같은 CLASS로 묶어서 SALARY를 합한 값을 출력한다.
+
+
+
+        - AVG(EXPR)
+
+            - EXPR의 평균을 구하는 함수
+
+            ex) SELECT AVG(SALARY) FROM TABLE
+            ex) SELECT CLASS, AVG(SALARY) FROM TABLE GROUP BY CLASS
+
+
+        그룹 함수들을 사용할 때 EXPR에는 칼럼명이 아니라 CASE 등 조건을 사용할 수 있다.
+
+
+        
+        - MAX(EXPR)
+
+            - EXPR 중 최댓값 반환
+
+
+
+        - MIN(EXPR)
+
+            - EXPR 중 최솟값 반환
+
+            ex) SELECT MAX(SALARY), MIN(SALARY) FROM TABLE GROUP BY CLASS
+
+
+
+        - COUNT(EXPR)
+
+            - EXPR의 '행의 개수'를 반환
+            - NULL값은 개수 포함 X
+            
+            - COUNT(*) : NULL을 포함하여 모든 행 개수 반환
+            - COUNT(칼럼) : 칼럼값이 NULL인 ROW를 제외하고 COUNT하여 반환
+            - COUNT(DISTINCT 칼럼) : 칼럼값이 NULL이 아닌 ROW에서 중복을 제거한 COUNT 반환
+
+            ex) SELECT CLASS, COUNT(SALARY) FROM TABLE GROUP BY CLASS
+            ex) COUNT(*), COUNT(열이름), COUNT(DISTINCT 열이름) 등을 사용해 NULL이나 중복값 쉽게 검증 가능
+
+-->
+
+<!-- 
+소계함수
+
+        - ROLLUP
+          - 계층적 집계
+          - 지정한 컬럼들에 대해 계층적으로 집계 결과 생성
+          - 점진적으로 높은 수준의 집계가 필요할 때 사용
+          - 인수의 순서에 따라 결과가 달라짐
+
+          - ROLLUP (A) : A로 그룹핑, 총합계
+          - ROLLUP (A, B) : A, B로 그룹핑, A로 그룹핑, 총합계
+          - ROLLUP (A, B, C) : A, B, C로 그룹핑, A, B로 그룹핑, A로 그룹핑, 총합계계
+          
+          ex)
+            SELECT
+              DEPARTMENT,
+              JOB,
+              SUM(SALARY) AS TOTAL_SALARY
+            FROM
+              EMPLOYEES
+            GROUP BY 
+              ROLLUP(DEPARTMENT, JOB)
+
+        - CUBE
+          - 모든 조합의 집계
+          - 지정한 컬럼들의 모든 가능한 조합에 대해 집계 계산
+          - ROLLUP보다 더 많은 소계(교차 소계)를 생성
+
+          - CUBE(A) : A로 그룹핑, 총합계
+          - CUBE(A, B) : A, B로 그룹핑, A로 그룹핑, B로 그룹핑, 총합계
+          - CUBE(A, B, C) : A,B,C / A,B / A,C / B,C / A / B / C / 총합계
+
+          ex)
+            SELECT
+              DEPARTMENT,
+              JOB,
+              SUM(SALARY) AS TOTAL_SALARY
+            FROM
+              EMPLOYEES
+            GROUP BY
+              CUBE(DEPARTMENT, JOB)
+
+
+        - GROUPING SETS
+          - 사용자 정의 집계 그룹
+          - 여러 개의 GROUP BY 조합을 명시적으로 지정할 수 있도록 함
+          - ROLLUP, CUBE와 달리 필요한 집계 조합만 선택적으로 지정할 수 있어 유연함
+
+          - GROUPING SETS(A, B) : A로 그룹핑, B로 그룹핑
+          - GROUPING SETS(A, B, ()) : A로 그룹핑, B로 그룹핑, 총합계
+          - GROUPING SETS(A, ROLLUP(B)) : A로 그룹핑, B로 그룹핑, 총합계
+          - GROUPING SETS(A, ROLLUP(B, C)) : A로 그룹핑, B,C로 그룹핑, B로 그룹핑, 총합계
+          - GROUPING SETS(A, B, ROLLUP(C)) : A로 그룹핑, B로 그룹핑, C로 그룹핑, 총합계
+
+          ex)
+            SELECT
+              DEPARTMENT,
+              JOB,
+              SUM(SALARY) AS TOTAL_SALARY
+            FROM
+              EMPLOYEES
+            GROUP BY
+              GROUPING SETS (
+                (DEPARTEMNT, JOB),        // DEPARTMENT, JOB 상세 집계
+                (DEPARTMENT),             // DEPARTMENT 소계 (JOB은 NULL)
+                ()                        // 총합
+              )
+
+
+        - GROUPING
+          - ROLLUP, CUBE, GROUPING SETS를 사용할 때 결과 집합에서 어떤 컬럼이 집계 수준으로 요약되었는지 구분하기 위해 사용
+
+          ex)
+            SELECT
+              DEPARTMENT,
+              JOB,
+              SUM(SALARY) AS TOTAL_SALARY,
+              GROUPING(DEPARTEMNT) AS DEPT_GROUP      // 집계면 1, 상세면 0
+              GROUPING(JOB) AS JOB_GROUP              // //
+            FROM
+              EMPLOYEES
+            GROUP BY
+              ROLLUP(DEPARTMENT, JOB)
+
+            SELECT
+              CASE GROUPING(DEPARTMENT) WHEN 1 THEN 'TOTAL' ELSE DEPARTMENT
+            FROM
+              ~
+
+
+        ----
+
+        [전체 테이블]
+
+        DEPARTMENT                      JOB                   SALARY
+
+        SALES                           MANAGER               1000
+        SALES                           CLERK                 500
+        MARKETING                       MANAGER               1500
+        MARKETING                       CLERK                 700
+        MARKETING                       CELRK                 800
+
+        [ROLLUP] : 지정한 순서대로 단계적 집계
+
+        DEPARTMENT                      JOB                   SALARY
+
+        SALES                           MANAGER               1000
+        SALES                           CLERK                 500
+        SALES                           NULL                  1500    V
+        MARKETING                       MANAGER               1500
+        MARKETING                       CLERK                 1500    GROUP
+        MARKETING                       NULL                  3000    V
+        NULL                            NULL                  4500    V
+
+        [CUBE] : 모든 가능한 조합에 대한 집계
+
+        DEPARTMENT                      JOB                   SALARY
+
+        SALES                           MANAGER               1000
+        SALES                           CLERK                 500
+        SALES                           NULL                  1500    V
+        MARKETING                       MANAGER               1500
+        MARKETING                       CLERK                 1500    GROUP
+        MARKETING                       NULL                  3000    V
+        NULL                            MANAGER               2500    V
+        NULL                            CLERK                 2000    V
+        NULL                            NULL                  4500    V
+
+        [GROUPING SETS] : 원하는 집계 조합만 선택
+
+        DEPARTMENT                      JOB                   SALARY
+
+        SALES                           MANAGER               1000
+        SALES                           CLERK                 500
+        MARKETING                       MANAGER               1500
+        MARKETING                       CLERK                 1500    GROUP
+        SALES                           NULL                  1500    V
+        MARKETING                       NULL                  3000    V
+        NULL                            NULL                  4500    V
+
+        [GROUPING] : 각 행이 집계(소게/총합)인지 상세 행인지 표시함
+
+        DEPARTMENT                      JOB                   SALARY            DEPT_GROUP          JOB_GROUP
+
+        SALES                           MANAGER               1000                  0                   0
+        SALES                           CLERK                 500                   0                   0
+        SALES                           NULL                  1500    V             0                   1
+        MARKETING                       MANAGER               1500                  0                   0
+        MARKETING                       CLERK                 1500    GROUP         0                   0
+        MARKETING                       NULL                  3000    V             0                   1
+        NULL                            NULL                  4500    V             1                   1
+
+        => GROUPING(DEPARTMENT) 또는 GROUPING(JOB) = 0 : 해당 행은 실제 데이터
+        => GROUPING(DEPARTMENT) 또는 GROUPING(JOB) = 1 : 해당 행이 집계(NULL)
 
 -->

@@ -469,45 +469,44 @@
   집합연산자
 
     - UNION
+      - 2개의 SELECT문 결과 합치고 중복된 행 제거 (내부적으로 DISTINCT 처리)
+
+        ex)
+          SELECT COL1, COL2 FROM A
+          UNION
+          SELECT COL1, COL2 FROM B
+
 
     - UNION ALL
+      - 2개의 SELECT문 결과 합치고 중복된 행 포함
+
 
     - INTERSECT
+      - 2개의 SELECT문 결과 집합에서 공통된 행만 반환
+      - 양쪽 쿼리 결과에 모두 존재하는 행들만 결과에 포함
+      - 중복된 행 제거
+      - 각 SELECT 문의 열의 수, 데이터 유형 일치해야 함 (UNION도 마찬가지)
 
-    - MINUS
+      - 별칭을 다른 것으로 지정했어도 첫번째 쿼리의 속성 별칭을 따라감
 
-    - EXCEPT
+        ex)
+          SELECT COL1 AS A1, COL2 AS A2 FROM A
+          INTERSECT
+          SELECT COL1 AS B1, COL2 AS B2 FROM B
 
-
-
-
-            UNION 문
-
-            - 2개 이상의 SELECT 문의 결과를 결합하는데 사용
-            - 중복 행은 제거됨
-            - ex)
-                SELECT COLUMN1, COLUMN2 FROM TABLE1
-                UNION
-                SELECT COLUMN1, COLUMN2 FROM TABLE2
+          => A1, B1 의 헤더 따라감
 
 
+    - MINUS / EXCEPT
+      - MINUS : 주로 ORACLE에서 사용되는 연산자
+      - EXCEPT : ANSI SQL 표준에서 사용 (POSTGRESQL, MSSQL)
+      - 첫번째 SELECT 문 결과 집합에서 두번째 SELECT 문 결과 집합에 존재하지 않는 행만 반환
+      - QUERY1의 결과에서 QUERY2의 결과를 제거하고 출력 (쿼리2결과 + 교집합 제거)
+      - 열개수,데이터유형 동일, 중복 제거
 
-        INTERSECT 문
-
-            - 2개 이상의 SELECT 문의 결과 중 공통된 행만 반환
-            - ex)
-                SELECT PRODUCT_ID, PRODUCT_NAME FROM PRODUCTS
-                INTERSECT
-                SELECT COLUMN1, COLUMN2 FROM TABLE2
-
-
-
-        EXCEPT 문
-
-            - 첫번째 SELECT 문의 결과에서 두 번째 SELECT 문의 결과를 제외한 행 반환
-            - ex)
-                SELECT COLUMN1, COLUMN2 FROM TABLE1
-                EXCEPT
-                SELECT COLUMN1, COLUMN2 FROM TABLE2
+        ex)
+          SELECT COL1, COL2 FROM A
+          EXCEPT
+          SELECT COL1, COL2 FROM B
 
 -->
