@@ -24,6 +24,26 @@
     - SUM
       - 지정한 윈도우 내 값들의 합 계산
 
+      - ORDER BY
+        - 윈도우 내 순서 지정
+        - 특정 기준에 따라 행을 정렬하게 되면 그 순서대로 누적 합계 적용
+
+      - RANGE UNBOUNDED PRECEDING
+        - 윈도우 프레임 지정 : 현재 행 기준으로 윈도우의 시작부터 현재 행까지의 범위 지정
+        - 누적 계산 범위 : 가장 첫 행부터 현재 행까지의 모든 값을 합산
+
+        ex)
+          SELECT
+            DATE,
+            AMOUNT,
+            SUM(AMOUNT) OVER (ORDER BY DATE) AS SUM1
+            SUM(AMOUNT) OVER (ORDER BY DATE RANGE UNBOUNDED PRECEDING) AS SUM2
+            
+          FROM
+            SALES
+          => 날짜 순으로 정렬된 행에 대해 각 행까지의 누적 판매 금액 계산
+          => SUM1과 SUM2는 모두 동일한 누적 합계 계산 (애초에 SQL 표준에 따라 기본 프레임이 RANGE BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW로 설정되기 때문)
+
     - MAX
       - 윈도우 내 최대값 반환
 
@@ -49,16 +69,20 @@
 
     - FIRST_VALUE
       - 현재 윈도우에서 지정한 순서에 따라 첫번째 값 반환
+      - 파티션 별 가장 선두에 위치한 데이터를 구하는 함수 (MSSQL X)
 
     - LAST_VALUE
       - 현재 윈도우에서 마지막 값 반환
+      - 파티션 별 가장 끝에 위치한 데이터를 구하는 함수 (MSSQL X)
 
     - LAG
-      - 현재 행보다 이전 행의 값을 참조
-      - 기본적으로 오프셋 1만큼 이전 값 반환 (다른 오프셋도 지정 가능)
+      - 현재 행보다 이전 행의 값을 참조 (MSSQL X)
+      - 기본적으로 오프셋 1만큼 이전 값 반환 (다른 오프셋도 지정 가능) (기본값)
+      - 자기 포함 안하고 N행 이동
 
     - LEAD
-      - 현재 행보다 이후 행의 값을 참조
+      - 현재 행보다 이후 행의 값을 참조 (MSSQL X)
+      - 오프셋 기본값 1
 
       ex)
         SELECT
@@ -68,6 +92,7 @@
           LEAD(SALARY, 1) OVER (ORDER BY HIRE_DATE) AS NEXT_SALARY,
           FIRST_VALUE(SALARY) OVER (ORDER BY HIRE_DATE) AS FIRST_SALARY,
           LAST_VALUE(SALARY) OVER (ORDER BY HIRE_DATE ROWS BETWEEN CURRENT ROW AND UNBOUNDED FOLLOWING) AS LAST_SALARY
+          LAST_VALUE(SALARY) OVER (ORDER BY HIRE_DATE ROWS BETWEEN UNBOUNDED PROCEDING AND UNBOUNDED FOLLOWING) AS LAST_SALARY2
         FROM
           EMPLOYEES
 
@@ -98,4 +123,49 @@
         FROM
           EMPLOYEES
 
+
+윈도우 함수 프레임
+  - 각 행에 대해 계산을 수행할 때 참조할 행들의 집합 정의
+  - OVER 절 내에서 ORDER BY와 함께 사용됨
+  - 각 행에 대해 누적, 이동, 범위 계산 등에서 참조할 행들의 집합을 정의
+
+    - 프레임
+      - 파티션 내에서 현재 행을 기준으로 앞뒤로 몇 개의 행을 계산에 포함할 지 결정하는 범위
+
+      - 프레임 경계
+        - UNBOUNDED PRECEDING : 파티션 첫 행부터 시작
+        - UNBOUNDED FOLLOWING : 파티션의 마지막 행까지 포함
+        - CURRENT ROW : 현재 행을 경계로 사용
+        - N PRECEDING / N FOLLOWING : 현재 행에서 N개의 행만큼 앞이나 뒤로 이동하여 경계 지정
+
+    - 프레임 지정 방식
+      - ROWS
+        - 물리적인 행 단위로 프레임 지정
+        - ROWS BETWEEN 3 PRECEDING AND CURRENT ROW : 현재 행 포함하여 그 앞의 3개 행을 계산 대상 포함
+        - 순서대로 인접한 행을 정확하게 선택하므로 값이 동일하더라도 개별 행을 구분
+        - 행 자체가 기준이 됨
+
+      - RANGE
+        - ORDER BY 절에 의해 정렬된 값의 범위를 기준으로 프레임 지정
+        - RANGE BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW : 현재 행의 ORDER BY 값보다 작거나 같은 모든 행 포함
+        - 동일한 정렬 값(같은 값)이 여러 행에 있을 경우, 이들 모두가 프레임에 포함
+        - 행이 가지고 있는 데이터 값이 기준이 됨
+
+      - GROUPS
+        - ORDER BY 컬럼의 동일한 값을 가진 행들을 그룹 단위로 처리
+        - ROWS와 RANGE의 중간 형태
+        - 동일한 값으로 묶인 행들을 하나의 그룹으로 보고 프레임을 정의
+
+  - 적용 함수
+    - O : SUM, AVG, COUNT, MAX, MIN, FIRST_VALUE, LAST_VALUE, LAG, LEAD
+    - X : ROW_NUMBER, RANK, DENSE_RANK
+
+
+
+    예시
+      - RANGE BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW : 처음부터 현재행까지
+      - RANGE BETWEEN 10 PRECEDING AND CURRENT ROW : 현재 행이 가지고 있는 "값"보다 10만큼 적은 행부터 현재 행까지
+      - ROWS BETWEEN CURRENT ROW AND UNBOUNDED FOLLOWING : 현재 행부터 끝까지
+      - ROWS BETWEEN CURRENT ROW AND 5 FOLLOWING : 현재 행부터 아래로 5만큼 이동한 행까지
+      - RANGE BETWEEN 2000 PRECEDING AND CURRENT ROW : 현재 행보다 2000 이하로 차이가 나는 행 ~ 현재 행
 -->
