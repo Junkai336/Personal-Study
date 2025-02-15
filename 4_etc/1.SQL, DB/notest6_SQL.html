@@ -1,66 +1,258 @@
 <!-- 
-스키마
-  - 데이터베이스, 프로그래밍, 데이터 모델링 등에서 데이터 구조를 정의하고 조직화하는 데 사용되는 설계 또는 청사진
-  - 특정 시스템에서 데이터를 저장하고 관리하는 방식과 관련된 규칙 구조 정의
-  - 데이터베이스 스키마는 테이블 구조와 테이블 간의 관계를 정의하고 SQL 또는 ORM 도구로 관리
+셀프 조인 
+  - 같은 테이블을 2번 이상 조인
+  - 계층 구조 데이터를 처리할 때 많이 사용
 
-구성요소
-  - 테이블
-    - 데이터가 저장되는 기본 단위
-    - 컬럼(열) : 속성
-    - 인스턴스(행) : 개별 데이터 저장
+  ex)
+    SELECT
+      A.CATEGORY_TP,
+      A.CATEGORY_NM,
+      B.CATEGORY_TP,
+      B.CATEGORY_NM,
+      C.CATEGORY_TP,
+      C.CATEGORY_NM
+    FROM
+      CATEGORY A,
+      CATEGORY B,      (쉼표 조인 = INNER JOIN)
+      CATEGORY C
+    WHERE
+      A.CATEGORY_NM = B.PARENT_CATEGORY
+      AND B.CATEGORY_NM = C.PARENT_CATEGORY
 
-  - 제약 조건
-    - 데이터의 무결성을 유지하기 위해 사용
-      - Primary Key : 고유 식별자
-      - Foreign Key : 다른 테이블과의 관계
-      - Unique : 중복 불허
-      - Not Null : 값 필수
+-->
 
-  - 데이터 타입
-    - 각 컬럼의 데이터 타입 지정하여 데이터 유효성 보장 (varchar, int, date, boolean, ...)
+<!-- 
+계층 쿼리
+  - 테이블에 계층 구조를 이루는 칼럼이 존재할 경우 계층 쿼리를 이용해서 데이터 출력 가능
+  - 트리 형태의 계층적 데이터를 한 번에 조회할 수 있음
 
-설계 과정
-  - 요구사항 분석 : 저장해야 할 데이터와 관계 정의
-  - ERD 작성 : 데이터 모델링을 통해 엔티티와 관계를 시각화
-  - 정규화 : 데이터 중복을 최소화하고 무결성 높임
-  - 구현 : SQL 스크립트나 ORM 도구를 사용해 스키마 정의
+  - 한 테이블 내 부모-자식 관계를 재귀적으로 탐색하여, 상위(루트)부터 하위(리프)까지 모든 계층 조회 가능
+  - 각 데이터의 계층 깊이(레벨)을 나타내 데이터 구조 파악 가능
+  - 재귀가 무한 루프에 빠지지 않도록 명확한 종료 조건이 필요함
+  - 자식 레코드가 더이상 존재하지 않을 때 재귀가 멈춤
 
-중요성
-  - 데이터 무결성 : 데이터 오류 방지
-  - 확장성 : 요구사항 변경에 유연하게 대응할 수 있도록 설계
-  - 성능 최적화 : 효율적인 데이터 검색과 처리
+  - LEVEL
+    - 현재의 DEPTH 반환
+    - 계층 쿼리 실행 시 각 행의 깊이를 나타내는 가상 칼럼
+    - 루트 노드는 1, 자식 노드는 부모보다 한 단계 높은 숫자
 
-  CREATE TABLE users (
-    id BIGINT AUTO_INCREMENT PRIMARY KEY,
-    name VARCHAR(50) NOT NULL,
-    email VARCHAR(100) UNIQUE NOT NULL,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-  );
+  - SYS_CONNECT_BY_PATH (칼럼, 구분자)
+    - 루트부터 현재 행까지의 경로를 문자열로 변환하는 함수
+    - 사용자가 지정한 구분자를 기준으로 각 노드의 값을 연결하여 계층 구조의 경로를 확인 가능
+    - SYS_CONNECT_BY_PATH(DEPT_NAME, '/') => 경로를 /부서명 형태로 보여줌
 
-  @Entity
-  @Table(name = "users")
-  public class User {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+  - START WITH
+    - 경로가 시작되는 루트 노드 생성하는 절
+    - 계층 구조의 시작점을 지정
+    - 보통 최상위(루트) 노드를 선택하는 조건 명시
+    - START WITH MANAGER_ID IS NULL <- 최상위 부모면 부모 칼럼 없으니까 보통 이렇게 지정
 
-    @Column(nullable = false, length = 50)
-    private String name;
+  - CONNECT BY
+    - 루트로부터 자식 노드 생성해주는 절
+    - 부모와 자식 간의 관계를 정의하는 절
+    - PRIOR 키워드와 함께 사용되어 상위 행과 하위 행 간 연결 조건 명시
+    - 조건에 만족하는 데이터가 없을 때까지 노드 생성 (재귀적)
+    - CONNECT BY PRIOR EMPLOYEE_ID = MANAGER_ID <- 이전 부모 행의 EMPLOYEE_ID가 현재 자식 행의 MANAGER_ID 와 일치할 때 관계 형성
 
-    @Column(nullable = false, unique = true, length = 100)
-    private String email;
+  - PRIOR
+    - CONNECT BY 절 내에서 사용
+    - 부모 행의 값을 참조할 때 사용
+    - 부모와 자식간의 연결 고리 명확하게 지정 가능
 
-    @Column(name = "created_at", nullable = false, updatable = false)
-    private LocalDateTime createdAt = LocalDateTime.now();
+  - CONNECT_BY_ROOT 칼럼값
+    - 루트 노드의 주어진 칼럼 값 반환
+    - 계층 쿼리에서 현재 행이 속한 계층의 루트 노드 값 반환 함수
+    - 각 행이 어느 최상위 노드에서 시작되었는지 확인 가능
 
-    // 게터 세터
-  }
+  - CONNECT_BY_ISLEAF
+    - 현재 행이 리프(자식이 없는 최하위 노드)인지 나타내는 가상 칼럼
+    - 리프 노드일 경우 1, 아니면 0 반환 (가장 하위 노드 1, 아니면 0)
+    - 계층 구조의 말단 노드 식별
 
-ERD
-  - Entity Relationship Diagram
+  - ORDER SIBLINGS BY
+    - 같은 부모를 가진 '형제 행들'을 특정 칼럼 기준으로 정렬하는 절
+    - 계층 쿼리 결과에서 같은 레벨에 속한 데이터들이 원하는 순서대로 나열됨
+  
+  ex)
+    SELECT
+      CATEGORY_TYPE,
+      CATEGORY_NAME,
+      PARENT_CATEGORY,
+      LEVEL,
+      SYS_CONNECT_BY_PATH('[' || CATEGORY_TYPE || ']' || CATEGORY_NAME, '-') AS PATH,
+      CONNECT_BY_ROOT CATEGORY_NAME AS ROOT_INFO,
+      CONNECT_BY_ISLEAF AS LEAF_INFO
+    FROM
+      CATEGORY
+    START WITH
+      PARENT_CATEGORY IS NULL
+    CONNECT BY
+      PRIOR CATEGORY_NAME = PARENT_CATEGORY     <- 순방향 전개 (루트 -> 자식)
+    ORDER SIBLINGS BY
+      CATEGORY_NAME                             <- ORDER BY는 계층 구조와 상관없이 정렬되므로 같은 레벨(형제)들끼리 정렬해야 함
 
-Entity
-  - 
+  ex)
+    SELECT
+      LEVEL,
+      CATEGORY_TYPE,
+      CATEGORY_NAME,
+      SYS_CONNECT_BY_PATH(CATEGORY_TYPE || ': ' || CATEGORY_NAME, '-') AS PATH,
+    FROM
+      CATEGORY
+    START WITH
+      CATEGORY_TYPE = '소'
+    CONNECT BY
+      CATEGORY_NAME = PRIOR PARENT_CATEGORY     <- 역방향 전개 (자식 -> 루트)
+
+-->
+
+
+
+<!-- 
+PIVOT
+  - 테이블의 행 데이터를 열 데이터로 전환
+  - 집계나 비교 보고서 형태로 데이터 재구성
+  - 일반적으로 한 칼럼의 값들을 여러 열로 분리하고, 각 열에 대해 집계 함수를 적용하여 원하는 형태의 결과 도출 가능
+  - 예: 월별 판매 데이터 -> 월을 열로 전환 -> 제품별 판매 합계 확인
+  - MYSQL, SQLITE, POSTGRESQL (X)
+
+  - 구성요소
+    - 집계함수 : 결과 데이터에 표시할 집계 데이터 정의
+    
+    - FOR 절 : PIVOT할 칼럼 지정
+
+    - IN 절 : PIVOT할 칼럼값 지정
+
+  ex)
+    SELECT
+      PRODUCT,
+      JAN,
+      FEB,
+      MAR
+    FROM
+      (
+        SELECT
+          PRODUCT,
+          MONTH,
+          SALES
+        FROM
+          SALES_TABLE
+      ) AS T
+    PIVOT
+      (
+          SUM(SALES)
+        FOR
+          MONTH
+        IN
+          (JAN, FEB, MAR)
+      ) AS PVT
+
+  ex)
+    SELECT
+      *
+    FROM
+      SALES_TABLE
+    PIVOT 
+        ( 
+          SUM(SALES) 
+        FOR 
+          MONTH 
+        IN 
+          ('JAN' AS JAN, 'FEB' AS FEB, 'MAR' AS MAR) 
+        )
+
+  ex)
+    SELECT
+      *
+    FROM
+      (
+        SELECT
+          PRICE,
+          PAYMENT_METHOD
+        FROM
+          ORDER_INFO
+      )
+    PIVOT
+        (
+          SUM(PRICE)
+        FOR
+          (PAYMENT_METHOD)
+        IN
+          (CREDITCARD, NAVERPAY)
+        )
+
+    ex)
+      SELECT
+        *
+      FROM
+        (
+          SELECT
+            HIRE_DATE,
+            GRADE,
+            DEPT_NAME,
+            SALARY
+          FROM
+            EMP_INFO
+        )
+      PIVOT
+        (
+          SUM(SALARY) AS SAL,
+          AVG(SALARY) AS AVG
+        FOR
+          (DEPT_NM, GRADE)
+        IN
+          (
+            ('IT개발팀', '과장') AS IT1,
+            ('IT개발팀', '차장') AS IT2,
+            ('AI연구팀', '부장') AS AI1,
+            ('AI연구팀', '대리') AS AI2
+          )
+        )
+
+        HIRE_DATE   IT1_AVG   IT1_SAL   IT2_AVG   IT2_SAL   AI1_AVG   AI1_SAL   AI2_AVG   AI2_SAL
+        2001        ...
+        2002
+        2003
+
+
+UNPIVOT
+  - 피벗의 반대 기능 수행
+  - 여러 열에 분산되어 있는 데이터를 행 형태로 전환
+  - 한 테이블에 여러 분기의 판매 데이터가 열로 존재 -> 분기, 판매액이라는 2개의 칼럼으로 변환
+  - 여러 칼럼에 분산된 데이터를 하나의 공통 칼럼에 모으고, 원래의 열 이름은 다른 칼럼으로 표현
+  - 일반적으로 내부 서브쿼리를 대상으로 하며 열들을 지정하여 이들을 행으로 변환
+
+  - 구성요소
+    - UNPIVOT 칼럼 : UNPIVOT 된 값이 들어갈 칼럼 지정
+
+    - FOR 절 : UNPIVOT 된 값에 대한 설명이 들어갈 칼럼 지정
+
+    - IN 절 : FOR 절에서 생성한 칼럼에 표시될 데이터 값 지정
+
+  ex)
+    SELECT
+      GRADE,
+      DEPT_NAME,
+      SALARY
+    FROM
+      EMP_INFO_PIVOT
+    UNPIVOT
+      (
+          SALARY
+        FOR
+          DEPT_NAME
+        IN
+          (
+            HR_SAL AS '인사팀',
+            IT_SAL AS 'IT개발팀',
+            AI_SAL AS 'AI연구팀',
+            CLOUD_SAL AS '클라우드팀'
+          )
+      )
+
+-->
+
+<!-- 
+정규표현식
 
 -->

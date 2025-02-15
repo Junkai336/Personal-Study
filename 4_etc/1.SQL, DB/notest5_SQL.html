@@ -100,17 +100,99 @@
     - 데이터 집합 내에서 특정 행의 값이 전체 또는 누적 분포 내에서 어떤 비율을 차지하는지 계산할 때 유용
 
     - CUME_DIST
-      - 누적 분포 계산
+      - 누적 분포 계산 (얼마나 누적 되었는가)
       - 현재 행의 값 이하인 행의 비율 반환
+      - 해당 값 이하의 행 개수 / 전체 행 개수
+      - 중복값이 있으면 동일한 백분율
+      - MSSQL X
+
+      ex)
+        SELECT
+          NAME,
+          SCORE,
+          CUME_DIST() OVER (ORDER BY SCORE) AS CUME_DIST
+        FROM
+          STUDENTS
+
+        NAME          SCORE         CUME_DIST
+        A             60            0.25
+        B             70            0.50
+        C             80            0.75
+        D             90            1.00
+
+        => C가 0.75인 이유 : C의 점수 이하인 사람이 A,B,C니까 3/4 = 0.75
 
     - PERCENT_RANK
       - 현재 행의 상대적 순위를 백분율로 나타냄 (최소 순위 0 , 최대 순위 1)
+      - 파티션의 맨 위 끝 행 0, 맨 아래 끝 행 1로 놓고 현재 행이 위치하는 백분위 순위 값
+      - 특정 값이 전체 데이터에서 몇번째 백분율 위치인지 계산 (백분율 순위)
+      - (해당 값의 순위 - 1) / (전체 행 개수 - 1)
+      - 중복 값이 있으면 동일한 백분율
+      - MSSQL X
+
+      ex)
+        SELECT
+          NAME,
+          SCORE,
+          CUME_DIST() OVER (ORDER BY SCORE) AS CUME_DIST
+        FROM
+          STUDENTS
+
+        NAME          SCORE         CUME_DIST
+        A             60            0.00
+        B             70            0.33
+        C             80            0.67
+        D             90            1.00
+
+        => C가 0.67인 이유 : C의 순위가 3이고 (3-1) / (4-1)
 
     - NTILE
       - 윈도우를 지정한 수의 그룹으로 나누고 각 행에 해당 그룹 번호 부여
+      - 데이터 전체 개수를 N으로 나눈 후 각 행에 1부터 N까지의 그룹 번호 부여
+      - ORDER BY 절을 기반으로 그룹 배정
+      - 균등 분할이긴 한데, N으로 나누어 떨어지지 않으면 1부터 더 할당함
+
+      ex)
+        SELECT
+          NAME,
+          SCORE,
+          NTILE(3) OVER (ORDER BY SCORE) AS BUCKET
+        FROM
+          STUDENTS
+
+          NAME    SCORE   BUCKET
+          A       60      1
+          B       70      1
+          C       80      1
+          D       90      2
+          E       99      2
+          F       100     3
+          G       101     3
+
+
 
     - RATIO_TO_REPORT
       - 현재 행의 값이 윈도우 내 전체 값의 합에서 차지하는 비율 계산
+      - 합계에서 차지하는 비율
+      - MSSQL X
+
+      ex)
+        SELECT
+          NAME,
+          JOB_ID,
+          SALARY,
+          RATIO_TO_REPORT(SALARY) OVER(PARTITION BY JOB_ID) AS RESULT,
+          SALARY/SUM(SALARY) OVER(PARTITION BY JOB_ID) AS RESULT2
+        FROM
+          EMPLOYEES
+
+          => RESULT랑 RESULT2가 같은 결과임
+
+          NAME          JOB_ID          SALARY          RESULT          RESULT2
+          N             A               17000           0.5             0.5
+          L             A               17000           0.5             0.5
+          V             B               5800            0.58            0.58
+          D             B               4200            0.42            0.42
 
       ex)
         SELECT
@@ -168,4 +250,29 @@
       - ROWS BETWEEN CURRENT ROW AND UNBOUNDED FOLLOWING : 현재 행부터 끝까지
       - ROWS BETWEEN CURRENT ROW AND 5 FOLLOWING : 현재 행부터 아래로 5만큼 이동한 행까지
       - RANGE BETWEEN 2000 PRECEDING AND CURRENT ROW : 현재 행보다 2000 이하로 차이가 나는 행 ~ 현재 행
+-->
+
+<!-- 
+ROWNUM
+  - ORACLE DB에서 행 번호를 부여하는 가상 칼럼
+  - 주어진 쿼리 결과에 대해 1부터 순차적 번호 매김
+
+  - 주의
+    - ROWNUM은 행이 반환될 때마다 순번이 1씩 증가하기 때문에 WHERE ROWNUM = 5 (X) (< , <= 조건으로 사용해야 함)
+    - ORDER BY 절은 WHERE 절보다 나중에 수행되기 때문에 같은 단락에서 수행하면 안됨
+  
+  ex)
+    SELECT
+      *
+    FROM
+      ROWNUM <= 5
+    ORDER BY SALARY DESC      <- X
+
+    SELECT
+      *
+    FROM
+      (SELECT * FROM EMP ORDER BY SALARY DESC)
+    WHERE
+      ROWNUM <= 5
+
 -->
