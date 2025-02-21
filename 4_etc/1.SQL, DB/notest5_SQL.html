@@ -65,6 +65,24 @@
         FROM
           EMPLOYEES
 
+      ex)
+        SELECT
+          DEPARTMENT_ID,
+          SALARY,
+          HIRE_DATE,
+          MIN(SALARY) OVER(PARTITION BY DEPARTMENT_ID ORDER BY HIRE_DATE) AS MIN_SAL
+        FROM
+          EMPLOYEES
+
+        DEPARTMENT_ID     SALARY      HIRE_DATE     MIN_SAL
+        10                4400        2021-01-01    4400
+        10                6000        2022-01-01    4400
+        10                3100        2023-01-01    3100
+        10                2600        2024-01-01    2600
+
+        => ORDER BY 절을 명시하면 각 행에 대해 그 행 + 그 행 이전 데이터들의 누적 MIN 계산 (SUM, MAX, MIN, AVG, COUNT)
+        => ORDER BY 절을 생략하면 파티션 내 모든 행에 대해 전체 집계 결과가 동일하게 반환
+
   - 행 순서 함수
 
     - FIRST_VALUE

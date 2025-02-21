@@ -365,7 +365,7 @@
 
           - 다중행 서브쿼리
             - 실행 결과로 두 개 이상의 행을 반환하는 서브쿼리
-            - 여러 행의 결과를 조건으로 비교할 때 IN, ANY, ALL 등 연산자와 함께 사용
+            - 여러 행의 결과를 조건으로 비교할 때 IN, ANY, ALL, SOME, EXISTS 등 연산자와 함께 사용
 
               ex)
                 SELECT
@@ -470,6 +470,8 @@
 
     - UNION
       - 2개의 SELECT문 결과 합치고 중복된 행 제거 (내부적으로 DISTINCT 처리)
+      - 두 개의 SQL을 UNION으로 연결할 경우 헤드 명칭은 첫번째 SQL의 칼럼명 혹은 ALIAS를 따르게 됨
+      - 대응하는 식과 같은 데이터 유형이어야 함
 
         ex)
           SELECT COL1, COL2 FROM A
