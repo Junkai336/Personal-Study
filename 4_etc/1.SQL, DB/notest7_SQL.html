@@ -45,6 +45,9 @@ CREATE
       칼럼명1 데이터타입 (DEFAULT / NULL 여부),
       ...
     )
+  - 기존 테이블 복사해서 생성하고 싶은 경우
+    - CREATE 테이블명 AS SELECT * FROM 복사할 테이블명
+    - 제약 조건 중 NOT NULL 조건만 복사되고 PK, UNIQUE KEY, CHECK 등의 제약조건은 초기화되므로 ALTER로 다시 지정해야 됨
 
   - 제약조건
     - 테이블에 저장될 데이터의 무결성을 유지하기 위해 적용되는 규칙
@@ -78,6 +81,7 @@ CREATE
     - FOREIGN KEY(외래키)
       - 하나의 테이블이 다른 테이블을 참조하고자 할 때 FK를 정의함
       - 한 테이블의 특정 칼럼의 다른 테이블의 PK를 참조하도록 설정하는 제약 조건
+      - 꼭 PK 참조여야 하는 건 아니고 UNIQUE 제약 조건이 있는 칼럼도 참조 가능
       - 데이터 무결성을 유지하기 위해 참조 무결성 규정을 설정할 수 있음
       - FK가 설정된 칼럼에 없는 값을 삽입할 수 없음
       - 참조하는 값이 삭제되거나 변경될 때의 동작을 지정 가능
@@ -89,12 +93,11 @@ CREATE
 
         - SET DEFAULT : PARENT 값이 삭제/변경되면 CHILD 값이 DEFAULT로 변경
 
-        - NO ACTION : 부모 테이블에서 삭제/변경이 발생하면 거부 (오류 발생)
-                      참조 무결성 제약이 걸려있는 경우 삭제/변경이 불가능
+        - NO ACTION : 트랜잭션이 완료되는 시점에서 외래 키 무결성 검사 수행
+                      지연 제한 (트랜잭션이 끝날 때 오류 발생)
 
-        - RESTRICT :  자식 테이블에 해당 데이터가 PK로 존재하지 않는 경우에만 PARENT 값 삭제/변경 가능
-
-
+        - RESTRICT :  부모 테이블에서 데이터 삭제/수정 즉시 참조하는 데이터가 있으면 오류 발생
+                      즉시 제한 (ON DELETE, ON UPDATE 실행 즉시 체크)
 
     ex)
       CREATE TABLE EMPLOYEES (
@@ -116,17 +119,64 @@ CREATE
       )
         => ORACLE
 
+      CREATE TABLE TEACHER_BACKUP AS SELECT * FROM TEACHER
+
+      CREATE TABLE EMPLOYEES (
+        EMP_ID INT PRIMARY KEY,
+        NAME VARCHAR(50) NOT NULL,
+        DEPT_ID INT,
+        CONSTRAINT FK_DEPT FOREIGN KEY (DEPT_ID) REFERENCES DEPARTMENTS(DEPT_ID) ON UPDATE CASCADE
+      )
+
+      UPDATE DEPARTMENTS SET DEPT_ID = 10 WHERE DEPT_ID 1
+      => DEPT_ID가 1에서 10으로 변경되면 EMPLOYEES 테이블의 DEPT_ID도 자동으로 10으로 변경
+
 
 ALTER
-  -
+  - 기존 테이블의 구조(스키마)를 수정
 
+  - ADD COLUMN
+    - 칼럼 새로 추가
+    - ALTER TABLE 테이블명 ADD 칼럼명 데이터유형
 
+  - DROP COLUMN
+    - 기존에 있던 칼럼 삭제
+    - ALTER TABLE 테이블명 DROP COLUMN 칼럼명
+
+  - MODIFY COLUMN / ALTER COLUMN
+    - 기존에 있던 칼럼 변경하고 싶은 경우 사용
+    - ALTER TABLE 테이블명 MODIFY (칼럼명1 데이터유형 [DEFAULT 값] [NOT NULL], 칼럼명2 ...)
+
+  - RENAME COLUMN
+    - 기존에 있던 칼럼 이름 변경
+    - ALTER TABLE 테이블명 REANME COLUMN 기존 칼럼명 TO 변경할 칼럼명
+
+  - ADD CONSTRAINT
+    - 제약조건 추가
+    - ALTER TABLE 테이블명 ADD CONSTRAINT 제약조건명 제약조건 (칼럼명)
+
+  - DROP CONSTRAINT
+    - 제약조건 삭제
+
+  ex)
+    ALTER TABLE E DROP PRIMARY KEY
+    ALTER TABLE E DROP CONSTRAINT PK_E
+    ALTER TABLE E ADD CONSTRAINT CHECK_SAL CHECK (SALARY > 0)
+    ALTER TABLE E ADD CONSTRAINT UNIQUE_E UNIQUE (EMAIL)
+    ALTER TABLE E RENAME COLUMN PHONE TO PHONE2
+    ALTER TABLE E MODIFY COLUMN P VARCHAR(30) NOT NULL
+
+    
 DROP
-  -
+  - DROP TABLE
+    - 테이블 삭제
+    - DROP TABLE 테이블명 [CASCADE CONSTRAINT]
 
 
 RENAME
-  -
+  - RENAME TABLE
+    - 테이블명 변경
+    - RENAME 기존 테이블명 TO 변경할 테이블명
 
 
 TRUNCATE
@@ -137,10 +187,6 @@ TRUNCATE
   - 트랜잭션 롤백, WHERE절 사용 불가능
   - 제약조건이 있으면 사용 불가
   - TRUNCATE TABLE TABLE_NAME
-
-
-데이터 유형
-  - 
 
 -->
 
@@ -358,6 +404,56 @@ SET TRANSACTION
 
 <!-- 
 DCL
+  - 사용자 권한을 부여하거나 제거하는 명령어
+  - 데이터베이스 보안과 관련
+  - 사용자에게 특정 작업을 수행할 수 있는 권한을 부여하거나 해제하는 데 사용
+
+  USER 관련 명령어
+    - 하나의 DB는 여러 개의 USER를 가질 수 있다.
+
+    - CREATE USER
+      - 사용자를 생성하는 명령어
+      - CREATE USER 사용자명 IDENTIFIED BY 패스워드
+
+    - ALTER USER
+      - 사용자를 변경하는 명령어
+      - ALTER USER 사용자명 IDENTIFIED BY 패스워드
+
+    - DROP USER
+      - 사용자를 삭제하는 명령어
+      - DROP USER 사용자명
+
+  권한 관련 명령어
+    
+    - GRANT
+      - 사용자에게 권한을 부여하는 명령어
+      - GRANT 권한 TO 사용자명
+
+      ex)
+        GRANT SELECT, INSERT ON MYDB_USERS TO 'TEST_USER'
+        => TEST_USER에게 MYDB_USERS 테이블의 SELECT, INSERT 권한 부여
+
+    - REVOKE
+      - 사용자에게 권한을 회수하는 명령어
+      - REVOKE 권한 FROM 사용자명
+
+    사용자 권한 조회
+      - MYSQL : SHOW GRANTS FOR 'USER'
+      - POSTGRESQL : \du
+      - ORACLE : SELECT * FROM DBA_SYS_PRIVS WHERE GRANTEE = 'USER'
+
+  ROLE 관련 명령어
+    - 특정 권한들을 하나의 세트처럼 묶는 것
+    - ROLE : 역할, 여러 사용자에게 공통적인 권한을 부여할 때 ROLE을 사용하여 일괄 관리 가능
+
+    - ROLE 생성
+      - CREATE ROLE 롤명
+      - GRANT 권한 TO 롤명
+      - GRANT 롤명 TO 사용자명
+      - REVOKE 롤명 FROM 사용자명
+
+    - ROLE 삭제
+      - DROP ROLE 롤명
 
 
 
